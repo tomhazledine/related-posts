@@ -1,11 +1,11 @@
 {
-    "name": "site",
-    "version": "1.0.0",
-    "description": "A test site to use the new SSG",
-    "main": "index.js",
+    "name": "@tomhazledine/related-posts",
+    "version": "0.1.0",
+    "description": "A node script that adds 'related posts' information to a set of markdown files.",
+    "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "related": "node scripts/related-posts"
+        "related": "node src/index"
     },
     "author": "",
     "license": "ISC",
@@ -13,6 +13,7 @@
         "dotenv": "^16.3.1",
         "esbuild": "^0.17.19",
         "gpt-3-encoder": "^1.1.4",
-        "openai": "^4.12.1"
+        "openai": "^4.12.1",
+        "yaml": "^2.3.4"
     }
 }
