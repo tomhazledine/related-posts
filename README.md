@@ -57,7 +57,7 @@ The script needs to know a few things before it can run:
 3. Which OpenAI model to use
 4. What your OpenAI API key is
 
-We've already covered adding your API key in the [Pre-requisites](#pre-requisites) section. The rest of the configuration can be added to a `related.config.json` file in the root of your project:
+We've already covered adding your API key in the [Pre-requisites](#pre-requisites) section. The rest of the configuration should be added to a `related.config.json` file in the root of your project:
 
 ```json
 {
@@ -85,12 +85,14 @@ Then you can run the script with `yarn related-posts`.
 
 ## Options
 
-The script accepts a few arguments when run from the command line:
+The script accepts a few arguments that change the behaviour of the script. These can appended to the command run in the terminal or be added to the command in your `package.json` scripts (recommended):
 
-An example of the full command might look like this:
-
-```bash
-node @tomhazledine/related-posts --verbose --auto
+```json
+{
+    "scripts": {
+        "related-posts": "@tomhazledine/related-posts"
+    }
+}
 ```
 
 The available options are:
@@ -104,7 +106,7 @@ If `true`, the script will log more information to the console.
 When interacting with the OpenAI API the script needs to account for rate limits. To do this the script will automatically pause after each API call and wait for user confirmation to continue.
 
 ```
-Pausing to allow for openai API rate limiting. Proceed? (y/n)y
+Pausing to allow for openai API rate limiting. Proceed? (y/n)
 ```
 
 If the `auto` flag is included in the command, the script will simply wait for a few seconds and then continue.
