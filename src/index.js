@@ -27,6 +27,12 @@ let embeddings = loadData(embeddingsPath);
 // Load articles
 const articlesFolder = path.resolve(process.cwd(), config.in);
 const articlePaths = readFolder(articlesFolder);
+
+if (articlePaths.length === 0) {
+    log(`No articles found in ${articlesFolder}`, "red");
+    process.exit(0);
+}
+
 const articles = {};
 
 for (const articlePath of articlePaths) {

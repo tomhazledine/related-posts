@@ -11,7 +11,9 @@ import { defaultConfig } from "../defaults.js";
  */
 export const getConfig = (verbose = false) => {
     try {
-        const rawUserConfig = readFile(path.resolve(".", `./config.json`));
+        const rawUserConfig = readFile(
+            path.resolve(".", `./related.config.json`)
+        );
         if (!rawUserConfig) return defaultConfig;
         const userConfig = JSON.parse(rawUserConfig);
         const config = mergeDeep(defaultConfig, userConfig);

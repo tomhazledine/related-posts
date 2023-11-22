@@ -1,6 +1,6 @@
 export const defaultConfig = {
-    in: "./complex-data/content",
-    temp: "./complex-data/temp"
+    in: "./content",
+    temp: "./temp"
 };
 
 export const defaultArgs = {
