@@ -24,7 +24,9 @@ When the script runs, it will add a `related` field to the frontmatter of all th
 
 ### 2. An OpenAI API key
 
-Currently `related-posts` uses the [OpenAI API](https://https://openai.com/) to generate the related posts. You'll need to sign up for an account and get an API key. We're relying on OpenAI for two things: **embedding** and **completions**. The embedding is used to find the similarity between two posts, and the completions are used to generate the descriptive posts.
+**The OpenAI API is a paid-for service. You will be charged for usage.**
+
+Currently `related-posts` uses the [OpenAI API](https://https://openai.com/) to generate the related posts. You'll need to sign up for an account and get an API key. We're relying on OpenAI for two things: **embeddings** and **completions**. The embeddings are used to find the similarity "score" for all the posts (i.e. for a given post, finding which other posts are most similar), and the completions are used to create the automatically-generated  descriptions of *why* the posts are similar.
 
 Add your API key to a `.env` file in the root of your project:
 
@@ -81,7 +83,11 @@ The script can be run directly in node with `node @tomhazledine/related-posts`, 
 }
 ```
 
-Then you can run the script with `yarn related-posts`.
+Then you can run the script with:
+
+```bash
+yarn related-posts
+```
 
 ## Options
 
@@ -90,7 +96,7 @@ The script accepts a few arguments that change the behaviour of the script. Thes
 ```json
 {
     "scripts": {
-        "related-posts": "@tomhazledine/related-posts"
+        "related-posts": "@tomhazledine/related-posts --verbose --auto"
     }
 }
 ```
