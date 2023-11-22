@@ -1,6 +1,7 @@
 export const defaultConfig = {
     in: "./content",
-    temp: "./temp"
+    temp: "./temp",
+    openai_model: "gpt-3.5-turbo"
 };
 
 export const defaultArgs = {
