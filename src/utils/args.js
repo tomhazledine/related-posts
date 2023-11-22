@@ -1,6 +1,7 @@
 import { mergeDeep } from "./helpers.js";
+import { defaultArgs } from "../defaults.js";
 
-export const parseArgs = (rawArgs, defaultArgs = {}) => {
+export const parseArgs = rawArgs => {
     const [a, b, ...relevant] = rawArgs;
     const args = relevant
         .map(arg => {

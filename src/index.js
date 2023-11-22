@@ -1,8 +1,7 @@
 import path from "path";
 
-import { parseArgs } from "./utils/args.js";
+import { parseArgs, getConfig, log } from "./utils/index.js";
 import { readFile, readFolder, saveFile, loadData } from "./utils/io.js";
-import { log } from "./utils/console.js";
 import { hashString, waitForUserInput, sleep } from "./utils/helpers.js";
 import { parseFrontmatter, formatFrontmatter } from "./utils/markdown.js";
 import { getEmbedding } from "./openai/embedding.js";
@@ -10,32 +9,23 @@ import { compareEmbeddings, compareSummaries } from "./openai/similarity.js";
 import { summarize } from "./openai/summarize.js";
 
 log("Calculating related posts...");
-
-// Parse starting arguments
-const DEFAULTS = {
-    in: "./demo-content",
-    temp: "./temp-data",
-    verbose: false,
-    auto: false,
-    forceSimilarities: false,
-    forceSummaries: false
-};
-const args = parseArgs(process.argv, DEFAULTS);
+const args = parseArgs(process.argv);
+const config = getConfig(args.verbose);
 
 // Load cached data
-const cachePath = path.resolve(process.cwd(), args.temp, "./cache.json");
+const cachePath = path.resolve(process.cwd(), config.temp, "./cache.json");
 let cache = loadData(cachePath);
 
 // Load cached embeddings
 const embeddingsPath = path.resolve(
     process.cwd(),
-    args.temp,
+    config.temp,
     "./embeddings.json"
 );
 let embeddings = loadData(embeddingsPath);
 
 // Load articles
-const articlesFolder = path.resolve(process.cwd(), args.in);
+const articlesFolder = path.resolve(process.cwd(), config.in);
 const articlePaths = readFolder(articlesFolder);
 const articles = {};
 
