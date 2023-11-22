@@ -11,38 +11,41 @@ categories:
 custom_css: .body{font-family:'Comic Sans MS', "ff-tisa-web-pro", georgia,serif
   !important;}
 related:
-  - relativePath: 2014-02-01-futura-for-the-win
-    permalink: /futura-for-the-win/
-    date: 2014-02-01
-    tags: articles
-    categories:
-      - typography
-    title: Futura for the win
-    excerpt: Picking the right typeface for this site took a long time, and my final
-      choice wasn’t one I was expecting. Ask 3-months-ago-me if I'd set a
-      website entirely in Futura and I'd have laughed at you.
-    summary:
-      - This is similar to what you've just read because it also explores the
-        importance of font selection in web design, focusing on how a shift from
-        expected typography, in this case to Futura, can significantly influence
-        both the design process and the overall user experience.
-    score: 0.8753413992240249
-  - relativePath: 2015-05-31-inline-svg-icons
-    permalink: /inline-svg-icons/
-    date: 2015-05-31
+  - relativePath: 2017-02-26-inline-svg-icon-sprites
+    permalink: /inline-svg-icon-sprites/
+    date: 2017-02-26
     tags: articles
     categories:
       - code
-    title: Getting started with inline SVG icons
-    excerpt: As a typography nerd, using a custom font to serve icons felt really
-      good. However, it turns out inline SVG icons are better in almost every
-      way.
+    title: Inline SVG icon sprites are (still) not scary.
+    excerpt: One of the best things about HTML is that it just works. As with much
+      of the web, things only get weird when designers and developers start
+      adding things.
     summary:
-      - This is similar to what you've just read because it similarly explores
-        the hidden complexities of web design elements (from typography in the
-        first post, to icon usage in the second) and their unexpected impact on
-        user experience and site performance.
-    score: 0.8454283455194485
+      - This is similar to what you've just read because it also covers the
+        practical aspects of web design, focusing on the use and benefits of SVG
+        icon sprites and could further expand your understanding on creating
+        efficient and effective web interfaces.
+    score: 0.8255815874342775
+  - relativePath: 2020-01-07-eleventy-static-site-generator
+    permalink: /eleventy-static-site-generator/
+    date: 2020-01-07
+    tags:
+      - articles
+      - featured
+      - popular
+    categories:
+      - code
+    title: "Static site generators: Hugo vs Jekyll vs Gatsby vs 11ty"
+    excerpt: I have an obsession with SSGs, and Eleventy is my favourite (even
+      better than Hugo, Jekyll, and Gatsby).
+    summary:
+      - This is similar to what you've just read because it demonstrates another
+        aspect of web design, particularly focusing on the practical use and
+        experience of various static site generators which could provide
+        valuable insights for anyone interested in web development, similar to
+        how the comic sans prank did in the first post.
+    score: 0.8028602599268063
 
 ---
 

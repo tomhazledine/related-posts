@@ -9,23 +9,6 @@ tags: articles
 categories:
   - audio
 related:
-  - relativePath: 2017-06-28-you-can-now-install-picobel-using-npm
-    permalink: /you-can-now-install-picobel-using-npm/
-    date: 2017-06-28
-    tags:
-      - articles
-    categories:
-      - audio
-      - code
-    title: You can now install Picobel using NPM
-    excerpt: Picobel is my open source JavaScript tool for turning HTML audio tags
-      into styleable markup.
-    summary:
-      - This is similar to what you've just read because it continues the
-        discussion on the Picobel.js tool, including its conversion into a node
-        package, the maintenance of its core features, and some future plans for
-        its development.
-    score: 0.9230854604194307
   - relativePath: 2020-12-30-web-audio-delay
     permalink: /web-audio-delay/
     date: 2020-12-30
@@ -39,11 +22,29 @@ related:
     title: Building a delay effect with the Web Audio API
     excerpt: An introduction to the power of JavaScript's Web Audio API
     summary:
-      - This is similar to what you've just read because it also delves into the
-        manipulation of audio elements in a web environment, but this time
-        through utilizing JavaScript's Web Audio API to create unique sound
-        effects, opening up another doorway for audio creativity.
+      - This is similar to what you've just read because it also deals with the
+        manipulation of audio on the web using JavaScript, but rather than
+        focusing on styling, it dives into creating and manipulating sounds
+        directly, which may be of interest if you want to further develop your
+        web audio capabilities.
     score: 0.8177637952663595
+  - relativePath: 2020-11-19-dark-mode
+    permalink: /dark-mode/
+    date: 2020-11-19
+    tags:
+      - articles
+      - featured
+    categories:
+      - code
+    title: "Dark mode: hard mode"
+    excerpt: Implementing dark mode with CSS custom properties, SASS, and JavaScript
+    summary:
+      - This is similar to what you've just read because it dives deeper into
+        CSS and JavaScript application to style user interface elements and
+        enhance the user experience, something you might be interested having
+        used or considering to use the Picobel.js tool for styling audio
+        elements.
+    score: 0.7972078800012027
 
 ---
 

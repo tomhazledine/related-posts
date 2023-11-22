@@ -22,30 +22,28 @@ related:
     excerpt: Crafting command-line scripts to calculate the most frequently used
       letters in Wordle (and finding an optimal sequence of starting words).
     summary:
-      - This is similar to what you've just read because both blog posts detail
-        the creation and implementation of code scripts within a terminal for
-        creative purposes, offering returns on learning and productivity in
-        terminal usage, and foster appreciation for tackling interesting
-        challenges using coding.
+      - "This is similar to what you've just read because both posts explore
+        leveraging coding to solve unique challenges: the first uses `npx` to
+        help implement Oblique Strategies, while the second employs command-line
+        scripts to optimize word choices while playing a game."
     score: 0.8017603510233204
-  - relativePath: 2017-06-28-you-can-now-install-picobel-using-npm
-    permalink: /you-can-now-install-picobel-using-npm/
-    date: 2017-06-28
-    tags:
-      - articles
+  - relativePath: 2017-04-30-picobel-js-css-audio-player
+    permalink: /picobel-js-css-audio-player/
+    date: 2017-04-30
+    tags: articles
     categories:
       - audio
-      - code
-    title: You can now install Picobel using NPM
-    excerpt: Picobel is my open source JavaScript tool for turning HTML audio tags
-      into styleable markup.
+    title: Introducing Picobel.js - an audio player you can style with css
+    excerpt: Picobel.js is a lightweight dependency-free Javascript tool that
+      converts html audio tags into styleable markup.
     summary:
-      - This is similar to what you've just read because it also discusses the
-        usage of `npm` packages, focusing this time on the publication and
-        deployment of a JavaScript tool called Picobel, offering insights into
-        modern development workflow that complements the author's earlier delve
-        into `npx` processes.
-    score: 0.7863050597918745
+      - This is similar to what you've just read because it covers the
+        development and use of an innovative open-source tool, like the `npx
+        oblique-strategy` command, provides detailed information on how to
+        implement and customize it, and invites involvement from the online
+        community for its improvement, all of which is hosted on GitHub for easy
+        access.
+    score: 0.7555841241028531
 
 ---
 

@@ -11,38 +11,41 @@ tags:
 categories:
   - general
 related:
-  - relativePath: 2015-08-05-internet-fridge
-    permalink: /internet-fridge/
-    date: 2015-08-05
-    tags: articles
-    categories:
-      - general
-    title: Why doesn’t everyone have an Internet Fridge?
-    excerpt: An internet-connected fridge is the go-to example when trying to
-      explain the Internet Of Things to lay people. So why don't we have them
-      yet? And do we really want them? Or even need them?
-    summary:
-      - This is similar to what you've just read because it goes deeper into
-        challenges and potential benefits of another innovative technology that
-        could potentially change the way we interact with our everyday devices,
-        much like Alexa has.
-    score: 0.8063867715590015
-  - relativePath: 2021-03-31-falling-back-in-love-with-music
-    permalink: /falling-back-in-love-with-music/
-    date: 2021-03-31
+  - relativePath: 2017-05-29-podcasts-recommended-listening
+    permalink: /podcasts-recommended-listening/
+    date: 2017-05-29
     tags:
       - articles
     categories:
-      - audio
-    title: Falling back in love with music
-    excerpt: Ditching web audio in favour of hardware synthesisers
+      - podcasting
+    title: "Recommended Listening: my favourite podcasts"
+    excerpt: Without any constraints of format or time, the best podcasts get to
+      dive deep into topics that wouldn't otherwise get covered.
     summary:
-      - This is similar to what you've just read because it also explores the
-        intersection of technology and music, specifically on how manipulating
-        controls and building custom hardware in modular synthesisers can create
-        unique sounds and provide a satisfying physical experience, akin to the
-        enjoyment of voice-activated music selection through Alexa.
-    score: 0.7907160088386375
+      - This is similar to what you've just read because, like the exploration
+        of Alexa's functionality in the first post, the second post recommends
+        audio-based content, allowing someone interested in the hands-free
+        consumption of media, such as through Alexa, to expand their repertoire
+        with podcast recommendations.
+    score: 0.7754513750636961
+  - relativePath: 2021-09-27-podcasting-equipment
+    permalink: /podcasting-equipment/
+    date: 2021-09-27
+    tags:
+      - articles
+      - featured
+    categories:
+      - podcasting
+    title: "Podcasting: what gear do you need?"
+    excerpt: To record a good podcast you need three essential pieces of equipment
+      and a little bit of skill.
+    summary:
+      - "\"This is similar to what you've just read because it delves into the
+        audio technology domain, which should interest you if you found the
+        in-depth analysis of Alexa's voice control and music playing features
+        compelling and are curious about how high-quality audio is recorded for
+        mediums like podcasts.\""
+    score: 0.7732883137857026
 
 ---
 

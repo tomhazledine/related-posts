@@ -11,23 +11,6 @@ tags:
 categories:
   - podcasting
 related:
-  - relativePath: 2020-04-28-installing-acoustic-panels
-    permalink: /installing-acoustic-panels/
-    date: 2020-04-28
-    tags: articles
-    categories:
-      - podcasting
-      - audio
-    title: Installing acoustic panels
-    excerpt: This week I installed some acoustic panels in my office to improve the
-      sound quality of the podcast.
-    summary:
-      - This is similar to what you've just read because it also emphasizes the
-        importance of quality in podcasting, with practical insight on
-        minimizing room noise via acoustic panels to enhance recording quality,
-        which complements the first post's detailed rundown on the appropriate
-        microphone and recording software.
-    score: 0.8482620647094797
   - relativePath: 2017-05-29-podcasts-recommended-listening
     permalink: /podcasts-recommended-listening/
     date: 2017-05-29
@@ -39,11 +22,31 @@ related:
     excerpt: Without any constraints of format or time, the best podcasts get to
       dive deep into topics that wouldn't otherwise get covered.
     summary:
-      - This is similar to what you've just read because it provides
-        recommendations on podcast shows to listen to, serving as a practical
-        application and extension to the technical information you obtained
-        earlier about podcast equipment and recording techniques.
+      - This is similar to what you've just read because after learning the
+        technical requirements of creating a podcast from the first post, the
+        second post introduces readers to a variety of popular podcasts, which
+        might help inspire their content creation or understand different
+        podcast styles.
     score: 0.8344174016170013
+  - relativePath: 2017-03-22-what-is-a-decibel-anyway
+    permalink: /what-is-a-decibel-anyway/
+    date: 2017-03-22
+    tags:
+      - articles
+      - featured
+      - popular
+    categories:
+      - audio
+    title: What is a decibel, anyway?
+    excerpt: The decibel has always confused me. I did some research, and it turns
+      out the decibel is actually pretty interesting.
+    summary:
+      - This is similar to what you've just read because it offers an in-depth
+        look at the technical aspects of audio mixing and sound engineering,
+        specifically on decibels, which can significantly help improve the sound
+        quality of the podcast that you're setting up, beyond the basic hardware
+        considerations covered in the first post.
+    score: 0.7812240491167968
 
 ---
 

@@ -22,27 +22,27 @@ related:
     excerpt: To record a good podcast you need three essential pieces of equipment
       and a little bit of skill.
     summary:
-      - This is similar to what you've just read because it delves further into
-        the podcasting sphere, which might appeal to tech savvy readers or those
-        considering starting their own podcast after exploring the recommended
-        podcasts in the first article.
+      - This is similar to what you've just read because it delves into the
+        technical aspects of podcasting, offering useful information about
+        equipment and recording techniques, that might be of interest to those
+        who are avid podcast listeners or considering producing a podcast
+        themselves.
     score: 0.8344174016170013
-  - relativePath: 2014-09-09-inspirational-web-people
-    permalink: /inspirational-web-people/
-    date: 2014-09-09
-    tags: articles
+  - relativePath: 2021-01-17-adding-rss
+    permalink: /adding-rss/
+    date: 2021-01-17
+    tags:
+      - articles
     categories:
-      - career
-    title: Inspirational Web People
-    excerpt: Taking time to credit the members of the digital-community that have
-      shaped my career is something I should do more often. Here's a few people
-      I've found personally inspiring.
+      - code
+    title: RSS in 2021 (yes, it's still a thing)
+    excerpt: Adding an RSS feed to an Eleventy site is (mostly) easy peasy.
     summary:
-      - This is similar to what you've just read because it highlights some of
-        the personalities behind leading tech and business podcasts, giving
-        readers a deeper understanding of the creators behind shows mentioned in
-        the listed recommendations.
-    score: 0.821068688709775
+      - This is similar to what you've just read because the author of the
+        second post, being an appreciator of podcasts like the author of the
+        first post, discusses the technology RSS that powers podcast sharing,
+        adding an insightful perspective to the theme of podcast consumption.
+    score: 0.7847551349890058
 
 ---
 

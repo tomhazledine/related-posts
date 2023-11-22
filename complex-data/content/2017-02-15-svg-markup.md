@@ -23,30 +23,31 @@ related:
       of the web, things only get weird when designers and developers start
       adding things.
     summary:
-      - This is similar to what you've just read because it continues the
-        discussion on SVGs, further exploring their use in sprites for better
-        website performance and providing a step-by-step guide on how they can
-        be built and managed, making it a suitable follow-up for those
-        interested in applying SVGs practically.
+      - This is similar to what you've just read because it builds upon the
+        previously discussed SVG knowledge by delving into the practicalities of
+        using and developing SVG icon sprites, including performance benefits
+        and ease of maintenance, which are relevant for web developers and
+        designers.
     score: 0.9008468410708951
-  - relativePath: 2015-05-31-inline-svg-icons
-    permalink: /inline-svg-icons/
-    date: 2015-05-31
-    tags: articles
+  - relativePath: 2021-07-21-line-graphs-with-react-svg-d3
+    permalink: /line-graphs-with-react-svg-d3/
+    date: 2021-07-21
+    tags:
+      - articles
+      - featured
+      - intro
     categories:
+      - audio
       - code
-    title: Getting started with inline SVG icons
-    excerpt: As a typography nerd, using a custom font to serve icons felt really
-      good. However, it turns out inline SVG icons are better in almost every
-      way.
+    title: Line graphs with React and D3.js
+    excerpt: Generating a dynamic SVG visualisation of audio frequency data.
     summary:
-      - This is similar to what you've just read because it provides a practical
-        perspective on the use of SVGs, discussing the author's personal
-        transition from icon fonts to inline SVGs and offers real-world
-        solutions for web optimisation using SVG sprites, which could interest
-        developers who want to explore more about SVG's advantages and how to
-        improve their website performance.
-    score: 0.8894873376523494
+      - This is similar to what you've just read because it further elaborates
+        on the practical application of SVGs in creating dynamic data
+        visualizations using React and D3.js, building upon your understanding
+        of SVGs and providing additional insights into using other developer
+        tools for SVG creation and manipulation.
+    score: 0.807171171245026
 
 ---
 

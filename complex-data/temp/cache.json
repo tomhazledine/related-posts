@@ -1,0 +1,887 @@
+{
+    "2017-02-15-svg-markup": {
+        "relativePath": "2017-02-15-svg-markup",
+        "hash": "9251ce4858ef31fe08601f7a4d6575cc1fa3edf00800334e318ef09e57720851",
+        "summary": "SVGs or Scalable Vector Graphics, complex as they are, hold immense power and potential. They can produce sharper and clearer results as compared to rasterized images like PNGs without requiring different files for each size. Using a single SVG file for all image sizes not only reduces HTTP requests but also the total page weight.\n\nThe language of SVGs, derived from XML, is relatively simple to master once you know what tags to look out for. The structure of SVG markup starts with an opening tag (`<svg>`) and ends with a closing tag (`</svg>`), similar to HTML. The main concept is using tags like `<path/>`, `<circle/>`, and `<rect/>` to build shapes within the SVG.\n\nThe SVGs can also be styled using CSS, offering a fine-grained control over individual parts of an icon. This control extends to transitions, animations, and positioning as well, providing an opportunity for developers to get more creative with their designs. Using CSS animations, a simple loading graphic can be transformed into an appealing and interactive design element. Can you imagine such an advantage with just playing around SVGs and CSS? Don't worry, the only limit appears to be the creativity and imagination of the developers who build them.",
+        "similarities": [
+            {
+                "relativePath": "2017-02-26-inline-svg-icon-sprites",
+                "permalink": "/inline-svg-icon-sprites/",
+                "date": "2017-02-26",
+                "tags": "articles",
+                "categories": [
+                    "code"
+                ],
+                "title": "Inline SVG icon sprites are (still) not scary.",
+                "excerpt": "One of the best things about HTML is that it just works. As with much of the web, things only get weird when designers and developers start adding things.",
+                "summary": [
+                    "This is similar to what you've just read because it builds upon the previously discussed SVG knowledge by delving into the practicalities of using and developing SVG icon sprites, including performance benefits and ease of maintenance, which are relevant for web developers and designers."
+                ],
+                "score": 0.9008468410708951
+            },
+            {
+                "relativePath": "2021-07-21-line-graphs-with-react-svg-d3",
+                "permalink": "/line-graphs-with-react-svg-d3/",
+                "date": "2021-07-21",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Line graphs with React and D3.js",
+                "excerpt": "Generating a dynamic SVG visualisation of audio frequency data.",
+                "summary": [
+                    "This is similar to what you've just read because it further elaborates on the practical application of SVGs in creating dynamic data visualizations using React and D3.js, building upon your understanding of SVGs and providing additional insights into using other developer tools for SVG creation and manipulation."
+                ],
+                "score": 0.807171171245026
+            }
+        ]
+    },
+    "2017-02-26-inline-svg-icon-sprites": {
+        "relativePath": "2017-02-26-inline-svg-icon-sprites",
+        "hash": "431bf52c37d7f49984079647ffdce92b1f05a4c7fcf229c95d496c12f865a2a5",
+        "summary": "The blog discusses the use and benefits of SVG icon sprites on websites. Using SVG icon sprites, large companies and development communities, like Lonely Planet, GitHub, and CodePen, have reaped benefits due to their ease of use and lesser file sizes in comparison to raster formats (JPG & PNG). The author gives step-by-step instructions of using SVG sprites by group blocking the icon code in one file for later use and referencing it whenever necessary.\n\nThe author goes into detail explaining the process of building SVG sprite using Gulp, a task runner, automating the sprite creation process which can sometimes be tasking for developers. Once configured, new icons can easily be added into the mix by simply running `gulp svg`.\n\nExtra SVG icons can also be easily included by selectively copying the markup from cleaned-up SVG files. The author finally concludes the post by stating the usefulness of using SVG icon sprites in creating a better performance and scalability for the website's icon system. Despite the complexity, maintaining it with a sensible workflow and toolset make SVG icon sprites a preferred choice.",
+        "similarities": [
+            {
+                "relativePath": "2017-02-15-svg-markup",
+                "permalink": "/svg-markup/",
+                "date": "2017-02-15",
+                "tags": [
+                    "articles",
+                    "popular"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Getting to grips with SVG markup",
+                "excerpt": "SVGs are complex, for sure, but that very complexity gives them their power. And we don't need to know the intricacies of the co-ordinate system to harness that power.",
+                "summary": [
+                    "This is similar to what you've just read because it further explores SVGs, digging into the specific XML derived language and how the application of CSS can deliver high-quality, responsive designs, while still echoing the theme of performance and scalability benefits of SVGs over rasterized images."
+                ],
+                "score": 0.9008468410708951
+            },
+            {
+                "relativePath": "2017-04-19-comic-sans-april-fool-disaster",
+                "permalink": "/comic-sans-april-fool-disaster/",
+                "date": "2017-04-19",
+                "tags": "articles",
+                "categories": [
+                    "typography"
+                ],
+                "title": "I changed my site's font to Comic Sans as an April Fool. It was a disaster.",
+                "excerpt": "I often hear that \"good design\" works in all situations, no matter what typeface you wrap it in. The reality is a little more nuanced.",
+                "summary": [
+                    "This is similar to what you've just read because it also explores the practical aspects of web design, in this case, typography and understanding the importance of 'web-safe' fonts, which could be useful for a developer keen on enhancing their website's user experience."
+                ],
+                "score": 0.8255815874342775
+            }
+        ]
+    },
+    "2017-03-22-what-is-a-decibel-anyway": {
+        "relativePath": "2017-03-22-what-is-a-decibel-anyway",
+        "hash": "67a9ac9116be33255173788ce769e036c500148303b5f6cb7b923f1c0dae2796",
+        "summary": "The post provides a comprehensive explanation on the function of decibels in the context of professional audio mixing and sound engineering. It clears up the initial confusion regarding the value \"0\" often used to refer to loudness in some contexts, while at the same time it can mean silence in other instances. It gives an extensive look into what decibels are, highlighting their function as relative units that help express ratios, properly and efficiently communicate very large or tiny differences, and quantify sound intensity and/or pressure. \n\nThe article further delves into specifics by discussing units like dBFS (decibel full scale) which measures sound relative to the maximum possible level that can be produced by audio equipment. In the mixing context, dBFS measures how much sound is produced below the equipment's maximum volume capacity. The author interestingly incorporates their own practical experience in using decibels, giving the discussion a personal touch. The concluding statements are an update offering further insights from fellow professionals responding to the post, which brought up points on how the sound medium and digital versus analogue audio can influence the definition and utilization of decibels.",
+        "similarities": [
+            {
+                "relativePath": "2020-12-30-web-audio-delay",
+                "permalink": "/web-audio-delay/",
+                "date": "2020-12-30",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Building a delay effect with the Web Audio API",
+                "excerpt": "An introduction to the power of JavaScript's Web Audio API",
+                "summary": [
+                    "This is similar to what you've just read because it continues the topic of sound manipulation and engineering, but from a more hands-on, technical perspective, discussing how to create, manipulate, and enhance sound using JavaScript's Web Audio API, a topic potentially interesting to those fascinated by audio mixing and audio technology."
+                ],
+                "score": 0.8118183831639654
+            },
+            {
+                "relativePath": "2021-07-21-line-graphs-with-react-svg-d3",
+                "permalink": "/line-graphs-with-react-svg-d3/",
+                "date": "2021-07-21",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Line graphs with React and D3.js",
+                "excerpt": "Generating a dynamic SVG visualisation of audio frequency data.",
+                "summary": [
+                    "\"This is similar to what you've just read because it further expands on the world of audio engineering, such as visualizations, by providing practical steps and insights into creating frequency graphs using programming languages, which could be another useful skillset for sound professionals to add to their portfolio.\""
+                ],
+                "score": 0.784514981160963
+            }
+        ]
+    },
+    "2017-03-31-echo-alexa-voice-interface-problems": {
+        "relativePath": "2017-03-31-echo-alexa-voice-interface-problems",
+        "hash": "763662584b8bb31063df1a9c7bbc619b1f89c7d636ce4be89849c185cd36bbeb",
+        "summary": "Alexa, the Amazon Echo's virtual assistant, represents a significant breakthrough in voice-activated interfaces, but six months of hands-on experience has revealed certain limitations. Alexa's lack of precision in understanding voice commands and the inability to browse options as effectively as text-based searching are drawbacks. Additionally, the slight awkwardness of speaking out loud to a device, the lack of discreetness in a public setting, and the inability to distinguish between different voices can present problems. Furthermore, the risk of unauthorized access and absence of security protocols are concerning, as it allows others, including TV ads, to manipulate the device.\n\nDespite these issues, the convenience of Alexa greatly outweighs those disadvantages. The most appealing aspect of Alexa is the ability to interact with it in a natural, intuitive manner, particularly for functions such as playing music. Once the quirks of Alexa's individual user's music preferences are learned, the practicality of this feature becomes apparent. The \"always-on\" state of the device allows immediate interaction without the need to log in or boot up, providing a user experience that is quite appealing. But while Alexa is impressive for fetching trivia answers or scheduling reminders, music selection remains the standout application of this voice-activated virtual assistant.",
+        "similarities": [
+            {
+                "relativePath": "2017-05-29-podcasts-recommended-listening",
+                "permalink": "/podcasts-recommended-listening/",
+                "date": "2017-05-29",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "podcasting"
+                ],
+                "title": "Recommended Listening: my favourite podcasts",
+                "excerpt": "Without any constraints of format or time, the best podcasts get to dive deep into topics that wouldn't otherwise get covered.",
+                "summary": [
+                    "This is similar to what you've just read because, like the exploration of Alexa's functionality in the first post, the second post recommends audio-based content, allowing someone interested in the hands-free consumption of media, such as through Alexa, to expand their repertoire with podcast recommendations."
+                ],
+                "score": 0.7754513750636961
+            },
+            {
+                "relativePath": "2021-09-27-podcasting-equipment",
+                "permalink": "/podcasting-equipment/",
+                "date": "2021-09-27",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "podcasting"
+                ],
+                "title": "Podcasting: what gear do you need?",
+                "excerpt": "To record a good podcast you need three essential pieces of equipment and a little bit of skill.",
+                "summary": [
+                    "\"This is similar to what you've just read because it delves into the audio technology domain, which should interest you if you found the in-depth analysis of Alexa's voice control and music playing features compelling and are curious about how high-quality audio is recorded for mediums like podcasts.\""
+                ],
+                "score": 0.7732883137857026
+            }
+        ]
+    },
+    "2017-04-19-comic-sans-april-fool-disaster": {
+        "relativePath": "2017-04-19-comic-sans-april-fool-disaster",
+        "hash": "e59ed7fa11456dd7fe65134dada2c1c7a3c3af7431b69e9164502044493f3680",
+        "summary": "In a playful take on humour through typography, I decided to change the font of my website to Comic Sans for April Fool's Day. As a seasoned typographer, I've been through the five stages of Comic Sans acceptance, so I thought it was about time to bring this love-hate relationship to new heights by featuring it on my website. With a few simple coding adjustments, I was able to make this change without much hassle. However, what I initially thought as a quick and funny prank turned out to be an enlightening experience about the realities of web design.\n\nMy Comic Sans prank not only amused me and some of my visitors, but it also taught me about the so-called \"web safe\" fonts. The prank totally failed on iOS, proving that what I assumed were 'web-safe' fonts can be quite the opposite in today's multi-device internet browsing habits. Apple, understandably, were not interested in bundling Comic Sans into their mobile operating system, rendering my prank virtually invisible on their devices.\n\nAnother lesson learnt was regarding the myth that good design should work with any typeface. In practice, it was indeed true that my designs remained functional when switched to Comic Sans, making for some office humour. However, the experience made me realise that a typeface has a crucial influence in setting the tone of the content, especially on sites that are predominantly text-based. So, while a design might technically work with various typefaces, it's definitely not a 'one size fits all' scenario.\n\nIn conclusion, my impromptu April Fool’s Day mischief resulted in a whole new perspective on web design, fonts and user experiences. Embrace the curveballs web design throws at you, and remember, a little bit of Comic Sans mischief can occasionally be a refreshing change!",
+        "similarities": [
+            {
+                "relativePath": "2017-02-26-inline-svg-icon-sprites",
+                "permalink": "/inline-svg-icon-sprites/",
+                "date": "2017-02-26",
+                "tags": "articles",
+                "categories": [
+                    "code"
+                ],
+                "title": "Inline SVG icon sprites are (still) not scary.",
+                "excerpt": "One of the best things about HTML is that it just works. As with much of the web, things only get weird when designers and developers start adding things.",
+                "summary": [
+                    "This is similar to what you've just read because it also covers the practical aspects of web design, focusing on the use and benefits of SVG icon sprites and could further expand your understanding on creating efficient and effective web interfaces."
+                ],
+                "score": 0.8255815874342775
+            },
+            {
+                "relativePath": "2020-01-07-eleventy-static-site-generator",
+                "permalink": "/eleventy-static-site-generator/",
+                "date": "2020-01-07",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "popular"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Static site generators: Hugo vs Jekyll vs Gatsby vs 11ty",
+                "excerpt": "I have an obsession with SSGs, and Eleventy is my favourite (even better than Hugo, Jekyll, and Gatsby).",
+                "summary": [
+                    "This is similar to what you've just read because it demonstrates another aspect of web design, particularly focusing on the practical use and experience of various static site generators which could provide valuable insights for anyone interested in web development, similar to how the comic sans prank did in the first post."
+                ],
+                "score": 0.8028602599268063
+            }
+        ]
+    },
+    "2017-04-30-picobel-js-css-audio-player": {
+        "relativePath": "2017-04-30-picobel-js-css-audio-player",
+        "hash": "bf50e676cf4d138f8bf504d9a28f7c95dc861ac140e253222a38a2bef6fcbad1",
+        "summary": "Announcing Picobel.js, a first-of-its-kind open source project. It's a lightweight Javascript tool that adds a much-needed touch of style to on-site audio players. The inspiration to create this particular tool stemmed from my indepth exploration of CSS, as part of my music review blog. My endeavors to creatively express through styling was always stunted when it came to audio elements. Picobel.js was born out of this frustration and effectively bypasses the handicap of the native HTML5 audio player. Bye, bye shadow DOM inconsistencies!\n\nBy simply converting audio tags into styleable markup, Picobel.js paves way for personal customization and also comes with \"out of the box\" themes for those among you who aren't particularly CSS-savvy. The ease of use is the major highlight and it can be readily moulded to fit any workflow, making it highly user-friendly. Despite being a debutant in the open-source world, the Github repo is replete with detailed documentation as well as installation guides, pre-made theme showcases, an official open-source license and even a build-status widget! As of now, the only gaps in the program's functionality are edge-cases and failure states, likely to be addressed in the next version. Take part in beta testing and help turn it into a polished, finished product!",
+        "similarities": [
+            {
+                "relativePath": "2020-12-30-web-audio-delay",
+                "permalink": "/web-audio-delay/",
+                "date": "2020-12-30",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Building a delay effect with the Web Audio API",
+                "excerpt": "An introduction to the power of JavaScript's Web Audio API",
+                "summary": [
+                    "This is similar to what you've just read because it also deals with the manipulation of audio on the web using JavaScript, but rather than focusing on styling, it dives into creating and manipulating sounds directly, which may be of interest if you want to further develop your web audio capabilities."
+                ],
+                "score": 0.8177637952663595
+            },
+            {
+                "relativePath": "2020-11-19-dark-mode",
+                "permalink": "/dark-mode/",
+                "date": "2020-11-19",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Dark mode: hard mode",
+                "excerpt": "Implementing dark mode with CSS custom properties, SASS, and JavaScript",
+                "summary": [
+                    "This is similar to what you've just read because it dives deeper into CSS and JavaScript application to style user interface elements and enhance the user experience, something you might be interested having used or considering to use the Picobel.js tool for styling audio elements."
+                ],
+                "score": 0.7972078800012027
+            }
+        ]
+    },
+    "2017-05-29-podcasts-recommended-listening": {
+        "relativePath": "2017-05-29-podcasts-recommended-listening",
+        "hash": "8ef5da672e6452fc90d44454f6b19abc012c1b35a411889341952a6284da2855",
+        "summary": "If you're an ardent podcast listener or seeking to explore this fascinating world,  you may relish the recommendations in this post. A committed podcast listener for several years now, the author avidly consumes at least a couple of hours of podcasts daily during his long commutes. Bingeing on polished podcasts such as those from NPR and Gimlet Media, he adores the more unstructured presentations. By not adhering to any set format or time constraints, these empirically delve into topics getting less attention.\n\nThe author's favourites range from tech to business and general interest podcasts. For tech podcasts, the preferences include 'Shop talk Show', 'ATP', 'CodePen Radio', 'a16z', and 'The Creative Coding Podcast'. These cover the spectrum from front-end web development to the intricate workings of silicon valley. The author's inclination for startup and business podcasts include 'Startup', 'The Tim Ferriss Show', 'Planet Money', and 'Boagworld' that give insights on starting a business, life-hacking, economics, and running a web business. General interest podcasts like 'Reply All', 'More or Less', 'To The F'ing Future', 'Song Exploder', and 'In Our Time' offer an eclectic mix that ranges from interesting news stories to a behind-the-scenes look at song composition. \n\nRegardless of whether you're a podcast novice or veteran, this curated list is sure to act as your guide to a riveting aural journey filled with a treasure trove of insights. Be sure to explore these, you might find some new favourites.",
+        "similarities": [
+            {
+                "relativePath": "2021-09-27-podcasting-equipment",
+                "permalink": "/podcasting-equipment/",
+                "date": "2021-09-27",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "podcasting"
+                ],
+                "title": "Podcasting: what gear do you need?",
+                "excerpt": "To record a good podcast you need three essential pieces of equipment and a little bit of skill.",
+                "summary": [
+                    "This is similar to what you've just read because it delves into the technical aspects of podcasting, offering useful information about equipment and recording techniques, that might be of interest to those who are avid podcast listeners or considering producing a podcast themselves."
+                ],
+                "score": 0.8344174016170013
+            },
+            {
+                "relativePath": "2021-01-17-adding-rss",
+                "permalink": "/adding-rss/",
+                "date": "2021-01-17",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "RSS in 2021 (yes, it's still a thing)",
+                "excerpt": "Adding an RSS feed to an Eleventy site is (mostly) easy peasy.",
+                "summary": [
+                    "This is similar to what you've just read because the author of the second post, being an appreciator of podcasts like the author of the first post, discusses the technology RSS that powers podcast sharing, adding an insightful perspective to the theme of podcast consumption."
+                ],
+                "score": 0.7847551349890058
+            }
+        ]
+    },
+    "2020-01-07-eleventy-static-site-generator": {
+        "relativePath": "2020-01-07-eleventy-static-site-generator",
+        "hash": "620992fe1a992a30c8d7c3b4f6599431bcba5e9fa7266fc9462610773f83c01c",
+        "summary": "The blog post expresses an obsession with static site generators (SSGs), which convert simple markdown files into a highly efficient website. The post comprises the tale of a journey to find the perfect SSG, starting with WordPress, moving to HTML, onto Jekyll, then Gatsby and Hugo, and ultimately landing on [Eleventy](https://www.11ty.dev/) as the firm favorite. \n\nWordPress proves not to be the performance bottleneck it's often made out to be, but the author experiences friction with the WP dashboard due to its lack of customization. Vanilla HTML, though intellectually stimulating, quickly becomes unwieldy with the addition of more pages. Jekyll is a relief compared to WordPress and HTML, but becomes a little too Ruby-focused in the long run, and the love affair cools off. Gatsby introduces the React-single page application alongside the benefits of statically generated sites, but the complexities of GraphQL turn off the author. Hugo holds its own due to its GoLang feature, but in the end, gives way to Eleventy. \n\nEleventy, written in JavaScript and combining the best of Hugo and Jekyll, emerges as the favorite. It offers the ability to keep things simple and intuitive, and fits neatly into the existing workflow automation. Pagination and simulation of different post types may still cause issues, but the opportunity to contribute to its development is a tempting prospect. The author may be lured away by a newer, shinier SSG in the future, but for now, Eleventy does everything needed and continues to stay out of the way of their workflow.\n",
+        "similarities": [
+            {
+                "relativePath": "2021-01-17-adding-rss",
+                "permalink": "/adding-rss/",
+                "date": "2021-01-17",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "RSS in 2021 (yes, it's still a thing)",
+                "excerpt": "Adding an RSS feed to an Eleventy site is (mostly) easy peasy.",
+                "summary": [
+                    "This is similar to what you've just read because it expands on the use of Eleventy, one of the static site generators discussed in the first post, more specifically on how to use it to add an RSS feed to a blog."
+                ],
+                "score": 0.8237468720779031
+            },
+            {
+                "relativePath": "2017-02-26-inline-svg-icon-sprites",
+                "permalink": "/inline-svg-icon-sprites/",
+                "date": "2017-02-26",
+                "tags": "articles",
+                "categories": [
+                    "code"
+                ],
+                "title": "Inline SVG icon sprites are (still) not scary.",
+                "excerpt": "One of the best things about HTML is that it just works. As with much of the web, things only get weird when designers and developers start adding things.",
+                "summary": [
+                    "\"This is similar to what you've just read because it also focuses on the optimization of website development, offering practical solutions and walkthroughs, now focusing on SVG icon sprites and their automated creation with a task runner (Gulp), which could be included in the efficient workflow that the first post's author praises in Eleventy.\""
+                ],
+                "score": 0.8101215292263658
+            }
+        ]
+    },
+    "2020-02-17-twitter-cards-with-nunjucks-and-eleventy": {
+        "relativePath": "2020-02-17-twitter-cards-with-nunjucks-and-eleventy",
+        "hash": "2279057761049689b206f29dbfea7b34a1eaf6b204b78c9cd34d9578a5d05163",
+        "summary": "Creating captivating Twitter Cards with Nunjucks and 11ty can be a game-changer for your website or blog. When you share your webpage URL on Twitter, Twitter Cards convert your simple text link into a rich card featuring a catchy image and structured title along with description data. This gives your shared links a much more appealing look. \n\nHowever, this charming feature is not universally applicable to all links. The webpage you're linking to needs to house some Twitter-specific metadata within its 'head.' The post explains how to create this metadata using  [Eleventy](https://www.11ty.dev/) and the [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. The master layout file needs to include metadata, which must accommodate a few various scenarios, such as pages without an image and the switch of a card's 'type.'\n\nAlthough it might take some trials to achieve perfect image loading, the effort is worth it. Furthermore, resources like the Twitter [Card validator](https://cards-dev.twitter.com/validator) tool allow you to test and debug without having to spam followers with tweets packed with broken links.",
+        "similarities": [
+            {
+                "relativePath": "2021-01-17-adding-rss",
+                "permalink": "/adding-rss/",
+                "date": "2021-01-17",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "RSS in 2021 (yes, it's still a thing)",
+                "excerpt": "Adding an RSS feed to an Eleventy site is (mostly) easy peasy.",
+                "summary": [
+                    "This is similar to what you've just read because it also details the application of a specific feature using the Eleventy tool, in this case, integrating RSS feeds into a personal blog for optimized content sharing and delivery."
+                ],
+                "score": 0.8166670078294536
+            },
+            {
+                "relativePath": "2020-01-07-eleventy-static-site-generator",
+                "permalink": "/eleventy-static-site-generator/",
+                "date": "2020-01-07",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "popular"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Static site generators: Hugo vs Jekyll vs Gatsby vs 11ty",
+                "excerpt": "I have an obsession with SSGs, and Eleventy is my favourite (even better than Hugo, Jekyll, and Gatsby).",
+                "summary": [
+                    "This is similar to what you've just read because it further explores the functionalities of Eleventy, an aspect that was touched on in the first post, and it details the author's journey and reasoning for selecting Eleventy as their preferred static site generator."
+                ],
+                "score": 0.8036363418916375
+            }
+        ]
+    },
+    "2020-04-09-css-naked-day": {
+        "relativePath": "2020-04-09-css-naked-day",
+        "hash": "1b0a464c657f2b52ce86d7ec6411dc8ef35ef92baf1b765d818aca8dee4396e3",
+        "summary": "In this blog post, I celebrate CSS Naked Day, a one-time annual event that honors clean and clear markup. As a web developer who firmly supported the advent of Web 2.0, I am in favour of supporting semantic markup. I have previously shared my views on how HTML does not require much styling to be fully functional. So, it brings me great joy to share the fact that today, the 9th of April, is officially recognized as CSS Naked Day.\n\nNow, if you're reading this on the very day, you'll notice my whole site without any CSS. However, if you browse this on any other day, you'll find only this page unstyled. This exercise, though fun, is aimed at making a serious point. A significant number of people interact with the web using simple markup via screen readers, automated delivery mechanisms like web scrappers, and RSS feeds. Therefore, how we structure our documents becomes highly crucial. This essentially underlines my commitment towards promoting more accessible and inclusive web practices, ensuring a seamless experience for all.",
+        "similarities": [
+            {
+                "relativePath": "2017-04-19-comic-sans-april-fool-disaster",
+                "permalink": "/comic-sans-april-fool-disaster/",
+                "date": "2017-04-19",
+                "tags": "articles",
+                "categories": [
+                    "typography"
+                ],
+                "title": "I changed my site's font to Comic Sans as an April Fool. It was a disaster.",
+                "excerpt": "I often hear that \"good design\" works in all situations, no matter what typeface you wrap it in. The reality is a little more nuanced.",
+                "summary": [
+                    "This is similar to what you've just read because both posts examine the impacts of front-end elements like CSS and web fonts on user experience, and highlight how changing these aspects can result in significant insights into web design practices."
+                ],
+                "score": 0.7869876232802168
+            },
+            {
+                "relativePath": "2020-11-19-dark-mode",
+                "permalink": "/dark-mode/",
+                "date": "2020-11-19",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Dark mode: hard mode",
+                "excerpt": "Implementing dark mode with CSS custom properties, SASS, and JavaScript",
+                "summary": [
+                    "\"This is similar to what you've just read because it continues the discussion on web design strategies, specifically focusing on the utilization of CSS and JavaScript to enhance user experiences such as implementing a dark mode theme, which complements the first post's emphasis on accessible and inclusive web practices.\""
+                ],
+                "score": 0.7811050281000997
+            }
+        ]
+    },
+    "2020-11-19-dark-mode": {
+        "relativePath": "2020-11-19-dark-mode",
+        "hash": "a00490cdff92338a098c62bcdc8956871220e8de0ce683c73bc973b50c140fd0",
+        "summary": "The post explores implementing a dark mode theme in the context of a web blog using CSS custom properties, SASS, and JavaScript. Initially driven by sibling rivalry, the author explores three main areas required to successfully implement this feature: the basics, removable themes with CSS custom properties, and toggling dark-mode without changing a system-wide preference.\n\nFor the basics, the author uses the `prefers-color-scheme` media query and provides a brief explanation and example of how it can be used to apply a dark mode theme. Then the post delves into defining dynamic themes with CSS custom properties, which are native CSS variables with the ability to change value depending on their context. The author explains how utilizing native CSS custom properties lets you dynamically adjust themes but also outlines some of the challenges encountered, especially when it comes to using custom properties alongside SASS.\n\nThe final section handles live switching, i.e., allowing users to toggle dark-mode without having to change a system-wide preference. This is achieved using JavaScript to dynamically modify a data attribute on the root of the webpage and storing the user's preference in localStorage. Finally, a UI element, in this case a button, that allows users to toggle between the different modes is introduced. Completed with a callback to his brother's page, the author finishes his blog post by reflecting on the experience, concluding that he managed to establish dark-mode quite successfully on his site.",
+        "similarities": [
+            {
+                "relativePath": "2017-04-30-picobel-js-css-audio-player",
+                "permalink": "/picobel-js-css-audio-player/",
+                "date": "2017-04-30",
+                "tags": "articles",
+                "categories": [
+                    "audio"
+                ],
+                "title": "Introducing Picobel.js - an audio player you can style with css",
+                "excerpt": "Picobel.js is a lightweight dependency-free Javascript tool that converts html audio tags into styleable markup.",
+                "summary": [
+                    "This is similar to what you've just read because it further explores the customization and dynamic modification of web elements using JavaScript, and might intrigue you if you're interested in seeing JavaScript used for aesthetic changes beyond colour scheme."
+                ],
+                "score": 0.7972078800012027
+            },
+            {
+                "relativePath": "2017-04-19-comic-sans-april-fool-disaster",
+                "permalink": "/comic-sans-april-fool-disaster/",
+                "date": "2017-04-19",
+                "tags": "articles",
+                "categories": [
+                    "typography"
+                ],
+                "title": "I changed my site's font to Comic Sans as an April Fool. It was a disaster.",
+                "excerpt": "I often hear that \"good design\" works in all situations, no matter what typeface you wrap it in. The reality is a little more nuanced.",
+                "summary": [
+                    "This is similar to what you've just read because it also explores manipulating website aesthetics using coding adjustments and reflects on the importance of considering different user contexts and experiences in web design."
+                ],
+                "score": 0.794705603329466
+            }
+        ]
+    },
+    "2020-12-30-web-audio-delay": {
+        "relativePath": "2020-12-30-web-audio-delay",
+        "hash": "c38a5d10628c4e259b84f6013eb371ff3fc8b0225a4c9161365be07d5e20fd8c",
+        "summary": "In this blog post, we walk through replicating a delay pedal using JavaScript's Web Audio API. After initiatiing an audio context to connect with the browser's audio capabilities, we go into creating an analogue _signal path_ using an oscillator and a gain node. Throughout the process, we ensure the functionality works on multiple browser types.\n\nOur sound’s initial stop and start functions feel jarring, so we utilise a gain node to soften this. We later create random pitches for our sound to enhance its musical feeling. These pitches use an array of note values, creating a melody within the C major scale.\n\nDuplication of notes gives our sound a more 'full' feeling. However, instead of duplicating it entirely, we transpose the second sound to be seven steps higher - creating a more harmonious combination. Then, we introduce an effects unit in our signal path right between the instrument and the mixer. This unit takes the signal, modifies it, and sends it back to the mixer alongside the original signal. \n\nThough it works, this merely creates a single delay. We thereafter introduce the idea of feedback, a principle of feeding back a fraction of the delayed signal back into the delay module. This achieves an audible delay creating fuller, more dynamic effects. Finally, we enable interaction through HTML range elements, allowing tweaking of delay duration and feedback level for diverse sounds.\n\nThis post showcases the broad capabilities of the browser's audio context, opening the door to endless creativity. Feel free to use this information for your own sound experiments and don't hesitate to share your creations!",
+        "similarities": [
+            {
+                "relativePath": "2021-07-21-line-graphs-with-react-svg-d3",
+                "permalink": "/line-graphs-with-react-svg-d3/",
+                "date": "2021-07-21",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Line graphs with React and D3.js",
+                "excerpt": "Generating a dynamic SVG visualisation of audio frequency data.",
+                "summary": [
+                    "This is similar to what you've just read because both posts explore the use of JavaScript libraries and APIs (Web Audio API in the first, React and D3.js in the second) for interactive, real-time media manipulation and visualization, which could be of interest if you want to further enhance your audio creations with visual elements."
+                ],
+                "score": 0.851308140652179
+            },
+            {
+                "relativePath": "2017-04-30-picobel-js-css-audio-player",
+                "permalink": "/picobel-js-css-audio-player/",
+                "date": "2017-04-30",
+                "tags": "articles",
+                "categories": [
+                    "audio"
+                ],
+                "title": "Introducing Picobel.js - an audio player you can style with css",
+                "excerpt": "Picobel.js is a lightweight dependency-free Javascript tool that converts html audio tags into styleable markup.",
+                "summary": [
+                    "This is similar to what you've just read because it explores another aspect of JavaScript usage in audio, this time focusing on how to enhance the aesthetics of on-site audio players with a lightweight tool, which like the first post, touches on the broader goal of creatively exploiting browser's capabilities for sound."
+                ],
+                "score": 0.8177637952663595
+            }
+        ]
+    },
+    "2021-01-17-adding-rss": {
+        "relativePath": "2021-01-17-adding-rss",
+        "hash": "dc06135a5e8d15a6076aafb065438d45c3a84752610815ccf2986469a52318f7",
+        "summary": "In this blog post, I explore the relevance of RSS (Rich Site Summary) in 2021 by sharing my fondness for the medium and how I integrated it into my personal blog. I am an avid fan of RSS for a couple of reasons. Firstly, it is the underlying tech that propels podcasts sharing, a platform I believe is one of the biggest lifetime contributions to knowledge sharing and distribution. I equally cherish RSS because it provides a direct delivery channel for me to stay updated with content from authors/bloggers I follow. Interestingly, the simplicity of RSS lies in its ability to facilitate content delivery devoid of algorithmic interferences and intrusive ads. \n\nRecently, I added an RSS feed to my blog and described the process in this post. Firstly, I created a 'feed.xml' page in my content directory with Eleventy. After this, I worked on the template structure for my feed, factoring in the need to validate the XML document to meet the standard. I ensured to cater for any unique situations that might affect my content delivery through RSS, in case they are not compatible. In the end, I simply validated my feed, tested it through my local host and published it live on my site. If you're a fan of RSS like me, you can now enjoy my content straight from your reader.\n",
+        "similarities": [
+            {
+                "relativePath": "2020-01-07-eleventy-static-site-generator",
+                "permalink": "/eleventy-static-site-generator/",
+                "date": "2020-01-07",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "popular"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Static site generators: Hugo vs Jekyll vs Gatsby vs 11ty",
+                "excerpt": "I have an obsession with SSGs, and Eleventy is my favourite (even better than Hugo, Jekyll, and Gatsby).",
+                "summary": [
+                    "This is similar to what you've just read because it delves deeper into Eleventy, a tool used by the author in the first post to integrate RSS into their blog, and offers an exploration of static site generators, which might interest anyone seeking to streamline their content delivery or enhance their blogging setup."
+                ],
+                "score": 0.8237468720779031
+            },
+            {
+                "relativePath": "2020-02-17-twitter-cards-with-nunjucks-and-eleventy",
+                "permalink": "/twitter-cards-with-nunjucks-and-eleventy/",
+                "date": "2020-02-17",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Twitter Cards with Nunjucks and 11ty",
+                "excerpt": "Using cards makes sharing your content on Twitter look much nicer.",
+                "summary": [
+                    "This is similar to what you've just read because it also discusses further enhancement of a blog by enriching shared content on social media platforms, specifically Twitter, using Eleventy and Nunjucks, which may appeal to those interested in utilizing different avenues and tech tools for optimal content distribution and display."
+                ],
+                "score": 0.8166670078294536
+            }
+        ]
+    },
+    "2021-07-21-line-graphs-with-react-svg-d3": {
+        "relativePath": "2021-07-21-line-graphs-with-react-svg-d3",
+        "hash": "60d07b6e16f4dde8160dca9205bb1b8b308eab1d46f9f5761a89aae4f5f1bc06",
+        "summary": "This blog post presents a detailed guide on how to create line graphs using React and D3.js. It demystifies the process of generating an SVG visualization of audio frequency data, building on the principles learned from using the Web Audio API. The primary tools employed in the creation of graphs include SVG, React, and D3.js.\n\nFundamentally, the process hinges on using React to create an SVG that updates when data changes. D3.js is employed primarily to make calculations easier. The tutorial delves into key steps involved in creating the graph. It begins with data parsing, converting an array of numbers into an object. The blog then guides on how to integrate the parsed data into a React component to draw the graph. It rounds off the basics with using D3.js to map the data to visual domain.\n\nTo make it dynamic, the blog proposes the use of React and a `useEffect` hook, where data is constantly monitored and updated. There's also a section that contrasts the simplified version of the graph explained with the original demo and highlights key differences, including the choice of scale, the addition of tick marks, and labels for the axes. The article concludes with core ideas to be used in your own work, that is, using comfortable tools sometimes supplemented with something new for ease, and the usefulness of SVG and React in creating data visualizations. However, it cautions on the complexities of D3.js and recommends its minimalistic usage.",
+        "similarities": [
+            {
+                "relativePath": "2020-12-30-web-audio-delay",
+                "permalink": "/web-audio-delay/",
+                "date": "2020-12-30",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Building a delay effect with the Web Audio API",
+                "excerpt": "An introduction to the power of JavaScript's Web Audio API",
+                "summary": [
+                    "This is similar to what you've just read because it also involves creative use of JavaScript and web APIs to create interactive, dynamic, and visually engaging elements, but this time focused on audio functionality rather than data visualization."
+                ],
+                "score": 0.8514342898798005
+            },
+            {
+                "relativePath": "2023-09-30-improving-svg-chart-interactivity-with-voronoi-diagrams",
+                "permalink": "/improving-svg-chart-interactivity-with-voronoi-diagrams/",
+                "date": "2023-09-30",
+                "tags": [
+                    "articles",
+                    "intro"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Improving SVG chart interactivity with Voronoi diagrams",
+                "excerpt": "How I used Delaunay triangulation and Voronoi diagrams to fix hover issues in my SVG charts (with React and D3.js).",
+                "summary": [
+                    "This is similar to what you've just read because it also details applications of D3.js and SVG in building interactive data visualizations, focusing on the use of Voronoi diagrams to improve the usability of scatter plots."
+                ],
+                "score": 0.8383405984602779
+            }
+        ]
+    },
+    "2021-09-27-podcasting-equipment": {
+        "relativePath": "2021-09-27-podcasting-equipment",
+        "hash": "eecc890cc1b09be0d2147c743c5ee06fb04d9c69b073e139e65a8ad3769aab52",
+        "summary": "In the planning of a new podcast, I have compiled and shared some \"Podcast Equipment 101\" tips for newbies in the game. To record a decent podcast, you need a good microphone, a connection between your mic and the computer, and recording software. \n\nThe quality difference between a cheap dedicated microphone and basic methods such as earbuds is significant. Good podcasting mics include dynamic mics, condenser mics, and lavalier mics. Connections come into play when connecting your mic to the computer to record. This typically involves an XLR cable running from the mic to an audio interface that connects to the computer via USB. Some podcast-focused mics can directly connect to the computer via USB, negating the need for an audio interface.\n\nWhen it comes to software, many options exist depending upon your role in the podcast. If editing, a full Digital Audio Workstation (DAW) is necessary, but if you are only a host or guest, all you need is simple software capturing your microphone's audio. \n\nIn sum, if you are not editing, a decent USB microphone is enough, but if you want top-notch quality, an SM7B mic with requisite addons like a Cloudlifter preamp, an XLR cable, and the Scarlett Solo audio interface is the best bet. And, if you are the editor, Logic Pro is the recommended DAW to invest in. Remember that your recording technique is as important as your equipment. Always use headphones, keep the mic close to mouth, reduce noise, minimize flat reflective surfaces while recording, and control the surface directly behind the mic.\n",
+        "similarities": [
+            {
+                "relativePath": "2017-05-29-podcasts-recommended-listening",
+                "permalink": "/podcasts-recommended-listening/",
+                "date": "2017-05-29",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "podcasting"
+                ],
+                "title": "Recommended Listening: my favourite podcasts",
+                "excerpt": "Without any constraints of format or time, the best podcasts get to dive deep into topics that wouldn't otherwise get covered.",
+                "summary": [
+                    "This is similar to what you've just read because after learning the technical requirements of creating a podcast from the first post, the second post introduces readers to a variety of popular podcasts, which might help inspire their content creation or understand different podcast styles."
+                ],
+                "score": 0.8344174016170013
+            },
+            {
+                "relativePath": "2017-03-22-what-is-a-decibel-anyway",
+                "permalink": "/what-is-a-decibel-anyway/",
+                "date": "2017-03-22",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "popular"
+                ],
+                "categories": [
+                    "audio"
+                ],
+                "title": "What is a decibel, anyway?",
+                "excerpt": "The decibel has always confused me. I did some research, and it turns out the decibel is actually pretty interesting.",
+                "summary": [
+                    "This is similar to what you've just read because it offers an in-depth look at the technical aspects of audio mixing and sound engineering, specifically on decibels, which can significantly help improve the sound quality of the podcast that you're setting up, beyond the basic hardware considerations covered in the first post."
+                ],
+                "score": 0.7812240491167968
+            }
+        ]
+    },
+    "2022-02-25-wordle-node-script": {
+        "relativePath": "2022-02-25-wordle-node-script",
+        "hash": "babd99a6e0fb83b7cffad9c186945f6768c6e31844bf2aaf063307852ed29fea",
+        "summary": "In my latest blog post, I take you on my journey to explore how command-line scripts can leverage the power of data in finding an optimal sequence of starting words while playing Wordle. While I acknowledge that the craze for this word game is almost over, I want to share how even simple scripts that are executed in your terminal can help you navigate large amounts of data efficiently, something we humans aren't particularly good at. As I didn't want to \"solve\" Wordle but merely optimize my initial guesses, I created a code to find a sequence of guesses that covers most common consonants.\n\nThe first major finding from running my script was that the most common letters in the entire Wordle dictionary were the vowels, and 'S' was the most common letter. However, since vowels are more commonly used later in the game, I focused on discovering the most common consonants.\n\nThe search for the best sequence of words revealed that not all combinations of the most common letters form valid words. Getting rid of the extra letters around the core group opened up several options. After a few trials, I found that ‘trend’ seemed the most satisfactory first word. Again, including the previous word in the ‘exc’ argument and adding new target letters to the ‘inc’ argument, I ran the script again. \n\nAfter all this fun experimentation, I learned that writing scripts need not be as daunting as it appears. In fact, it can assist you with repetitive tasks and even save you a lot of time. Yes, you might spend a few days writing a script to automate a task that could be done manually in a few hours, but who wouldn't prefer an excuse to delve into some coding fun?",
+        "similarities": [
+            {
+                "relativePath": "2022-10-24-oblique-strategies-via-npx",
+                "permalink": "/oblique-strategies-via-npx/",
+                "date": "2022-10-24",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Oblique Strategies via npx",
+                "excerpt": "A node script that prints one of Brian Eno's Oblique Strategies into your terminal",
+                "summary": [
+                    "This is similar to what you've just read because it also discusses the utilization of computer scripts and coding, particularly `npx`, used to make practical tasks easier and enhance creativity by generating the Oblique Strategies card prompts in your terminal."
+                ],
+                "score": 0.8017603510233204
+            },
+            {
+                "relativePath": "2023-10-27-llm-related-posts",
+                "permalink": "/llm-related-posts",
+                "date": "2023-10-27",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "TomBot2000: automatically generating related posts using LLMs",
+                "excerpt": "How I used LLM embeddings and GPT4 to generate related posts for my blog.",
+                "summary": [
+                    "This is similar to what you've just read because it also chronicles the author's journey of programming a solution, specifically creating a script using Large Language Model embeddings and GPT4 to automatically generate related blog posts, emphasizing the utility of scripts and automation in dealing with large amounts of data efficiently."
+                ],
+                "score": 0.7965044877234031
+            }
+        ]
+    },
+    "2022-10-24-oblique-strategies-via-npx": {
+        "relativePath": "2022-10-24-oblique-strategies-via-npx",
+        "hash": "ce78186f0381c328abf0cc88d44ec620d6019c85d51a482f9e7b16381049a129",
+        "summary": "In 1975, Brian Eno and Peter Schmidt introduced Oblique Strategies, a collection of over 100 cards, each proposing a course of action or thinking to assist in creative situations. These cards have been used by multiple artists and creative individuals around the globe. You can now get a mini taste of Oblique inspiration via your terminal by running the `npx oblique-strategy` command.\n\nThe complete code for this `npm` package is accessible on GitHub. The package itself is quite simple, with more lines dedicated to drawing the box around the output than for actually selecting the strategy. The strategies were all sourced from other GitHub repos. This exercise intended to master the `npx` process and was considered successful as valuable knowledge on `package.bin` was accumulated. The script is made freely available but the author is ready to take it down in case of complaints over rights violations. This project continues the legacy of the original idea—strategic, defined nudges guiding us towards fresh perspectives.",
+        "similarities": [
+            {
+                "relativePath": "2022-02-25-wordle-node-script",
+                "permalink": "/wordle-node-script/",
+                "date": "2022-02-25",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Improving my Wordle opening words using simple node scripts",
+                "excerpt": "Crafting command-line scripts to calculate the most frequently used letters in Wordle (and finding an optimal sequence of starting words).",
+                "summary": [
+                    "This is similar to what you've just read because both posts explore leveraging coding to solve unique challenges: the first uses `npx` to help implement Oblique Strategies, while the second employs command-line scripts to optimize word choices while playing a game."
+                ],
+                "score": 0.8017603510233204
+            },
+            {
+                "relativePath": "2017-04-30-picobel-js-css-audio-player",
+                "permalink": "/picobel-js-css-audio-player/",
+                "date": "2017-04-30",
+                "tags": "articles",
+                "categories": [
+                    "audio"
+                ],
+                "title": "Introducing Picobel.js - an audio player you can style with css",
+                "excerpt": "Picobel.js is a lightweight dependency-free Javascript tool that converts html audio tags into styleable markup.",
+                "summary": [
+                    "This is similar to what you've just read because it covers the development and use of an innovative open-source tool, like the `npx oblique-strategy` command, provides detailed information on how to implement and customize it, and invites involvement from the online community for its improvement, all of which is hosted on GitHub for easy access."
+                ],
+                "score": 0.7555841241028531
+            }
+        ]
+    },
+    "2023-06-01-client-side-search": {
+        "relativePath": "2023-06-01-client-side-search",
+        "hash": "f77d5f6d25d35bcf75cf1e41760a74041fc2156b152ee34a95b846a901c6806e",
+        "summary": "In this article, I talk about adding client-side search functionality to a statically-generated site without any need for third-party services. Previously, the addition of a search element required the use of services like Algolia or Elastic but now it can be accomplished using libraries like Fuse.js.\n\nArguably, one might wonder why the need for a site search exists when we have a search mogul like Google. The answer is simple - a built-in search function remarkably enhances the user experience of a site. It allows readers to quickly seek out specific content, eliminating the need to navigate through multiple pages or understand the overall structure of the site. This not only decreases user stress but also boosts engagement, as readers are more likely to explore more content if they can easily find what they're looking for.\n\nServer-side and client-side are the two main options when building a search function. I discuss the pros and cons of each but for my purposes, client-side search seems more fitting for my site. I explore the costly nature of server-side options and talk about why constructing my own search function will be more fulfilling and provide better control over the final product.\n\nThe key to effective client-side search functionality is a robust index. Using a Static Site Generator (SSG), I can create a search index when the site is built and provide a way for my client-side JavaScript to read the information. A superior matching engine should consider search term variations, synonyms or related terms, and account for \"stop words\". The primary goal is to create a high-quality search service that returns results ordered by relevancy. I specifically talk about my use of the Fuse.js library which provides a \"fuzzy\" searching environment, producing efficient and accurate results.\n\nIn conclusion, while the client-side option has some limitations and compromises, I am very pleased with the search functionality on my site and various possibilities for improvement and customization it provides.",
+        "similarities": [
+            {
+                "relativePath": "2020-01-07-eleventy-static-site-generator",
+                "permalink": "/eleventy-static-site-generator/",
+                "date": "2020-01-07",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "popular"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Static site generators: Hugo vs Jekyll vs Gatsby vs 11ty",
+                "excerpt": "I have an obsession with SSGs, and Eleventy is my favourite (even better than Hugo, Jekyll, and Gatsby).",
+                "summary": [
+                    "\"This is similar to what you've just read because it continues the exploration of client-side operations and website optimization, this time focusing on the use of static site generators, tools that could further enhance the experience when setting up search functionality on a static site.\""
+                ],
+                "score": 0.8008626057739316
+            },
+            {
+                "relativePath": "2021-01-17-adding-rss",
+                "permalink": "/adding-rss/",
+                "date": "2021-01-17",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "RSS in 2021 (yes, it's still a thing)",
+                "excerpt": "Adding an RSS feed to an Eleventy site is (mostly) easy peasy.",
+                "summary": [
+                    "This is similar to what you've just read because it delves into another aspect of improving user experience on a static content site, discussing the implementation of RSS feeds for seamless content delivery, much like the first post talked about enhancing user experience with client-side search functionality."
+                ],
+                "score": 0.7918425619613471
+            }
+        ]
+    },
+    "2023-08-31-what-if-minesweeper-kept-getting-harder": {
+        "relativePath": "2023-08-31-what-if-minesweeper-kept-getting-harder",
+        "hash": "fefa9660afad436d13de21fbe4eaf00dd75f10c2e9270d60ccdd4b1822d4c2af",
+        "summary": "I dove into the world of game development with a twist on the classic Minesweeper. Over the years, I used to raise the stakes by adding an extra mine each time I completed a grid. This sparked the idea to automate this process and incrementally increase the difficulty level as progress is made. [Try out my version here](https://incremental-minesweeper.netlify.app/). \n\nFor those who aren't familiar, Minesweeper involves clicking cells on a grid to reveal their contents. The catch is, if you reveal a cell containing a mine, you lose. Using logic and clues from numbers displayed on the grid, you have to clear all the cells that don't encase a mine to win. My version differs from the classic game mainly by its difficulty progression. Every time you complete a grid, a mine is added, turning your score into a ticking time bomb. I've also constrained things to a 10 x 10 grid for mobile-friendliness and ensured that the first click will always land on a clear cell to avoid frustrating instant losses. After much nudging from early playtesters, flagging or marking also made its way into the game. \n\nI've managed to score a high of 36 after tinkering around for about a year. Can you beat that? Go ahead, take your shot, and show me your best on [Mastodon](https://mastodon.social/@tomhazledine).",
+        "similarities": [
+            {
+                "relativePath": "2022-02-25-wordle-node-script",
+                "permalink": "/wordle-node-script/",
+                "date": "2022-02-25",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Improving my Wordle opening words using simple node scripts",
+                "excerpt": "Crafting command-line scripts to calculate the most frequently used letters in Wordle (and finding an optimal sequence of starting words).",
+                "summary": [
+                    "This is similar to what you've just read because it also explores how the author used programming to augment a popular game, this time focusing on leveraging data to improve initial word guesses in Wordle."
+                ],
+                "score": 0.7837641217986089
+            },
+            {
+                "relativePath": "2020-11-19-dark-mode",
+                "permalink": "/dark-mode/",
+                "date": "2020-11-19",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Dark mode: hard mode",
+                "excerpt": "Implementing dark mode with CSS custom properties, SASS, and JavaScript",
+                "summary": [
+                    "This is similar to what you've just read because just as the first post details the application of logic and programming to enhance a game, the second post explores the application of programming skills and logic to improve a webpage's user experience, ultimately showcasing the author's problem-solving approach."
+                ],
+                "score": 0.7587626442167353
+            }
+        ]
+    },
+    "2023-09-30-improving-svg-chart-interactivity-with-voronoi-diagrams": {
+        "relativePath": "2023-09-30-improving-svg-chart-interactivity-with-voronoi-diagrams",
+        "hash": "0b0be610098c1136570861f0efae259247e6d71c3c819c10bb5a381e7250ff5d",
+        "summary": "The blog post is about improving the interactivity of SVG charts, especially scatter plots, using voronoi diagrams. The writer shares his experience with hover-triggered tooltips, especially their usability problem owing to the precision required to target points. To overcome this, the writer proposes increasing the size of the points but notes that this solution interferes with the design of the plot.\n\nThe author then shares his solution of adding a 'hitbox' or buffer area around each point. This allows for larger targets without sacrificing the visual quality of the plot. He demonstrates how this can be achieved on a scatter plot using SVG's 'group' tag to replace a single data point with two circles. However, he also notes a potential problem - overlapping hitboxes, which can cause issues when there are a lot of points on the graph.\n\nThe writer then introduces the main part of the blog - using Voronoi diagrams, which split the chart area into cells assigned to each data point, creating a large hitbox without overlaps. He explains the concepts and demonstrates how to employ a Voronoi diagram using D3.js, a JavaScript library for creating data visualizations in SVG. He outlines the steps involved, from creating a Delaunay triangulation object to converting this into a Voronoi diagram.\n\nThe writer finishes with some practical tips for applying this technique, including using event listeners to enhance the interactivity of the chart by highlighting active points or displaying tooltips. He asserts that this way can greatly enhance SVG chart interactivity and it requires only a few extra lines of code when using D3.js. He says if already familiar with attaching event listeners and toggling class names based on the state, readers should be able to get up to speed easily with Voronoi diagrams.",
+        "similarities": [
+            {
+                "relativePath": "2021-07-21-line-graphs-with-react-svg-d3",
+                "permalink": "/line-graphs-with-react-svg-d3/",
+                "date": "2021-07-21",
+                "tags": [
+                    "articles",
+                    "featured",
+                    "intro"
+                ],
+                "categories": [
+                    "audio",
+                    "code"
+                ],
+                "title": "Line graphs with React and D3.js",
+                "excerpt": "Generating a dynamic SVG visualisation of audio frequency data.",
+                "summary": [
+                    "This is similar to what you've just read because it expands on the use of SVG and D3.js for data visualization, this time incorporating React and focusing on how to create a dynamic line graph, which resonates with the theme of enhancing interactivity covered in the first post."
+                ],
+                "score": 0.8383405984602779
+            },
+            {
+                "relativePath": "2017-02-15-svg-markup",
+                "permalink": "/svg-markup/",
+                "date": "2017-02-15",
+                "tags": [
+                    "articles",
+                    "popular"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Getting to grips with SVG markup",
+                "excerpt": "SVGs are complex, for sure, but that very complexity gives them their power. And we don't need to know the intricacies of the co-ordinate system to harness that power.",
+                "summary": [
+                    "This is similar to what you've just read because it also focuses on SVGs, but takes a broader look at their potential advantages and how their simple language and compatibility with CSS can enable developers to creatively enhance their designs."
+                ],
+                "score": 0.797112384961181
+            }
+        ]
+    },
+    "2023-10-27-llm-related-posts": {
+        "relativePath": "2023-10-27-llm-related-posts",
+        "hash": "54f517a47f6b8102cb39b99932472dfd313b228d4acc72f31912622ec909191e",
+        "summary": "The blog post discusses how Large Language Model (LLM) embeddings and the GPT4 model can be leveraged to automatically generate related posts for a blog. It goes in-depth into how embeddings, which convert a text into a vector or array of numbers, can be used for \"natural language search\", comparing the \"meanings\" of two pieces of content. The author uses this capability to address a long-standing issue of generating related posts for blog content.\n\nThe blog post elaborates on multiple attempts and failures made in the past to generate related posts, highlighting the challenges of manually choosing related content and using CMS features. The author then introduces and explores the concept of embeddings, which, when used with GPT4, can be used to calculate relations between blog posts without the risk of hallucination, or generating incorrect content.\n\nThe author outlines the specifics of her script, which uses the OpenAI embeddings API to generate a single embedding for each post and compares each post to ascertain the two most similar ones. The script is optimized through caching and other mechanisms to improve efficiency and cut costs. The blog finally discusses the difficulties faced during the development process, including rate limits, token limits, inconsistent output, hallucination, and memory issues, and their resolution.\n\nIn conclusion, the author is considering packaging the script for open-source use on NPM if enough people express interest.",
+        "similarities": [
+            {
+                "relativePath": "2021-01-17-adding-rss",
+                "permalink": "/adding-rss/",
+                "date": "2021-01-17",
+                "tags": [
+                    "articles"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "RSS in 2021 (yes, it's still a thing)",
+                "excerpt": "Adding an RSS feed to an Eleventy site is (mostly) easy peasy.",
+                "summary": [
+                    "This is similar to what you've just read because it also deals with the topic of automated blog content distribution, specifically diving into the process of integrating an RSS feed, a channel which - like the LLM-based automatic posting from the first post - also bypasses algorithmic interferences."
+                ],
+                "score": 0.7949880662192309
+            },
+            {
+                "relativePath": "2022-02-25-wordle-node-script",
+                "permalink": "/wordle-node-script/",
+                "date": "2022-02-25",
+                "tags": [
+                    "articles",
+                    "featured"
+                ],
+                "categories": [
+                    "code"
+                ],
+                "title": "Improving my Wordle opening words using simple node scripts",
+                "excerpt": "Crafting command-line scripts to calculate the most frequently used letters in Wordle (and finding an optimal sequence of starting words).",
+                "summary": [
+                    "This is similar to what you've just read because it delves into another practical application of scripting and data manipulation, this time focusing on a word game, which could interest readers who enjoy seeing real-world implications of coding and automated processes."
+                ],
+                "score": 0.7938704968029567
+            }
+        ]
+    }
+}

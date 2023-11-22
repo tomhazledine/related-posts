@@ -22,27 +22,27 @@ related:
     title: RSS in 2021 (yes, it's still a thing)
     excerpt: Adding an RSS feed to an Eleventy site is (mostly) easy peasy.
     summary:
-      - This is similar to what you've just read because it continues the
-        discussion on blog site optimization and explores the implementation of
-        RSS feeds, also using Eleventy, which was the chosen static site
-        generator in the first blog post.
+      - This is similar to what you've just read because it expands on the use
+        of Eleventy, one of the static site generators discussed in the first
+        post, more specifically on how to use it to add an RSS feed to a blog.
     score: 0.8237468720779031
-  - relativePath: 2015-05-31-inline-svg-icons
-    permalink: /inline-svg-icons/
-    date: 2015-05-31
+  - relativePath: 2017-02-26-inline-svg-icon-sprites
+    permalink: /inline-svg-icon-sprites/
+    date: 2017-02-26
     tags: articles
     categories:
       - code
-    title: Getting started with inline SVG icons
-    excerpt: As a typography nerd, using a custom font to serve icons felt really
-      good. However, it turns out inline SVG icons are better in almost every
-      way.
+    title: Inline SVG icon sprites are (still) not scary.
+    excerpt: One of the best things about HTML is that it just works. As with much
+      of the web, things only get weird when designers and developers start
+      adding things.
     summary:
-      - This is similar to what you've just read because it details a technical
-        journey of switching between different tools (from icon fonts to SVG
-        sprites) just like the first post's journey through different static
-        site generators.
-    score: 0.8190045521541176
+      - "\"This is similar to what you've just read because it also focuses on
+        the optimization of website development, offering practical solutions
+        and walkthroughs, now focusing on SVG icon sprites and their automated
+        creation with a task runner (Gulp), which could be included in the
+        efficient workflow that the first post's author praises in Eleventy.\""
+    score: 0.8101215292263658
 
 ---
 
