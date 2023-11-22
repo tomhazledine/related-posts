@@ -1,0 +1,394 @@
+---
+permalink: /web-audio-delay/
+layout: Article
+title: Building a delay effect with the Web Audio API
+date: 2020-12-30
+excerpt: An introduction to the power of JavaScript's Web Audio API
+tags:
+  - articles
+  - featured
+  - intro
+categories:
+  - audio
+  - code
+scripts:
+  - delay
+custom_stylesheet: /tomhazledine.delay.css
+intro_note: This is a detailed "how to" post, but feel free to [skip to the
+  interactive demo](#delay-block-nine).
+image: /articles/frequency-pulse.png
+read_time_override: strap in, it's a long one
+not_rss_friendly: true
+related:
+  - relativePath: 2021-07-21-line-graphs-with-react-svg-d3
+    permalink: /line-graphs-with-react-svg-d3/
+    date: 2021-07-21
+    tags:
+      - articles
+      - featured
+      - intro
+    categories:
+      - audio
+      - code
+    title: Line graphs with React and D3.js
+    excerpt: Generating a dynamic SVG visualisation of audio frequency data.
+    summary:
+      - This is similar to what you've just read because it also explores the
+        use of JavaScript tools (React, SVG and D3.js in this case) to
+        manipulate audio data, showing how to visualize audio frequency using
+        dynamic line graphs instead of creating audio effects.
+    score: 0.8514342898798005
+  - relativePath: 2021-03-31-falling-back-in-love-with-music
+    permalink: /falling-back-in-love-with-music/
+    date: 2021-03-31
+    tags:
+      - articles
+    categories:
+      - audio
+    title: Falling back in love with music
+    excerpt: Ditching web audio in favour of hardware synthesisers
+    summary:
+      - This is similar to what you've just read because it explores the
+        author's personal journey in music and front-end engineering,
+        particularly focusing on how JavaScript and the Web Audio API are used
+        to create and manipulate sounds, just like how a delay pedal was
+        replicated in the first post.
+    score: 0.8285747637244729
+
+---
+
+In this post I'm going to show you how to use JavaScript to recreate a delay pedal. A delay pedal is something that you'd place between a guitar and an amplifier to add a delay effect to the signal from the guitar. They're a relatively common piece of musical kit, and I'm going to recreate one in the browser.
+
+## The audio context
+
+To get started, we will need an _audio context_. The audio context is our gateway into the audio power of a browser.
+
+```js
+const context = new window.AudioContext();
+```
+
+Having created a new `AudioContext` object (which in this instance we're naming "context"), we can then use that context object to do all sorts of things: we can create audio sources, connect audio-creating-things to audio-listening-things, all of that good stuff.
+
+And of course because we live in the real world we need to fudge things a little to make sure that it works in as many different browsers as possible:
+
+```js
+const context = new (window.AudioContext || window.webkitAudioContext)();
+```
+
+Once we've got that `AudioContext` set up, we can then start using it. And the way that we're going to use it is to recreate the idea of an analogue _signal path_, but in code.
+
+## The signal path
+
+A good example of a "signal path" is a how a band sets up on stage. It's the path that sound takes from an instrument to a mixing desk and then out to some speakers (so the audience can hear it).
+
+<DelaySignalPath />
+
+And in audio-context terms, **Instrument** > **Mixer** > **Speakers**
+translates to `oscillator` > `gainNode` > `context.destination`
+
+1. The instrument becomes an `oscillator` (we'll be using an oscillator to create some sounds)
+2. The mixer will become a `gainNode` (which is a way for us to control the level of that signal - the "volume", if you will)
+3. The speakers will become our `context.destination`
+
+Now let's work backwards through this path in more detail...
+
+### 3. The destination
+
+The `context.destination` is available on the `context` object that we created, and the "destination" will be either the speakers in your laptop or your headphones or some kind of Bluetooth connection. In short: wherever your sound goes when it leaves your computer, that'll be your context's "destination".
+
+### 2. Gain
+
+The `gainNode` is a little bit more complicated. This is a way of controlling the "volume" of our signal. We'll use our `context` object to create a "gain node". We'll call the new node "master" (because it will act as our master volume control), and we'll need to set a value for it.
+
+```js
+const master = context.createGain();
+master.gain.value = 0.8;
+master.connect(context.destination);
+```
+
+The sound comes in at a raw level, essentially (if it comes from an oscillator it's just coming in at the default level), but once it gets to a gain node we can set what level we want that signal to be. The range runs from `0` to `1`, and in our example we're using `0.8` (just slightly less than full volume). Then on the last line we're connecting the `master` gain node to our `destination`, which will be the the _output_ of the sound.
+
+So we've got the sound coming in, we're setting that volume level with a `gain` node, and then connecting it with `.connect` (which is a method on all audio objects that we create from our `context`).
+
+### 1. Oscillator
+
+Moving to the very start of that signal path (where the sound actually comes from!), we're going to simulate a "voltage-controlled oscillator" (a.k.a. a "VCO"). Of course it's _not_ voltage controlled because we're not in the analogue world and we're not actually plugging electricity into things and wiring things up and soldering them. But we can _simulate_ a VCO with the context's `createOscillator()` method.
+
+```js
+const VCO = context.createOscillator();
+VCO.frequency.value = 440.0;
+VCO.connect(master);
+```
+
+That creates an oscillator object. The object has has a frequency value which represents the _pitch_ of the note that will be created. Here we're setting a value of `440`, which translates to 440 hertz (Hz). That is the frequency value of "Middle A", which in an orchestral setup is the note that everyone tunes to.
+
+We're then connecting that to `master` (the gain node that we're treating as our "master volume"), which then sends our signal off to the to the destination.
+
+Now that we've created an oscillator we can test that it's working using two simple methods: `start` and `stop`.
+
+```js
+// Start the oscillator
+VCO.start();
+
+// Stop the oscillator
+VCO.stop();
+```
+
+Putting these methods into action might look a little like this:
+
+```js
+let buttonState = "off";
+
+const button = document.querySelector("#our-button");
+
+button.addEventListener("click", () => {
+    if (buttonState === "off") {
+        VCO.start();
+        buttonState = "on";
+    } else {
+        VCO.stop();
+        buttonState = "off";
+    }
+});
+```
+
+You can test this out using the button below. Clicking once will call `.start()`, and you should hear a (probably quite horrible) noise. Then clicking a second time will call `.stop()`, which will end the sound.
+
+<!-- Start/stop button -->
+
+<div id="delay-block-one"></div>
+
+If we look at the frequency graph of what's happening, you can see when we start the pitch we get a peak at 440Hz, which is the "middle A" that we are hoping for.
+
+This code gives us a constant tone which is not massively useful for adding a delay to. The delays will start layering up and overlapping, so we're not going to be able to hear what's going clearly. What will be more useful for us is to have a _pulse_, so let's look at how to have the button trigger a pulse of sound:
+
+```js
+// Start the oscillator now
+VCO.start(context.currentTime);
+
+// Stop the oscillator in .25 seconds time
+VCO.stop(context.currentTime + 0.25);
+```
+
+Now when we hit "start" we're not just a calling `.start()` with no parameters: we're calling it with our current time and then straight away calling the `.stop()` function with a different time. This means our code will know to start and stop at these given times.
+
+We're getting time from `context.currentTime`, which is a more reliable way of getting a time-value than using a `setTimeout()` like we would normally use in JavaScript. The audio context has its own internal clock which is much more precise.
+
+<div id="delay-block-two"></div>
+
+## Controlling a VCO with a gain node (a.k.a. a VCA)
+
+So now we get a pulse of sound that lasts for 0.25 seconds, but it's still kind of sudden. What we will probably ought to do now is "soften" this slightly so it's not quite such a jarring sound. It just turns on and off. What we want is to have a way of ramping up the volume gradually and then ramping that down again.
+
+We want it to fade in and fade out, and we can achieve that by using _another_ gain node.
+
+We've already used a gain node for our master volume, and now we're using a new gain node paired just to our oscillator.
+
+```js
+const note = {
+    vco: context.createOscillator(),
+    vca: context.createGain()
+};
+note.vco.connect(note.vca);
+note.vca.connect(master);
+
+const button = document.querySelector("#our-button");
+
+button.addEventListener("click", () => {
+    // Start the oscillator gradually
+    note.vca.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.2);
+
+    // Stop the oscillator gradually
+    note.vca.gain.exponentialRampToValueAtTime(
+        0.0001,
+        context.currentTime + 0.5
+    );
+});
+```
+
+Here we've made a regular JavaScript object called `note`, and we've given it a VCO and a VCA.
+
+Whereas a VCO is a voltage controlled _oscillator_, a VCA is a voltage controlled _amplitude_. That's analogue-synthesiser-speak for a node that controls "volume". Here our VCA is going to be a gain node.
+
+We connect those two together, then we set the values using a function called `exponentialRampToValueAtTime()` which, surprise surprise, exponentially ramps to a value at a
+given time.
+
+We want to ramp up to the volume value of `1` (a.k.a. maximum volume) and we want that to take `0.2` seconds. To stop the pulse, we then ramp all the way down to a value of `0` half a second later.
+
+<!-- "Ramped" pulse button (with graph) -->
+
+<div id="delay-block-three"></div>
+
+Now our pulse is starting to sound a little bit more sonorous. We've got a gentle pulse that more closely mimics sound that we'd hear in the real world (rather than the artificial on/off of the raw oscillator).
+
+## Randomly selecting a "note"
+
+Now we can spice things up a little by randomly choosing the pitch of the note that is generated.
+
+```js
+const getRandomInt = (min, max) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
+note.frequency.value = getRandomInt(220, 880);
+```
+
+The `getRandomInt()` function creates a random integer between `220` and `880` (which is the frequency range, in hertz, that we want to hear). Now every time we press the "pulse" button we will hear a random pitch.
+
+<div id="delay-block-four"></div>
+
+We talked about it being a bit more sonorous earlier, but because these pitches are random there is no sense of _musicality_. To enhance this a little bit we can make use of an array of note values that each have a `name` (so that we know what note we're dealing with) and a `value` (which is the
+important part).
+
+```js
+const C_Maj = [
+    { name: "C4", value: 261.63 },
+    { name: "D4", value: 293.66 },
+    { name: "E4", value: 329.63 },
+    { name: "F4", value: 349.23 },
+    { name: "G4", value: 392.0 },
+    { name: "A4", value: 440.0 },
+    { name: "B4", value: 493.88 },
+    { name: "C5", value: 523.25 },
+    { name: "D5", value: 587.33 },
+    { name: "E5", value: 659.26 },
+    { name: "F5", value: 698.46 },
+    { name: "G5", value: 783.99 }
+];
+```
+
+Now that we have a list of all the notes in a **C major** scale, we can use that same random number generator. This time, however, we'll use it to generate a `key` for the array of notes.
+
+```js
+const noteNumber = getRandomInt(0, C_Maj.length - 1);
+
+note.frequency.value = C_Maj[noteNumber].value;
+```
+
+Now we are still randomly creating notes, but they're all within the bounds of a C major scale (which should in theory sound a little bit nicer). It's still a bit random but it is within the bounds of a normal scale so it sounds like of how we'd expect _music_ to sound.
+
+<div id="delay-block-five"></div>
+
+## Doubling-up our note
+
+Next, let's get even more fancy and duplicate the notes for a "fuller" sound. We can create a _second_ VCO and VCA for our note:
+
+```js
+const note = {
+    ...note,
+    vco2: context.createOscillator(),
+    vca2: context.createGain()
+};
+```
+
+And rather than manually choosing the note value we can "transpose" the value of our first VCO.
+
+```js
+const transpose = (freq, steps) => freq * Math.pow(2, steps / 12);
+
+const startingPitch = note.vco1.frequency.value;
+
+note.vco2.frequency.value = transpose(startingPitch, 7);
+note.vco2.connect(note.vca2);
+note.vca2.connect(master);
+```
+
+This `transpose()` function takes in a frequency and the number of "steps" in either direction that we want to go. Say you want to transpose from a C to a D; that's two semitones (musical steps) up.
+
+What the transpose function does is work that out for us. It calculates how we should mathematically transform our starting pitch, and does this by multiplying the frequency by a power law.
+
+By adding a second VCO, we are doubling up the notes that we hear when we hit the "pulse" button. But rather than simply duplicating the sound, we're transposing the second VCO to be seven steps above the pitch of the first VCO. Seven steps up equates to a "fifth" in musical terminology (there are 12 _steps_ but eight _notes_, so seven steps up is actually five notes up the scale).
+
+You can see see the double peak on the frequency graph when we trigger a pulse:
+
+<!--  Doubled-up pulse with frequency graph -->
+
+<div id="delay-block-six"></div>
+
+## The FX loop
+
+Let's get to the business at hand of actually adding in our effects unit.
+
+This will be a unit that slots into our signal path and adds an effect to the signal.
+
+The "normal" signal path (as we've already established) is "instrument" -> "mixer" -> "speaker". The FX ("effects", for non-nerds) loop sits into that path between the instrument and the mixer.
+
+<!-- image of FX loop -->
+
+{% include "delay/signalpath-fx.njk" %}
+
+This little module takes a bit of the signal, does something to it, and then sends that
+signal back up to the mixer along with the original signal itself.
+
+Creating a delay object in JavaScript is nice and easy to do because the audio `context` has the concept of "delay" built into it.
+
+```js
+const delay = context.createDelay();
+delay.delayTime.value = 0.4;
+delay.connect(master);
+```
+
+The `delayTime` value determines how much time the `delay` node will delay the signal
+before sending it on again.
+
+Anything that we connect to that `delay` will then be paused for whatever value we set (`0.4` seconds, in this example) before then being sent on to the master output.
+
+If we hook our notes' VCOs to the delay node, then our pulse will be heard twice (audio nodes can have multiple connections, so here our notes are connected directly to the `master` output _and_ indirectly via the `delay` node).
+
+```js
+note.vca1.connect(master);
+note.vca2.connect(master);
+
+note.vca1.connect(delay);
+note.vca2.connect(delay);
+
+delay.connect(master);
+```
+
+<!-- pulse with single delay and frequency graph -->
+
+<div id="delay-block-seven"></div>
+
+Success! We have now created a delay. But we don't have the full picture yet; this is only applying the delay once. When we press the "pulse" button, we hear the original note and a single repetition of that note forty milliseconds (`0.4` seconds) later.
+
+## FX Feedback
+
+What we're missing is the idea of "feedback". Feedback is the mechanism by which a small part of the delayed signal is _fed back_ into the delay module.
+
+{% include "delay/fx-loop.njk" %}
+
+We could connect the delay node to itself directly (`delay.connect(delay)`), but this would send the _entire_ signal back into the delay. This would be an infinite loop, so let's not do that because it would sound terrible.
+
+What we're going to do is create a new gain node. We've used a lot of game nodes so far, so we're pretty familiar with them at this point.
+
+We eliminate the problem of infinite feedback by giving the `feedback` node a very small value: `0.3` (which is equivalent to saying "30% of the signal"). Then we put this new `feedback` node in between the delay output and the delay input
+
+```js
+const feedback = context.createGain();
+feedback.gain.value = 0.3;
+
+delay.connect(feedback);
+feedback.connect(delay);
+delay.connect(master);
+```
+
+<!-- Pulse with full delay and frequency graph -->
+
+<div id="delay-block-eight"></div>
+
+The amount of signal that we're passing back in controls how many times we hear the pulse repeated; that's the audible delay. The combination of the delay _duration_ (`delay.delayTime.value`) and the level of the _feedback_ (`feedback.gain.value`) combine to create the full effect.
+
+## Making it interactive
+
+There's one final step required to fully mimic the behaviour of a "real" delay pedal. To finish off, I'll plug the two crucial factors (the duration and the feedback) into some HTML range elements. This allows us to tweak those values "on the fly". The higher the feedback level, the longer the repetition of the pulse will continue for. The longer the delay duration, the larger the gaps between the repetitions will be.
+
+Have a play yourself, and see what crazy sounds you can make. You can even set the feedback level to `100%`, but be warned - weird things will happen!
+
+<!-- Pulse with sliders and frequency graph -->
+
+<div id="delay-block-nine"></div>
+
+---
+
+This post has, hopefully, shown you some of the power of the audio context as it exists in the browser. We've just scratched the surface; creating a tone and manipulating it in small ways is pretty simple stuff, but there is no end to the amount of creativity that can be had from playing with these tools. I hope this has inspired you to do something of your own.
+
+If you've enjoyed this or you have questions please do get in touch on Twitter and let me know if you've done something crazy with the audio context. I'd love to see what you've come up with.

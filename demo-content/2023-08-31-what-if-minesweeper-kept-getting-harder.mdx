@@ -1,0 +1,104 @@
+---
+permalink: /what-if-minesweeper-kept-getting-harder/
+layout: Article
+title: What if minesweeper kept getting harder?
+date: 2023-08-31
+excerpt: Hey look, I made a game! Can I call myself a game developer now?
+tags: articles
+custom_icon: minesweeper
+categories:
+  - code
+related:
+  - relativePath: 2022-02-25-wordle-node-script
+    permalink: /wordle-node-script/
+    date: 2022-02-25
+    tags:
+      - articles
+      - featured
+    categories:
+      - code
+    title: Improving my Wordle opening words using simple node scripts
+    excerpt: Crafting command-line scripts to calculate the most frequently used
+      letters in Wordle (and finding an optimal sequence of starting words).
+    summary:
+      - This is similar to what you've just read because, like the Minesweeper
+        post, it explores using coding and data analysis to optimize gameplay
+        and enhance player experience, this time with the popular word game,
+        Wordle.
+    score: 0.7837641217986089
+  - relativePath: 2017-01-20-bullet-journal-revisited
+    permalink: /bullet-journal-revisited/
+    date: 2017-01-20
+    tags:
+      - articles
+      - popular
+    categories:
+      - general
+      - productivity
+    title: Bullet Journal Revisited
+    excerpt: The Bullet Journal is a system for Getting Things Done. One nested
+      pen-and-paper list that gets rewritten every morning.
+    summary:
+      - This is similar to what you've just read because it discusses the
+        development and fine-tuning of a system - in this case, a productivity
+        tool - based on feedback and personal preferences, much like how the
+        author adjusted the rules and features of the Minesweeper game in the
+        first post.
+    score: 0.7628795255605386
+
+---
+
+I've burnt thousands of hours playing [Minesweeper](<https://en.wikipedia.org/wiki/Minesweeper_(video_game)>) over the years, and my preferred method of keeping things interesting was to add a mine everytime I completed the grid. I often wondered if someone would automate this process, and (as is the way of all software nerds) I inevitably decided to do it myself.
+
+> [Play my incrementally harder version here](https://incremental-minesweeper.netlify.app/)
+
+[![Screenshot of my version of Minesweeper, showing a lost game of minesweeper: a 10-by-ten board with 10 mines marked in red in random positions. The player has cleared a portion of the top-right of the board before hitting a mine. They are currently on level 10, and now have the option to restart at level 9. Their high score is shows as being 20.](/images/articles/minesweeper-screenshot-400.png)](https://incremental-minesweeper.netlify.app/)
+
+This soon turned into _quite_ the project, so I'm explaining myself here. But before I get to that, it's worth explaining how Minesweeper works (for those of you who _didn't_ sink thousands of hours into Windows 3.11/95/98).
+
+## How to play Minesweeper
+
+Playing Minesweeper involves clicking cells on a grid to reveal their contents. If you click a cell that contains a mine, you lose. If you clear all the cells that don't contain a mine, you win.
+
+The basic controls:
+
+-   Left-click (or a tap on a touch-enabled device) reveals a cell.
+-   Right-click (or a long-press) flags[^1] or unflags a cell.
+
+If the cell you click is _adjacent_ to any mines, it will show you the number of mines that it is adjacent to. For example, if a cell has a `1` on it, there is 1 mine next to that cell. This could be above, below, left, right, or diagonal to the numbered cell.
+
+This means you can use logic to deduce where the mines are. For example, if a `8` is surrounded by eight unrevealed cells you can deduce that _every_ surrounding cell contains a mine.
+
+If you click a cell that is blank (i.e. contains no number), all the surrounding cells will be revealed. If any of those cells are also blank, all the surrounding cells of those cells will be revealed, and so on. This is called a "cascade" and is a key part of keeping the gameplay speedy.
+
+Take this example 4x4 grid version of the game...
+
+![3 images of a 4x4 minesweeper board. Board 1 is completely uncleared except for cell B3, which shows a number 1. The second board is a continuation of the game, and shows more cleared cells - with only four left uncleared. Board 3 shows the game in a loss state, with two mines exposed and marked in red.](/images/articles/minesweeper.svg)
+
+1. For the first move, the player clicks to reveal cell **B3**. It contains a `1`, so the player knows that there is one mine adjacent to that cell, but it isn't a particularly useful opening move. There's no clue _which_ of the adjacent cells contains the mine.
+2. The player then clicks to reveal cell **A3**. This cell is blank, so the "cascade" kicks in and reveals all the connected black cells and the numbered cells that are adjoining. This tells a smart player that cells **C3** and **D3** must contain mines.
+3. Our player, however, is _not_ smart and clicks on **C3**. This is a mine, and they lose the game.
+
+## How does my version differ from "classic" Minesweeper?
+
+### 1. Difficulty (the main point of making my version)
+
+In my version, the difficulty increases as you play. This is achieved by adding a mine to the grid every time you complete it. This means that the grid gets more difficult to complete as you play, and the number of mines becomes your score.
+
+### 2. Size
+
+For my version, I've constrained things to a 10 x 10 grid. The primary reason for this is that I wanted to make the game playable on mobile devices, and ten-by-ten is about the largest I could fit on a phone screen and still be able to play comfortably with my fat and clumsy fingers.
+
+### 4. You always start with a clear cell
+
+No matter which cell you click first, it will always be a clear cell. This is to avoid the frustration of losing on the first click, which is a common occurrence in the original game.
+
+### 5. Flagging
+
+At first I left the concept of "flagging" or "marking" cells out of my version, taking the view that "flagging is for chumps". But early playtesters were adamant I add it, so I caved to the pressure.
+
+## How well will you do?
+
+I've been tinkering with this version for about a year now, and my all-time high score is 36. Can you beat that? If so, take a screenshot and show me [on Mastodon (@tomhazledine@mastodon.social)](https://mastodon.social/@tomhazledine).
+
+[^1]: **Note:** "flagging" (or "marking" or "chording" in some versions of the game) is for chumps who aren't confident enough to yolo their way to victory.

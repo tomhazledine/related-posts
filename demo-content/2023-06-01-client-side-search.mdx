@@ -1,0 +1,214 @@
+---
+permalink: /client-side-search-static-site/
+layout: Article
+title: Adding client side search to a static site
+date: 2023-05-31
+excerpt: Creating a site-search function that doesn't rely on external services
+tags: articles
+categories:
+  - code
+related:
+  - relativePath: 2020-01-07-eleventy-static-site-generator
+    permalink: /eleventy-static-site-generator/
+    date: 2020-01-07
+    tags:
+      - articles
+      - featured
+      - popular
+    categories:
+      - code
+    title: "Static site generators: Hugo vs Jekyll vs Gatsby vs 11ty"
+    excerpt: I have an obsession with SSGs, and Eleventy is my favourite (even
+      better than Hugo, Jekyll, and Gatsby).
+    summary:
+      - "\"This is similar to what you've just read because it continues the
+        exploration of client-side operations and website optimization, this
+        time focusing on the use of static site generators, tools that could
+        further enhance the experience when setting up search functionality on a
+        static site.\""
+    score: 0.8008626057739316
+  - relativePath: 2021-01-17-adding-rss
+    permalink: /adding-rss/
+    date: 2021-01-17
+    tags:
+      - articles
+    categories:
+      - code
+    title: RSS in 2021 (yes, it's still a thing)
+    excerpt: Adding an RSS feed to an Eleventy site is (mostly) easy peasy.
+    summary:
+      - This is similar to what you've just read because it delves into another
+        aspect of improving user experience on a static content site, discussing
+        the implementation of RSS feeds for seamless content delivery, much like
+        the first post talked about enhancing user experience with client-side
+        search functionality.
+    score: 0.7918425619613471
+
+---
+
+In the bad old days (a.k.a. "a couple of years ago") adding search functionality to a statically-generated site required third-party services that provided a search backend (like Algolia or Elastic or whatever). Thankfully we can now run a (simple) search using only client-side tech thanks to libraries like [Fuse.js](https://fusejs.io). As Fuse say in their docs: _"you don’t need to setup a dedicated backend just to handle search."_
+
+So how does it all work? Why do we even want site search functionality? And what are the steps required to add a decent search experience to a statically-generated site like mine?
+
+## Why add search to a blog like this?
+
+It's a good question, especially when you consider that Google exists already. But a built-in search function does significantly improve the user experience for a site like this.
+
+It offers readers a fast and direct way to find the specific content they're interested in, eliminating the need to navigate through multiple pages or understand the overall structure of the site. This ease of use not only enhances the site's accessibility but also increases engagement, as readers are more likely to stay longer and explore more content if they can easily locate the bits that interest them.
+
+## Search fundamentals
+
+At its simplest, a site-search function is a tool that allows users to search for specific content within a website. When a user enters a search query into the search box on the site, the search function scans the content of the site to find pages that match the query and returns a list of results.
+
+This is normally a two-step process that consists of "indexing" and "querying".
+
+To start, an index is created of the content. The index is a representation of all the information on the site that could be relevant to a search and is specifically created to enable efficient searching. The index should contain metadata about each page, such as its title, description, and keywords, as well as the content of the page itself.
+
+Then, when a search is made, the search engine queries this index to find pages that match the query. The results are then displayed to the user in a list, ordered by relevancy. In the context of a content-search function for a website, the relevance of search results could be determined by factors such as the presence of keywords in the page title, the frequency of keywords in the page content, and the overall quality of the content itself.
+
+So to build an effective search engine for a site, we need to have two key features:
+
+1. A way to create an index of the site's content.
+2. A way to query that index to return relevant results.
+
+## The two options: server-side and client-side
+
+There are two primary options when it comes to implementing search. The traditional approach is "server-side", where the search is executed on a server. The alternative, which we'll be focusing on, is "client-side", where the search is performed in the user's web browser.
+
+There are benefits and trade-offs for both approaches, but in my view client-side search is the best option for a site like mine.
+
+## Why not use server-side search?
+
+In the past when creating static sites that needed a search function I've used an external service. These have been server-side solutions like Elastic or Algolia, which index your site's content for you and provide API endpoints for performing searches.
+
+### 1. Cost
+
+The biggest obstacle to adding server-side search to a static site is cost. Even though _my_ static site doesn't require a server, if I'm using server-side search there has to be server _somewhere_. While there are free tiers available for many server-side services, it's likely that I'd need a paid plan. Costs can escalate quickly depending on the amount of data indexed and the number of search queries made, and for a "continual tinkerer" like myself the amount of fine-tuning and customisation I'd want would inevitably result in expensive bills.
+
+### 2. Fun
+
+For a real business deciding between building or buying a complicated second-order function like search, it generally makes sense to let a third party handle the complexity in exchange for money. As highlighted in the point above, I'm not keen on splashing too much cash on this project (aside from ethereal "career" benefits, this blog generates no income at all) but there are other benefits to building it myself.
+
+For starters, having a proper project to work on is a great way to reinforce things I've learnt. So by building my own search function I'll inevitably learn more about building search functions. Plus I actually enjoy these kinds of nitty-gritty software challenges.
+
+Building it myself will also give me more control over the end result. I'll be able to fine-tune and customise as much as I like, without having to fight too much against a system that has it's own conventions and defined way of doing things. And that's what my whole career has been built on thus far; learning how to do things myself to get around the limitations of off-the-shelf products.
+
+But I'm not willing to compromise on the "staticness" of this site, so if I'm determined not to use an external service then I'll have to find an option that works client-side.
+
+## How does client-side search work?
+
+For a static content site, client-side search should be a two step process. The first step is to generate an index whenever a site is built. The second step is to provide frontend components to perform a query against that index.
+
+The index-creation should be handled by the SSG, and the query functionality would be handled by component-level JavaScript.
+
+### Creating the index
+
+Part of the power of using a Static Site Generator is that you can interact with all your content at build time. By generating a search index when the site is built, I'm able to leverage this power to address one of the biggest problems with any client-side search: generating an index is a costly operation.
+
+To perform a search, the search engine needs an index to query against, and to make an index requires the code to be able to "see" _all_ the content within a site. Server-side search engines traditionally "crawl" all the pages of a website to generate an index that is then stored server-side, but client-side search engines often generate their index in the client at the time a search is made. Using an SSG allows me to get the best of both worlds by generating the index at build time.
+
+This approach comes with an extra benefit, too: because the index is generated at build time, whenever the site's content changes (and thus triggers a rebuild) the index is automatically regenerated. No more waiting for crawlers or manually-triggered re-indexing. Any search results _always_ represent the most up-to-date content on the site.
+
+In a client-side context, the best format for a search index is a JSON array. Each page in the site becomes an object in the array, each with a `title`, `url`, and `content` keys. These are the keys I've chosen to use, but the beauty of "rolling your own" is that you can easily tailor this to your own content. Are "tags" crucial to your information architecture? Include them in the search index. The same goes for anything else you think might contribute to the relevancy of search results; categories, keywords, meta-data, etc. If you think it will produce better results, include it in the index (and then test and refine over time).
+
+Once created, I need a way for my client-side JavaScript to be able to read the index, so I need to make it available to the browser. The easiest way to do this is to save the index as a JSON file and include it in the site's build output. This way the index is available to the browser at the same time as the rest of the site's content. You can see the index for this site here: [search-data.json](/search-data.json)
+
+```json
+[
+    {
+        "title": "Adding client side search to a static site",
+        "url": "/client-side-search-static-site/",
+        "content": [
+            "In the bad old days (of, like, a couple of years ago) adding search functionality to a statically-generated site required third-party services that provided a search backend (like Algolia or Elastic or whatever). ",
+            "Thankfully we can now run a (simple) search using only client-side tech thanks to libraries like Fuse.js. "
+            // etc...
+        ]
+    },
+    {
+        "title": "Oblique Strategies via npx",
+        "url": "/oblique-strategies-via-npx/",
+        "content": [
+            "In 1975 Brian Eno and Peter Schmidt released their Oblique Strategies; &quot;Over One Hundred Worthwhile Dilemmas&quot;",
+            "The Oblique Strategies constitute a set of over 100 cards, each of which is a suggestion of a course of action or thinking to assist in creative situations."
+            // etc...
+        ]
+    }
+    // etc...
+]
+```
+
+**Note:** Because of the way our matching engine works (see the [section on Fuse.js](#fusejs) later in this article), the content body is split into an array of sentences. This is achieved using `Intl.Segmenter`:
+
+```js
+const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
+const segments = [...segmenter.segment(content)]
+    .map(segment => segment.segment)
+    // Cap sentences at 240 chars
+    .map(line => chunk(line, 240))
+    .flat()
+    // Remove trailing whitespace
+    .map(line => line.trim())
+    // Remove empty lines
+    .filter(line => line.length > 0);
+```
+
+### Querying the index
+
+With the index handled, the next step is to write code to query that index. At the core of the search engine is a "matching" function that consumes the index and any given search term and returns a list of results ordered by relevancy.
+
+A simple "matching" function would search the index for exact matches of a search term, but in practice this does not produce useful results. A more sophisticated matching engine should account for several things:
+
+1. It should consider variations of the search term, such as singular versus plural forms or different verb tenses, which can help to find more accurate and relevant results.
+2. It should account for synonyms or related terms that might be relevant to the search query, allowing for a more comprehensive set of results. For example, a search for "car" might also include results about automobiles, vehicles, or transportation.
+3. It should account for "stop words", which are common words often excluded from search queries because they are considered to have little semantic value or meaning.
+
+Stop words are particularly tricky, as sometimes they should be included and sometimes omitted. Stop words are often articles, prepositions, and conjunctions, such as "a", "an", "the", "in", "on", "and", and "or". A naive search function would treat them like any other word in the search query which can lead to search results that are cluttered with irrelevant pages that happen to contain the stop words. For example, if a user searches for "the best coffee in town," a naive search function may return results for every page that includes the words "the", "best", "coffee", and "in" regardless of whether the page is actually about coffee or has any useful information about the best coffee in town.
+
+A smarter search function would take stop words into account and exclude them from the search query, focusing instead on the more meaningful keywords. But it would also be able to handle cases were users _are_ searching for an exact match. For example, if a user searches for "red shoes" (in quotes), the search engine will only return results that contain that exact phrase, rather than returning any content that contains either "red" or "shoes" separately.
+
+In short, writing a matching engine is a big project and not one to take lightly. After several POC projects where I compared hand-written options to off-the-shelf options, there was one clear winner: Fuse.js.
+
+## Fuse.js
+
+[Fuse.js](https://fusejs.io) is a JavaScript library that focuses on what it calls "fuzzy" searching.
+
+> Generally speaking, fuzzy searching (more formally known as approximate string matching) is the technique of finding strings that are approximately equal to a given pattern (rather than exactly).
+
+Fuse performed well in head-to-head tests against other options (including a complex hand-rolled function) and has good documentation, wide usage, and is under active development.
+
+As with anything code-related, specific implementation details get complicated quickly, but the basic implimentation of Fuse is a straightforward process. We initialise a new instance of Fuse with our index data and a configuration object, and then we can call the `search` method on that instance with a search term. The `search` method returns an array of results, each of which contains a reference to the original item in the index and the matched text.
+
+```js
+const options = {
+    includeMatches: true,
+    findAllMatches: true,
+    minMatchCharLength: 2,
+    threshold: 0.3,
+    ignoreLocation: true,
+    keys: [
+        { name: "title", weight: 2 },
+        { name: "content", weight: 1 }
+    ]
+};
+const index = await fetch("/search-data.json").then(res => res.json());
+const fuse = new Fuse(index, options);
+const results = fuse.search("search term");
+```
+
+The configuration options are powerful and allow for a lot of fine-tuning. The `keys` option is particularly useful, as it allows us to specify which fields in the index should be searched and how much weight should be given to each field. In the example above, we're telling Fuse to search the `title` field with twice as much weight as the `content` field. This means that a match in the `title` field will be considered twice as relevant as a match in the `content` field.
+
+I'm also setting the threshold to `0.3` (meaning that only results with a score of `0.3` or higher will be returned) which is a comparatively low value. My site doesn't have thousands of pages, so I'm happy to return a lot of results and let the user decide which is most relevant. If you have a larger site, you may want to increase this value to return fewer results.
+
+## Optimization
+
+Ultimately there are some trade-offs and compromises that come from choosing client-side over server-side search. These are few, thankfully, and I've mitigated as many of these as I feasibly can.
+
+While the configuration options are powerful, they are not as powerful as a fully server-side stack and Elastic (or other similar services). A client-side option is always going to be constrained by the power of the browser it's running inside.
+
+For deep sites, the index can get quite large (sometimes up to multiple megabytes for sites with thousands of pages). For the search to work that index needs to be loaded into the client. I've mitigated this by lazy-loading the index and leveraging caching, but there's no way to _search_ an index without _having_ the index. This is one area where server-side power can really speed things up. But on the flip-side, a server-side search will always require a network round-trip to fetch the results, so while the client-side search is slower on first load, every actual search feels pleasingly fast.
+
+## Conclusion
+
+I'm really happy with the search experience on my site. It's fast, it's accurate, and it's easy to use. It's also a great example of how powerful modern browsers are and how much can be achieved with a little bit of JavaScript.
+
+And because I've built it myself, I can tweak and improve it as I see fit. I can add new features, change the UI, and make it work exactly how I want it to. I can also use it as a learning tool to better understand how search engines work and how to improve them.

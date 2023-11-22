@@ -1,0 +1,245 @@
+---
+permalink: /improving-svg-chart-interactivity-with-voronoi-diagrams/
+layout: Article
+title: Improving SVG chart interactivity with Voronoi diagrams
+date: 2023-09-30
+excerpt: How I used Delaunay triangulation and Voronoi diagrams to fix hover
+  issues in my SVG charts (with React and D3.js).
+tags:
+  - articles
+  - intro
+categories:
+  - code
+scripts:
+  - voronoi
+custom_stylesheet: /tomhazledine.voronoi.css
+custom_icon: voronoi
+related:
+  - relativePath: 2021-07-21-line-graphs-with-react-svg-d3
+    permalink: /line-graphs-with-react-svg-d3/
+    date: 2021-07-21
+    tags:
+      - articles
+      - featured
+      - intro
+    categories:
+      - audio
+      - code
+    title: Line graphs with React and D3.js
+    excerpt: Generating a dynamic SVG visualisation of audio frequency data.
+    summary:
+      - This is similar to what you've just read because it expands on the use
+        of SVG and D3.js for data visualization, this time incorporating React
+        and focusing on how to create a dynamic line graph, which resonates with
+        the theme of enhancing interactivity covered in the first post.
+    score: 0.8383405984602779
+  - relativePath: 2017-02-15-svg-markup
+    permalink: /svg-markup/
+    date: 2017-02-15
+    tags:
+      - articles
+      - popular
+    categories:
+      - code
+    title: Getting to grips with SVG markup
+    excerpt: SVGs are complex, for sure, but that very complexity gives them their
+      power. And we don't need to know the intricacies of the co-ordinate system
+      to harness that power.
+    summary:
+      - This is similar to what you've just read because it also focuses on
+        SVGs, but takes a broader look at their potential advantages and how
+        their simple language and compatibility with CSS can enable developers
+        to creatively enhance their designs.
+    score: 0.797112384961181
+
+---
+
+Scatter plots are a fun way to visualize data, showing both the relationship between two variables and the distribution of data points. And they're reasonably trivial to create in web-friendly SVG (especially if you get a library like [D3.js](https://d3js.org/) involved). One issue, though, is hover interactions.
+
+I've made so many graphs that include hover-triggered tooltips, and the sheer precision required to target those points with a cursor can be infuriating. You can solve this UX problem by making the points (and thus the hover-targets) bigger, but that inteferes with the design of the chart as a whole. For charts with complex datasets, it's often not feasible to make the points big enough to be easily targeted.
+
+<figure className="post-content__image-wrapper">
+    <div id="voronoi-example-01">
+        <div className="voronoi-scatter__placeholder" />
+    </div>
+    <figcaption className="post-content__caption">
+        Tiny points require precision to target with a cursor
+    </figcaption>
+</figure>
+
+## Adding a hitbox to our points
+
+When I'm building charts like these I'm using SVG, so there are plenty of options to try. One approach is to really dive into the "hitbox" analogy from video-games. The visual part of the datapoint doesn't have to be the only part you can target with the mouse!
+
+<div className="cluster cluster--not-narrow">
+    <blockquote className="width-66">
+        <h3>What is a "hitbox"?</h3>
+        <p>
+            In video games, <strong>hitbox</strong> is a term used to describe
+            the area in which a character can be hit by an attack. While a
+            character's appearance can be a complex shape, the hitbox is often
+            much simpler; a primitive circle or rectangle that roughly covers
+            the area of the character.
+        </p>
+        <p>
+            <strong>Visual size `!==` hitbox size.</strong>
+        </p>
+    </blockquote>
+    <figure className="post-content__image-wrapper width-33">
+        <img
+            src="/images/articles/voronoi-minecraft-hitbox.svg"
+            alt="Diagram of a character with a hitbox that extends beyond the visual portion of the character"
+        />
+        <figcaption className="post-content__caption">
+            Illustration of how a hitbox can extend beyond the visual portion of
+            a character
+        </figcaption>
+    </figure>
+</div>
+
+## Make the ~~logo~~ _hitbox_ bigger
+
+With SVG, we can use the `<g>` tag to "group" several elements together. This means we can replace a datapoint's single `<circle>` element with _two_ circles and treat them as a single element.
+
+In this example, we have a circle with a radius of `2` that fires the `handleHover()` event when hovered. _(Note we're assuming the SVG is being writen as a React component in JSX, with `d` as the data point and `handleHover` as the event handler.)_
+
+```jsx
+const DataPoint = ({ d, handleHover }) => (
+    <circle r={2} cx={d.x} cy={d.y} onMouseOver={handleHover} />
+);
+```
+
+To add a bigger hitbox to this point, we can add a second circle with a larger radius and no fill. Because we're adding `fill: "none"` as a style rule this circle will be invisible, but it will still trigger the `handleHover()` event when hovered if we set `pointerEvents` to `"all"`.
+
+```jsx
+const DataPoint = ({ d, handleHover }) => (
+    <g>
+        <circle r={2} cx={d.x} cy={d.y} />
+        <circle
+            r={10}
+            cx={d.x}
+            cy={d.y}
+            onMouseOver={handleHover}
+            style={{ fill: "none" }}
+            pointerEvents="all"
+        />
+    </g>
+);
+```
+
+So now we can render a scatter graph with the original design we wanted, but with the added benefit of a larger hitbox for each point.
+
+<figure className="post-content__image-wrapper">
+    <div id="voronoi-example-02">
+        <div className="voronoi-scatter__placeholder" />
+    </div>
+    <figcaption className="post-content__caption">
+        The hitbox is now larger than the visual portion of the datapoint
+    </figcaption>
+</figure>
+
+## More hitboxes, more problems
+
+This approach works well for charts with sparse datasets, but it doesn't scale well. We've now effectively added a buffer zone around each of our points that will obscure anything behind it. This means that if we have a lot of points, we'll end up with a lot of overlapping hitboxes. And overlapping hitboxes means that we could easily be trying to hover over one point, but accidentally trigger the hover event for a different point.
+
+Ideally we'd like to have hitboxes that are as large as possible _without overlapping any other points_. What we need, it turns out, is a **[Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)**.
+
+> ## What is a Voronoi diagram?
+>
+> At its simplest, a Voronoi diagram divides our chart area into "cells" that are each assigned to a single datapoint. The cell for a given datapoint is the area of the chart that is closer to that datapoint than any other datapoint.
+
+<figure className="post-content__image-wrapper">
+    <div id="voronoi-example-03">
+        <div className="voronoi-scatter__placeholder" />
+    </div>
+    <figcaption className="post-content__caption">
+        Example Voronoi diagram
+    </figcaption>
+</figure>
+
+Voronoi diagrams are named after the Russian mathematician Georgy Voronoy, who introduced the concept in 1908 (although the concept can be traced all with way back to Descartes). Mathematically, the process of creating Voronoi diagrams is a complicated procedure involving [Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) and "circumcircles" (all a mystery to a mere code monkey like myself!), but thankfully we don't have to deal with that directlty when creating our charts in SVG.
+
+## Voronoi diagrams in D3.js
+
+If you're not familiar with D3.js, it's a JavaScript library for creating data visualizations in SVG (it can do `canvas` stuff too, but all I ever use it for is generating path data to pipe into SVGs). I use it all the time for converting data into charts and graphs.
+
+It's a powerful library, but it can be a bit daunting at times and a lot of the demo code you can find (which is plentiful and inspiring) assumes a D3-only workflow. My approach is a bit more peacemeal, as I just use the parts of D3.js that I need to generate path data and coordinates that I then "manually" add to SVG in JSX.
+
+The circles in the example-code above aren't using D3 directly, but my normal workflow is to use D3 to map my data to a pixel domain, so the `cx` and `cy` data _will_ have been run through a D3 "scale" function. _I'll write more about how I use D3 scales in a future post._
+
+So, to create a Voronoi diagram in D3, we need to use the `Delaunay` and `Voronoi` modules. We can then use the `Delaunay.from()` method to create a Delaunay triangulation from our data, and the `voronoi()` method to create a Voronoi diagram from that triangulation.
+
+```js
+import React from "react";
+import { Delaunay } from "d3-delaunay";
+
+const HoverTargets = ({ data, scales, layout, handleHover }) => {
+    const delaunay = Delaunay.from(
+        data.map(d => [scales.x(d.x), scales.y(d.y)])
+    );
+
+    const voronoi = delaunay.voronoi([
+        layout.graph.left,
+        layout.graph.top,
+        layout.graph.right,
+        layout.graph.bottom
+    ]);
+
+    const shapes = data.map((d, i) => {
+        const path = voronoi.renderCell(i);
+        return (
+            <path
+                key={`hover-target-${i}`}
+                pointerEvents="all"
+                d={path}
+                onMouseOver={e => handleHover(e, d)}
+            />
+        );
+    });
+
+    return <g>{shapes}</g>;
+};
+
+export default HoverTargets;
+```
+
+In this example we created a `HoverTargets` component that will map over our data and return an SVG `<path>` for each point (this will be the voronoi "cell"). Within the component we create a Delaunay triangulation object from our data points using the `Delaunay.from()` method. The `data.map(d => [scales.x(d.x), scales.y(d.y)])` part of the code uses D3 scales to translate our data points into pixel positions.
+
+Once we have the Delaunay triangulation, we create a Voronoi diagram by calling `delaunay.voronoi()` with the boundaries of our graph area as an argument. The result is a Voronoi diagram that perfectly fits within the confines of our chart, and it automatically divides the space into cells that correspond to our data points.
+
+The we populate our `<path>` into the `shapes` array, with the `d` value for each path based on the Voronoi cells. When a cell is hovered over, the handleHover function is called, and the associated data point is passed as an argument. This gives us a perfect hitbox for each point.
+
+<figure className="post-content__image-wrapper">
+    <div id="voronoi-example-04">
+        <div className="voronoi-scatter__placeholder" />
+    </div>
+    <figcaption className="post-content__caption">
+        Voronoi diagram incorporated into a scatter plot
+    </figcaption>
+</figure>
+
+## Making it interactive
+
+The final step is to make the Voronoi diagram interactive by adding an `onMouseOver` event listener to each Voronoi cell. Then, when the cell is hovered that listener passes the associated data point to the component's state, which we can then use to apply our hover effects to the correct point on the graph. This can include stylistic effects (like visually highlighting the active point, as in the example below) or functional effects like showing a tooltip or adjusting other parts of the graph.
+
+<figure className="post-content__image-wrapper">
+    <div id="voronoi-example-05">
+        <div className="voronoi-scatter__placeholder" />
+    </div>
+    <figcaption className="post-content__caption">
+        Using the Voronoi shapes as hitboxes for the points. The first diagram
+        shows the hitboxes, and the second shows the points with the hitboxes
+        hidden.
+    </figcaption>
+</figure>
+
+I'll acknowledge that this overview does contain a few _["draw the rest of the owl"](https://knowyourmeme.com/memes/how-to-draw-an-owl)_ moments. I've assumed a certain amount of familiarity with D3.js and React, but if you already know how to attach event listeners and toggle class names based on state, then this article should give you all you need to get cracing with Voronoi diagrams.
+
+By using Voronoi diagrams, we can drastically improve the interactivity of SVG charts, making them more user-friendly and accurate. The best part is that it's all possible with just a few lines of additional code when you're already using D3.js. So the next time you find yourself grappling with hover issues on your scatter plot or any other kind of chart, give Voronoi diagrams a try.
+
+To summarize:
+
+1. When building SVG graphs don't rely on hover interactions on visually small elements - they are hard to target with a cursor.
+2. You can use invisible elements to extend the "hitbox" of your points, but the quick-and-dirty approach (i.e. just makeing the points bigger) can lead to overlapping hitboxes and inaccurate hover interactions.
+3. Voronoi diagrams are a great way to create hitboxes that are as large as possible without overlapping any other points.
+4. If you're using D3.js, the `d3-delaunay` package is a great way to create Voronoi diagrams from your data.

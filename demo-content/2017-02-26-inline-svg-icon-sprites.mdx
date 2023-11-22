@@ -1,0 +1,310 @@
+---
+permalink: /inline-svg-icon-sprites/
+layout: Article
+title: Inline SVG icon sprites are (still) not scary.
+date: 2017-02-26
+excerpt: One of the best things about HTML is that it just works. As with much
+  of the web, things only get weird when designers and developers start adding
+  things.
+tags: articles
+categories:
+  - code
+intro_note: This post deals with the specifics of combining SVGs into a sprite.
+  If you're new to SVG, you might find it useful to read this [explanation of
+  SVG markup first](/svg-markup).
+related:
+  - relativePath: 2015-05-31-inline-svg-icons
+    permalink: /inline-svg-icons/
+    date: 2015-05-31
+    tags: articles
+    categories:
+      - code
+    title: Getting started with inline SVG icons
+    excerpt: As a typography nerd, using a custom font to serve icons felt really
+      good. However, it turns out inline SVG icons are better in almost every
+      way.
+    summary:
+      - This is similar to what you've just read because it provides additional
+        insights on the transition from icon fonts to SVG sprites, adds
+        practical examples on how to use SVG sprites in Jekyll and Wordpress,
+        and reinforces the idea of SVG sprites being advantageous in terms of
+        website performance and ease of maintenance.
+    score: 0.9469621901606602
+  - relativePath: 2017-02-15-svg-markup
+    permalink: /svg-markup/
+    date: 2017-02-15
+    tags:
+      - articles
+      - popular
+    categories:
+      - code
+    title: Getting to grips with SVG markup
+    excerpt: SVGs are complex, for sure, but that very complexity gives them their
+      power. And we don't need to know the intricacies of the co-ordinate system
+      to harness that power.
+    summary:
+      - This is similar to what you've just read because it further explores the
+        benefits of using SVGs, adds depth to the understanding of SVG markup
+        and emphasizes the potential for creativity and design control using
+        SVGs and CSS, which complements the discussion on SVG icon sprites.
+    score: 0.9008468410708951
+
+---
+
+You can see SVG icon sprites in use across the high-performance web. [Lonely Planet](http://www.lonelyplanet.com/)[^1], [GitHub](https://github.com), & [CodePen](http://codepen.io) all use an SVG icon sprite, and there are [plenty](https://sarasoueidan.com/blog/icon-fonts-to-svg/) [of](https://cloudfour.com/thinks/seriously-dont-use-icon-fonts/) [advocates](https://css-tricks.com/svg-sprites-use-better-icon-fonts/) for SVG icons across the development community. These examples come from the cutting-edge of front-end development, but SVG icons are not "hard" or "complicated". In fact, using an SVG sprite is one of the easiest ways to maintain an icon system.
+
+Vector-based images are much better than raster formats (JPG & PNG) for creating icon systems for websites. They're easy to style with CSS, and have small file-sizes. The old way of dealing with this was to use _icon fonts_ (where the icons were glyphs in a typeface), but a couple of years ago [a better method emerged](https://css-tricks.com/icon-fonts-vs-svg/): SVG icon sprites.
+
+## Using an SVG sprite
+
+We _could_ add SVG icons to our sites using standard image-tag syntax – `<img src="our_icon.svg">` – but that's not the best option. Every new `<img>` we add to the page creates a new HTTP request, which is bad for performance. The more requests you make, the longer the site takes to load[^2]. As in the bad-old-days of image-sprites, it makes sense to group all our icons into a single request. Or even better: no extra requests at all. We can do this with SVG icon sprites.
+
+We call them "sprites", but _SVG_ sprites are much more elegant and programmatic than their rasterized forebears. The SVG language allows us to group blocks of icon-code in a single file for individual use later. All our disparate icon files get smushed into one big SVG, which we load like an asset. Then whenever we want to display a particular icon, we reference the relevant part of the master SVG file. No matter how many icons we use, or how often we use them, we're only ever including the complex SVG code once.
+
+The reason we can do this is because SVG is a XML-like language. We can mark out different elements using tags in much the same manner as we'd mark-up our HTML. Instead of using `<h1>` tags for headings and `<a>` tags for links, we use tags for lines and shapes. We can also use tags to group our shapes together. The `<g>` tag ("g" == "group") is the obvious choice, but the `<symbol>` tag work best for our purposes[^3]. The following code-snippet shows two separate icons within one SVG file:
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg">
+    <symbol viewBox="0 0 100 100" id="square_icon">
+        <path d="M10 10H90V90H10Z"/>
+    </symbol>
+    <symbol viewBox="0 0 100 100" id="circle_icon">
+        <circle cx="50" cy="50" r="40"/>
+    </symbol>
+</svg>
+```
+
+Notice how we've added a standard HTML `id` attribute to each `<symbol>`. This is the "secret sauce" that makes SVG sprites useful. We can now load our entire SVG at the top of our page and extract the symbols whenever we need them.
+
+With the sprite-code in place, using individual icons becomes much simpler. We can include them whenever and wherever we need them by taking advantage of SVG's `<use>` tag.
+
+```xml
+<svg>
+    <use xlink:href="#square_icon"/>
+</svg>
+```
+
+And of course we can still add classes to the `<svg>` tags, allowing us to style an icon in as many different ways as we like.
+
+```html
+<ul class="example_svg_list">
+    <li>
+        <svg class="example_svg_1"><use xlink:href="#example_svg" /></svg>
+    </li>
+    <li>
+        <svg class="example_svg_2"><use xlink:href="#example_svg" /></svg>
+    </li>
+    <li>
+        <svg class="example_svg_3"><use xlink:href="#example_svg" /></svg>
+    </li>
+</ul>
+```
+
+<ul className="example_svg_list cluster--center">
+    <li>
+        <svg
+            className="example_svg_1"
+            viewBox="0 0 512 512"
+            id="code"
+            width="100%"
+            height="100%"
+        >
+            <path d="M37.8 237.8h14.6v12.6H37.8zM37.8 269.3h14.6v12.6H37.8zM37.8 174.9h14.6v12.6H37.8zM37.8 206.4h14.6V219H37.8zM37.8 300.8h14.6v12.6H37.8zM37.8 332.3h14.6v12.6H37.8zM37.8 143.4h14.6V156H37.8zM73.4 237.8h35v12.6h-35zM73.4 269.3h76.7v12.6H73.4zM73.4 174.9h403.1v12.6H73.4zM73.4 206.4h294.2V219H73.4zM73.4 300.8H247v12.6H73.4zM73.4 332.3h134.7v12.6H73.4zM73.4 143.4h43.1V156H73.4z"></path>
+            <circle cx="40.8" cy="97.3" r="6.2"></circle>
+            <circle cx="62.9" cy="97.3" r="6.2"></circle>
+            <circle cx="84.9" cy="97.3" r="6.2"></circle>
+            <path d="M511.9 108.8c-.2-3-1-9.9-4.2-16.8-4.1-8.8-12.9-19.4-31.3-19.4H37.8C9 72.6.7 95.4.1 108.8H0v283.9h366.3l14.3 42.8 19.6-19.6 24.5 24.5 28.9-28.9-18.7-18.7H512l-.1-284zM37.8 85.1h438.7c19.6 0 22.5 17.8 22.9 23.6H12.7c.4-5.8 3.6-23.6 25.1-23.6zm398 326.2l-11.1 11.1-24.5-24.5-14.1 14.1-19.3-58 58 19.3-13.4 13.4 24.4 24.6zm63.6-31.3h-63.5l12.1-12.1-101.2-33.7 15.3 45.8H12.6V121.4h486.8V380z"></path>
+        </svg>
+    </li>
+    <li>
+        <svg
+            className="example_svg_2"
+            viewBox="0 0 512 512"
+            id="code"
+            width="100%"
+            height="100%"
+        >
+            <path d="M37.8 237.8h14.6v12.6H37.8zM37.8 269.3h14.6v12.6H37.8zM37.8 174.9h14.6v12.6H37.8zM37.8 206.4h14.6V219H37.8zM37.8 300.8h14.6v12.6H37.8zM37.8 332.3h14.6v12.6H37.8zM37.8 143.4h14.6V156H37.8zM73.4 237.8h35v12.6h-35zM73.4 269.3h76.7v12.6H73.4zM73.4 174.9h403.1v12.6H73.4zM73.4 206.4h294.2V219H73.4zM73.4 300.8H247v12.6H73.4zM73.4 332.3h134.7v12.6H73.4zM73.4 143.4h43.1V156H73.4z"></path>
+            <circle cx="40.8" cy="97.3" r="6.2"></circle>
+            <circle cx="62.9" cy="97.3" r="6.2"></circle>
+            <circle cx="84.9" cy="97.3" r="6.2"></circle>
+            <path d="M511.9 108.8c-.2-3-1-9.9-4.2-16.8-4.1-8.8-12.9-19.4-31.3-19.4H37.8C9 72.6.7 95.4.1 108.8H0v283.9h366.3l14.3 42.8 19.6-19.6 24.5 24.5 28.9-28.9-18.7-18.7H512l-.1-284zM37.8 85.1h438.7c19.6 0 22.5 17.8 22.9 23.6H12.7c.4-5.8 3.6-23.6 25.1-23.6zm398 326.2l-11.1 11.1-24.5-24.5-14.1 14.1-19.3-58 58 19.3-13.4 13.4 24.4 24.6zm63.6-31.3h-63.5l12.1-12.1-101.2-33.7 15.3 45.8H12.6V121.4h486.8V380z"></path>
+        </svg>
+    </li>
+    <li>
+        <svg
+            className="example_svg_3"
+            viewBox="0 0 512 512"
+            id="code"
+            width="100%"
+            height="100%"
+        >
+            <path d="M37.8 237.8h14.6v12.6H37.8zM37.8 269.3h14.6v12.6H37.8zM37.8 174.9h14.6v12.6H37.8zM37.8 206.4h14.6V219H37.8zM37.8 300.8h14.6v12.6H37.8zM37.8 332.3h14.6v12.6H37.8zM37.8 143.4h14.6V156H37.8zM73.4 237.8h35v12.6h-35zM73.4 269.3h76.7v12.6H73.4zM73.4 174.9h403.1v12.6H73.4zM73.4 206.4h294.2V219H73.4zM73.4 300.8H247v12.6H73.4zM73.4 332.3h134.7v12.6H73.4zM73.4 143.4h43.1V156H73.4z"></path>
+            <circle cx="40.8" cy="97.3" r="6.2"></circle>
+            <circle cx="62.9" cy="97.3" r="6.2"></circle>
+            <circle cx="84.9" cy="97.3" r="6.2"></circle>
+            <path d="M511.9 108.8c-.2-3-1-9.9-4.2-16.8-4.1-8.8-12.9-19.4-31.3-19.4H37.8C9 72.6.7 95.4.1 108.8H0v283.9h366.3l14.3 42.8 19.6-19.6 24.5 24.5 28.9-28.9-18.7-18.7H512l-.1-284zM37.8 85.1h438.7c19.6 0 22.5 17.8 22.9 23.6H12.7c.4-5.8 3.6-23.6 25.1-23.6zm398 326.2l-11.1 11.1-24.5-24.5-14.1 14.1-19.3-58 58 19.3-13.4 13.4 24.4 24.6zm63.6-31.3h-63.5l12.1-12.1-101.2-33.7 15.3 45.8H12.6V121.4h486.8V380z"></path>
+        </svg>
+    </li>
+</ul>
+
+## Building an SVG sprite with Gulp
+
+Hand-coding SVG icon sprites can be a real chore. It gives your site's _users_ the best experience possible, but it's not fun for developers. Even combining _simple_ SVGs into `<symbol>` elements inside a single `<svg>` is not a fun way to spend your time. And real-world SVGs are never as easy to read as the examples show here. What we need is a way to automate the sprite-creation process.
+
+I automate other front-end tasks using a _task runner_. If you've made it this far into an article about creating SVG icon sprites, then I'm going to assume you use one too. Gulp is my task-runner of choice, but you might be using something like Grunt[^4]. Gulp already handles my javascript and css, so adding my icons into the mix is a natural progression.
+
+Adding an SVG icon sprite to my Gulp setup was quick &amp; painless, and the same task has been serving me well for over two years now. The [`gulp-svg-sprite` module](https://github.com/jkphl/gulp-svg-sprite) runs error-free without much need for configuration. If you've already got a `gulpfile.js` in your project, you can install the module like this:
+
+```bash
+npm install gulp-svg-sprite --save
+```
+
+That module takes individual SVG files and combines them into a single `<svg>`. Each file becomes a `<symbol>` with an ID matching the original filename.
+
+So a folder structure like this:
+
+```bash
+SVG_folder
+- icon_one.svg
+- second_icon.svg
+```
+
+Becomes a sprite like this:
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon_one">
+        <path d="/* path data */"/>
+    </symbol>
+    <symbol id="icon_two">
+        <path d="/* path data */"/>
+    </symbol>
+</svg>
+```
+
+Once we've installed the module, we need to build our task. The important things to set are the source folder and destination folder. I.e. where the task will _find_ the raw SVGs, and where it will _put_ the sprite.
+
+```js
+// Load the module.
+var svgSprite = require("gulp-svg-sprite");
+
+// Set our desired configuration values.
+svgConfig = {
+    mode: {
+        // Make sure we're combining icons
+        // using the <symbol> method.
+        symbol: true
+    },
+    // Some more settings to keep
+    // the SVG's code clean:
+    svg: {
+        xmlDeclaration: false,
+        doctypeDeclaration: false,
+        // By default the module wants to namespace
+        // all our IDs and classes. We're grownups
+        // so we want to preserve our settings.
+        namespaceIDs: false,
+        namespaceClassnames: false
+    }
+};
+
+// Define our task.
+gulp.task("svg", function () {
+    // Set the source folder.
+    gulp.src("uncompressed/icons/**/*.svg")
+        // Include our options.
+        .pipe(svgSprite(svgConfig))
+        // Set the destination folder.
+        .pipe(gulp.dest("assets/icons"));
+});
+```
+
+With this task in place, maintaining an SVG icon sprite is easy. Whenever we add a new icon to our source folder we just need to run `gulp svg`. That takes our raw files, cleans them up, and combines them into a single file.
+
+## Keeping the intermediate files.
+
+When creating our sprite, the module first cleans-up our SVGs. It removes empty tags, strips out any unnecessary attributes, and minifies the files. This can come in handy if you need easy access to nice, neat SVG code for an individual icon.
+
+If you want to target discrete elements _within_ an icon, you may need to include the raw markup in your page. This can be necessary when you want to build complex animations or transitions. Being able to copy/paste the nicely-configured code is useful in these situations.
+
+You can configure the module to create a folder with the individual SVGs in after they've been optimized and cleaned-up by the module. You can do this by adding the following rule to the `svgConfig` object:
+
+```js
+shape: {
+    // Choose a folder to store the
+    // intermediate SVG files in.
+    dest: "intermediate";
+}
+```
+
+## Including the sprite in a site
+
+Once Gulp has created the sprite file for us, we need to add that to our page below your opening `<body>` tag. Copy-pasting the contents of `sprite.symbol.svg` would do the trick. But we can automate this process by including a reference to our sprite file.
+
+Including an SVG icon sprite in a Jekyll site
+: In the past I've worked a lot with Jekyll - a static-site generator. When it comes to performance and security it's hard to beat static HTML files. Jekyll compiles a site _before_ it gets put on a server. There are no databases to hack, and no server-side build-steps to slow the site down. Because Jekyll is already combining lots of files together, adding a sprite into the mix is easy.
+
+We can get Gulp to output the sprite into Jekyll's `_includes` directory by changing the path in `gulp.dest()`. So `.pipe( gulp.dest( 'assets/icons' ) );` becomes `.pipe( gulp.dest( '_includes' ) );`. Then you can pull in your sprite with a simple "include" statement:
+
+```liquid
+{% include /symbol/svg/sprite.symbol.svg %}
+```
+
+Remember to use Liquid's `{% raw %}` tag to ensure the SVG code doesn't get escaped.
+
+<dl>
+    <dt>Including an SVG icon sprite in a WordPress site</dt>
+    <dd>
+        I built this site in WordPress, which has its own conventions for
+        including files. When I want to inject code into the markup,
+        `get_template_part()` is the preferred method. The only downside is that
+        `get_template_part()` only works for PHP files.
+    </dd>
+</dl>
+
+I get around this obstacle with the following Gulp task:
+
+```js
+gulp.task("svg_rename", function () {
+    return gulp
+        .src("assets/icons/symbol/svg/*.svg")
+        .pipe(rename("iconsprite.svg.php"))
+        .pipe(gulp.dest("assets/icons"));
+});
+```
+
+That task renames the sprite and saves the renamed file in the `assets/icons` directory. Note that we're adding _two_ file extensions: `.svg` and `.php`. Once we've generated this file we include it in our code like this:
+
+```php
+<?php get_template_part('assets/icons/iconsprite.svg'); ?>
+```
+
+<dl>
+    <dt>Hiding the sprite</dt>
+    <dd>
+        When we load a page with an SVG icon sprite in it, the browser will try
+        to render the sprite code. This can create a large empty space at the
+        top of our page. The only time we want our SVG code to appear is when we
+        reference it with a{" "}
+        <code>
+            <use />
+        </code>{" "}
+        tag, so we want to hide the raw sprite. Remember to add a style of
+        `display:none;` to the sprite or it's container.
+    </dd>
+</dl>
+
+---
+
+Building and using SVG icon sprites sounds complicated, and it is. But maintaining a performant and scalable icon system is a non-trivial task. That complexity has to live _somewhere_, and icon sprites are by far the best of the options[^5]. Couple the sprite with a sensible workflow and the whole process becomes second-nature.
+
+I've been using [SVG icon sprites in production](http://caniuse.com/#search=SVG) for over two years now. I have yet to see a simpler solution. Now that I've got by Gulp setup how I like it, I can be confident that all the tools I need are at my fingertips. Whenever I need to add a new icon to a site, it's a two-step process. I save an SVG to my `uncompressed/icons` folder and drop a corresponding `<use>` element in my markup.
+
+Like many good ideas before them, SVG icon sprites are spreading across the web. And like Tyler Sticka said: [Don't be Table Guy](https://cloudfour.com/thinks/seriously-dont-use-icon-fonts/).
+
+[^1]: Ian Feather wrote a great article about when [Lonely Planet switched from using an icon-font to SVG icon sprites](http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/).
+[^2]: The number of requests is a big deal with regular HTTP connection. HTTP-2, however, changes things; but you'll have to find out more about that elsewhere.
+[^3]: We could just use a `<g>` tag – or even reference individual paths and shapes directly – but `<symbol>` allows us to add a `viewBox` attribute. This means we only have to declare the view-box once for each icon, rather than repeating ourselves every time we use the icon in our page.
+[^4]: Note that the raw [`svg-sprite` Node module](https://github.com/jkphl/svg-sprite) doesn't read or write to the file system, so you'll need to use _something_ to help you out.
+[^5]: It is worth looking at the counter argument in favour of icon fonts, because SVG sprites may not be appropriate for everybody. Ben Frain probably [makes the best case against SVG sprites](https://benfrain.com/seriously-use-icon-fonts/), but his argument is about _changing_ from fonts to sprites. Kind of a "if it ain't broke" thesis.

@@ -1,0 +1,356 @@
+---
+permalink: /line-graphs-with-react-svg-d3/
+layout: Article
+title: Line graphs with React and D3.js
+date: 2021-07-21
+excerpt: Generating a dynamic SVG visualisation of audio frequency data.
+tags:
+  - articles
+  - featured
+  - intro
+scripts:
+  - frequency-graphs
+custom_stylesheet: /tomhazledine.delay.css
+categories:
+  - audio
+  - code
+related:
+  - relativePath: 2020-12-30-web-audio-delay
+    permalink: /web-audio-delay/
+    date: 2020-12-30
+    tags:
+      - articles
+      - featured
+      - intro
+    categories:
+      - audio
+      - code
+    title: Building a delay effect with the Web Audio API
+    excerpt: An introduction to the power of JavaScript's Web Audio API
+    summary:
+      - This is similar to what you've just read because it also involves
+        creative use of JavaScript and web APIs to create interactive, dynamic,
+        and visually engaging elements, but this time focused on audio
+        functionality rather than data visualization.
+    score: 0.8514342898798005
+  - relativePath: 2023-09-30-improving-svg-chart-interactivity-with-voronoi-diagrams
+    permalink: /improving-svg-chart-interactivity-with-voronoi-diagrams/
+    date: 2023-09-30
+    tags:
+      - articles
+      - intro
+    categories:
+      - code
+    title: Improving SVG chart interactivity with Voronoi diagrams
+    excerpt: How I used Delaunay triangulation and Voronoi diagrams to fix hover
+      issues in my SVG charts (with React and D3.js).
+    summary:
+      - This is similar to what you've just read because it also details
+        applications of D3.js and SVG in building interactive data
+        visualizations, focusing on the use of Voronoi diagrams to improve the
+        usability of scatter plots.
+    score: 0.8383405984602779
+
+---
+
+A while ago I wrote [an article about the Web Audio API](/web-audio-delay/) with an interactive demo. The primary visualisation for that demo was a series of graphs that displayed the live frequency data of the sounds made by the demo. Since then, several people have asked about how the graphs were made and the answer is way too confusing when expressed at tweet-length, so this post is a full explanation.
+
+The core principle is to use React to generate an SVG that updates ("reacts"?) when the data changes, and to use certain features of D3.js to make these calculations easier.
+
+<figure>
+    <div id="delay-block"></div>
+    <figcaption>
+        Push the "pulse" button to make some bleepy-bloopy sounds. The frequency
+        data will be shown in the graph in real-time.
+    </figcaption>
+</figure>
+
+<ToC items={[
+    "What are the tools we'll be using?",
+    {
+        title: "The basics: converting an array of data into an SVG path",
+        children: [
+            "Step 1. parsing the data",
+            "Step 2. creating a React component with an SVG in it",
+            "Step 3. mapping our data to the visual domain using D3.js"
+        ]   
+    },
+    "Make it dynamic",
+    "Why is this graph so different from the original demo?",
+    "Core ideas to use in your own work"
+]}/>
+
+## What are the tools we'll be using?
+
+1. **SVG**[^1]: using an SVG `path` feels (to me) like a really intuitive way to draw our graph lines. You can inspect the results in any web-inspector just like any other DOM node, and we can style the SVG with CSS in the same way we would style any other component.
+2. **React**: the React "virtual DOM" makes this kind of graph really easy. When the data changes, React efficiently handles the re-rendering of the graph. Because we're using a stream of real-time audio data that updates several times a second, we don't need to worry about "tweening" or animating the graph line.
+3. **D3.js**: D3 is a powerful tool that _could_ handle the creation of the whole graph. I find React more intuitive for this kind of component work, but D3 has some amazing data-wrangling tools that we can leverage to make our life easier. Specifically, the mapping of data into a layout-friendly domain and the creation of the actual `path` values that will form the main part of the graph.
+
+The aim is to optimize for an easy workflow that leans into the tools and techniques that I already use when creating websites. I already use React for anything that needs to be "dynamic". SVG uses markup that looks familiar to anyone who knows HTML, and can be styled with the same (S)CSS workflow that I use for every web project. D3 is the only graph-specific tool I'm using, and that's because it has some very specific utilities that make the rest of the process much easier.
+
+## The basics: converting an array of data into an SVG path
+
+So what's happening in the example at the top of the page? At the most basic level, the Web Audio API code is giving us an array of numbers for each moment in time. These numbers are then converted to a format that can be used as line data in an SVG. That SVG is then rendered on the page. Here's a simpler example, with all the "decorative" elements (axes, labels, etc.) removed, and using a simpler (and static) data set:
+
+<figure>
+    <div id="simple-line-graph"></div>
+    <figcaption>A simple static line graph drawn using SVG.</figcaption>
+</figure>
+
+### Step 1. parsing the data
+
+To build this reduced version of the graph, we'll start off with some representative data. We'll use fewer numbers than the real audio data, but the basic format is the same. The Web Audio API "analyser" gives us an array of frequency data for each moment in time[^2], so what we're using for this demo is functionally the same:
+
+```js
+const exampleData = [34, 44, 32, 78, 184, 221, 171, 26, 62, 5];
+```
+
+The obvious thing that we're missing from this data is a second axis. Each "node" in the graph line represents an `x` and `y` coordinate, and our data only contains a single dimension.
+
+With the real audio data, the array of numbers represents the volume of the signal at a series (an array, even?) of specifc frequencies. This level (ranging between `0` and `255`) becomes what we plot on the y-axis. Because each value represents an evenly-spaced slice of the frequency data we can distribute our points evenly across our graph. We can use the index-value from the array to create the x-axis data we need.
+
+To convert our raw array of numbers into a format that can be used to draw a graph, we want each item to be an object with an `x` and `y` value. A quick `map()` over our array creates this for us:
+
+```js
+const exampleData = [34, 44, 32, 78, 184, 221, 171, 26, 62, 5];
+const cleanData = exampleData.map((item, i) => ({ x: i, y: item }));
+
+// cleanData = [
+//     {x: 0, y: 34},
+//     {x: 1, y: 44},
+//     {x: 2, y: 32},
+//     {x: 3, y: 78},
+//     etc...
+// ];
+```
+
+### Step 2. creating a React component with an SVG in it
+
+Now we're armed with some useable data, we can create a React component to draw this data onto the page.
+
+What we want is to draw an rectangular `<svg>` element with a single `<path>` within it. An SVG `<path>` gets it's shape from a data prop called `d`. We'll create a `line` state value that will populate this prop, and hard code this value for now (and add _our_ data in the next step).
+
+Note that we're doing something triksy with the SVG's `viewBox` property here. Because in future steps we'll be mapping our data to coordinates within the SVG, we need a _fixed_ set of dimensions for our image. But we also want our graph to be responsive and fit whatever screen it's being shown on (even in narrow contexts!) so we're setting **absolute** values for our `viewBox` and a **relative** value (a percentage) for our `width`. Combined with the `preserveAspectRatio="none"` prop, this means that we only need to do our coordinate calculations once, and CSS will work it's magic to ensure the graph responds to different widths correctly.
+
+```js
+import React, { useState } from "react";
+
+const ExampleLineGraph = ({ data }) => {
+    const [line, setLine] = useState("M0,200 L100,100 L400,100 L500,0");
+
+    return (
+        <svg
+            className="graph--example"
+            width="100%"
+            height="200"
+            viewBox="0 0 500 200"
+            preserveAspectRatio="none"
+        >
+            <path className="graph__data" d={line} />
+        </svg>
+    );
+};
+
+export default ExampleLineGraph;
+```
+
+We'll also want to set some CSS rules so our SVG looks the way we want it to:
+
+```css
+// Declare our colour custom properties (a.k.a. CSS variables)
+:root {
+    --grey: #dad8d2;
+    --primary: #00b7c6;
+}
+
+// Set the border for the whole graph
+.graph--example {
+    border: 1px solid var(--grey);
+}
+
+// Set the colour of the line (and remove any defualt "fill" our line may have)
+.graph__data {
+    fill: none;
+    stroke: var(--primary);
+}
+```
+
+Then all that's left is to mount our example graph on the page. Don't forget that even though we're passing in our `cleanData` value here, we're not actually using it yet (that will come in step #3):
+
+```js
+const exampleData = [34, 44, 32, 78, 184, 221, 171, 26, 62, 5];
+const cleanData = exampleData.map((item, i) => ({ x: i, y: item }));
+
+ReactDOM.render(
+    <ExampleLineGraph data={cleanData} />,
+    document.getElementById("simple-line-graph")
+);
+```
+
+<figure>
+    <div id="super-simple-line-graph"></div>
+    <figcaption>
+        A hard-coded SVG <code>&lt;path&gt;</code>.
+    </figcaption>
+</figure>
+
+### Step 3. mapping our data to the visual domain using D3.js
+
+With our basic line being successfully drawn within the SVG, the next step is to hook in our "real" data. Currently we're passing in an array of data via the `data` prop, but we're not using it yet. We need to convert the array of x/y objects into a format that can be understood by the `d` property of an SVG `<path>` element.
+
+This is where D3.js comes in handy. The D3 graphing library is often used to generate entire graphs, but all we need in this instance are a couple of helper functions to make our data-conversion a little easier:
+
+```js
+import { line, scaleLinear } from "d3";
+```
+
+-   D3's `line()` function will handle the formatting of our data: turning it into a valid SVG `d` value.
+-   D3's `scaleLinear()` function will help us convert our raw data into spatially-aware values (a.k.a. mapping our **frequency** values into **pixel** values)
+
+The key concept at work here is that of **ranges** and **domains**. Our raw data exists in a frequency "domain", and the values are frequency values (i.e. `34 Hz`, `44 Hz`, `32 Hz` etc. ). To draw this data with our graph, we'll need to convert those frequencies into _pixel_ values; we need to transform them from the frequency domain to the spatial "range". This is what we'll use `scaleLinear` for.
+
+Defining the spatial range is relatively straightforward. In our first pass at the graph, we hardcoded the `viewBox` values for our graph. To make life easier for ourselves (and to avoid accidentally changing an important value in one place but missing it in another) we'll define our width and height values in a `layout` object that we can reference every time we need to use a layout value. We'll then update the `height` and `viewBox` props to use these values:
+
+```js
+const layout = {
+    width: 500,
+    height: 200
+};
+```
+
+```js
+height={layout.height}
+viewBox={`0 0 ${layout.width} ${layout.height}`}
+```
+
+The next piece of the puzzle is to setup our D3 functions as values we can use in the rest of our code. As well as our line generator (using the D3 `line()` function), we'll need to _scales_[^3]: one for `x` and one for `y`. For each scale we'll set a range from `0` to the corresponding layout value (width for `x` and height for `y`):
+
+```js
+const graphDetails = {
+    xScale: scaleLinear().range([0, layout.width]),
+    yScale: scaleLinear().range([layout.height, 0]),
+    lineGenerator: line()
+};
+```
+
+There are two more things we need to setup for our line generator before we can use it. Firstly we need to define the domain of our data, and secondly we need to tell the generator which values to use for which axis.
+
+Setting the data domain looks similar to how we set the range. We're defining the minimum and maximum values our data might be. The `x` domain is the simpler of the two, being as it's the number of items in our array (more complicated datasets would need more complicated domains, of course). As for the `y` domain, we know that our audio analyser provides a maximum frequency value of `255 Hz`, so we can hardcode this value (I like to add a bit of "headroom" to the graph for purely visual reasons, so I've bumped the value from `255` to `280`).
+
+```js
+graphDetails.xScale.domain([0, data.length - 1]);
+graphDetails.yScale.domain([0, 280]);
+```
+
+Assigning the correct data values to the line generator is one of the more esoteric parts of D3 (it confused me for a long time!). Things made a lot more sense when I realised that we're defining a function that will be run for each item in our dataset _when the line generator is actually used_.
+
+Our data (provided to this component via the `data` prop) is in object format (e.g. `{x: 3, y: 78}`). We've handily named our values `"x"` and `"y"` but they could be called _anything_, so we need to tell our line generator which values to use. This is also the point where the values are run through our scale functions. So for each item (`d`) in our dataset, we're passing our `d["x"]` value into the `xScale` function, and returning that computed value. (and ditto for `y`).
+
+```js
+graphDetails.lineGenerator.x(d => graphDetails.xScale(d["x"]));
+graphDetails.lineGenerator.y(d => graphDetails.yScale(d["y"]));
+```
+
+And now that the line generator is all set up, we can finally use it when we intialise our `lineData` state, and then we can plumb that into the `<path>` element within our SVG:
+
+```js
+const [lineData, setLineData] = useState(() =>
+    graphDetails.lineGenerator(data)
+);
+```
+
+```js
+<path className="graph__data" d={lineData} />
+```
+
+At this point, the full component looks like this:
+
+```js
+import React, { useState } from "react";
+import { line, scaleLinear } from "d3";
+
+const ExampleLineGraph = ({ data }) => {
+    const layout = {
+        width: 500,
+        height: 200
+    };
+
+    const graphDetails = {
+        xScale: scaleLinear().range([0, layout.width]),
+        yScale: scaleLinear().range([layout.height, 0]),
+        lineGenerator: line()
+    };
+
+    graphDetails.xScale.domain([0, data.length - 1]);
+    graphDetails.yScale.domain([0, 280]);
+
+    graphDetails.lineGenerator.x(d => graphDetails.xScale(d["x"]));
+    graphDetails.lineGenerator.y(d => graphDetails.yScale(d["y"]));
+
+    const [lineData, setLineData] = useState(() =>
+        graphDetails.lineGenerator(data)
+    );
+
+    return (
+        <svg
+            className="graph--example"
+            width={"100%"}
+            height={layout.height}
+            viewBox={`0 0 ${layout.width} ${layout.height}`}
+            preserveAspectRatio="none"
+        >
+            <path className="graph__data" d={lineData} />
+        </svg>
+    );
+};
+
+export default ExampleLineGraph;
+```
+
+<figure>
+    <div id="final-simple-line-graph"></div>
+    <figcaption>The line renders the real data 🎉</figcaption>
+</figure>
+
+## Make it dynamic
+
+The beauty of using React for a project like this is that there aren't many more steps required to make the graph dynamically respond to changing data. Because we've already initialised our data with a `useState` hook, we can make React watch for changes in the data with a standard `useEffect` hook.
+
+```js
+useEffect(() => {
+    if (data) {
+        // Calculate the data line
+        const newLine = graphDetails.lineGenerator(data);
+        setLineData(newLine);
+    }
+}, [data]);
+```
+
+With this hook in place, whenever the `data` prop changes the path `d` will be recalculated and re-rendered. Note again that we're not digging into the specifics of _how_ the data value is changed. That would require an entire article on Web Audio API analyser nodes. This example just covers the graphing component, not the actual data generation.
+
+<figure>
+    <div id="delay-block-simplified"></div>
+    <figcaption>
+        Push the "pulse" button to make some bleepy-bloopy sounds.
+    </figcaption>
+</figure>
+
+## Why is this graph so different from the original demo?
+
+There are a couple of obvious differences between this simplified demo and full-featured frequency graph at the top of this page.
+
+1. The first graph uses a logarithmic scale for the x-axis (note how on the simple example, the peaks occur squished toward the left of the graph). Instead of using D3's `scaleLinear()` function, the original graph uses `scaleLog()` combined with actual frequency values (rather than the evenly spaced indexes that we've used for the simpler demo). If you're implementing this for yourself, you can apply the same concepts that we used on our y-axis: i.e. mapping between a visual range and a data domain.
+2. The first graph has tick marks (the helpful guiding lines that make it clear where each frequency goes). These are implemented with `<line>` nodes in SVG, drawing simple lines from one x/y coordinate to another using the `x1`, `y1`, `x2`, and `y2` props.
+3. The first graph has labels for the axes. Truth be told, I've dodged some complexity here by only marking the minimum and maximum frequency values. This allows me to add the labels with traditional markup and CSS. If you wanted to mark incremental values along either axis, you would need to use the `yScale` or `xScale` functions to find the visual positions of the exact values you wanted to mark.
+
+## Core ideas to use in your own work
+
+As I just mentioned, in this article we've made a much-simplified version of the original frequency graph. This is deliberate, because every graph will inevitably have it's own quirks and idiosyncrasies that make it different from all other graphs (and thus hard to explain in a basic manner). I wish it wasn't so, but you can only abstract so far before your all-singing-all-dancing reusable graphing component has so many options that it's actually _harder_ to use that building every graph individually from scratch. This article is an attempt to show a few core concepts that can be reused in lots of different contexts. Those core concepts are:
+
+1. Use whatever tools that you are most comfortable with (but sometimes add in a _little_ bit of something new to make your life easier). I'm comfortable using React and SVG, so I'm mostly just using those. Graph-maths can get hard, though, so I'm using _as little D3 as possible_ to make my life easier.
+2. SVG and React are great tools for creating visualisations. If visualising data is something that you want to do on a regular basis, these tools are great ones to learn. They're versatile enough to handle all sorts of data-vis and the skills you learn will also be useful in the wider web ecosystem (so you're not wasting too much time learning an esoteric system that's only useful for one thing).
+3. Speaking of esoteric systems, D3.js is really powerful but can be daunting too. It can do so much, but also has it's own quirky ways of doing a lot of things. My response is to just use the parts that I actually need, which in this case is just the line generator and linear scale calculator. Then I'm free to let the more conventional tools (a.k.a. React and hand-coded vanilla SVG) to do the bulk of the work.
+
+[^1]: If SVGs are new to you (or you just need a quick refresher on their syntax) I've written a [primer on SVG markup](/svg-markup/) that might be useful.
+[^2]: _**A quick note about getting audio data:** we're skipping the details of getting raw frequency data from the Web Audio API. The important concept to Google is the `createAnalyser` method. `createAnalyser()` is available on any audio "context" (a concept we touched on in detail in the [original Web Audio API post](/web-audio-delay/))._
+[^3]: Note that for the yScale we're setting the range in reverse (from `height` to `0`). This is so that our line starts at the _bottom_ of the graph.

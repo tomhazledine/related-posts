@@ -1,0 +1,119 @@
+---
+permalink: /what-is-a-decibel-anyway/
+layout: Article
+title: What is a decibel, anyway?
+date: 2017-03-22
+excerpt: The decibel has always confused me. I did some research, and it turns
+  out the decibel is actually pretty interesting.
+tags:
+  - articles
+  - featured
+  - popular
+read_time_override: roughly seven minutes
+categories:
+  - audio
+related:
+  - relativePath: 2020-12-30-web-audio-delay
+    permalink: /web-audio-delay/
+    date: 2020-12-30
+    tags:
+      - articles
+      - featured
+      - intro
+    categories:
+      - audio
+      - code
+    title: Building a delay effect with the Web Audio API
+    excerpt: An introduction to the power of JavaScript's Web Audio API
+    summary:
+      - This is similar to what you've just read because it continues to explore
+        audio manipulation, this time delving into the hands-on creation of
+        sound effects through coding and the practical application of sound
+        principles such as feedback and delay.
+    score: 0.8118183831639654
+  - relativePath: 2021-03-31-falling-back-in-love-with-music
+    permalink: /falling-back-in-love-with-music/
+    date: 2021-03-31
+    tags:
+      - articles
+    categories:
+      - audio
+    title: Falling back in love with music
+    excerpt: Ditching web audio in favour of hardware synthesisers
+    summary:
+      - This is similar to what you've just read because both posts share a deep
+        fascination with the technical aspects of sound production, with the
+        second post focusing on the practical application and experience of
+        creating unique sounds using modular synthesizers, drawing a connection
+        between audio engineering and music creation that complements the
+        technical discussion of decibels in the first post.
+    score: 0.7916899432196506
+
+---
+
+The decibel has always confused me. Sometimes people use decibels as an absolute value where "0" is silence and anything over "120" is very loud. Journalists do this when describing how loud a band is[^1]. Sound engineers do it too, when boasting about the power of their speaker-setup. "It's louder than a jet engine at 50 paces, man". But when I look at the volume meter on a mixing desk, things are different. The desk shows the loudest value as zero, all the way down to silence at "-96" (or sometimes even "∞"). See what I mean? Confusing.
+
+<figure className="post-content__image-wrapper">
+    <img
+        className="post-content__image"
+        src="/images/articles/logic-mixer.jpg"
+        alt="The mixer section of Logic X"
+    />
+    <figcaption className="post-content__caption">
+        The mixer section of Logic X (a typical DAW - Digital Audio Workstation)
+    </figcaption>
+</figure>
+
+For a long time I've been at least tangentially connected to the world of "pro" audio. As such, I'd feel uneasy when I overheard a lay-person talking about volume. I would often catch myself thinking "I know they are getting it wrong, but I don't know why". So after years of pretty much taking the decibel for granted, I finally had enough. I did some research, and it turns out the decibel is actually pretty interesting.
+
+-   A decibel is a relative unit. That means it expresses a ratio, and not an explicit value.
+-   Decibels are measured using a logarithmic scale[^2].
+-   They are a good unit for expressing very small _and_ very large differences, and can do both on the same scale. This works because they are relative and logarithmic.
+-   Decibels are a technical measure of intensity and/or pressure. Humans don't hear all frequencies equally, so "loudness" is a subjective concept.
+-   When decibels _are_ used to express "loudness", (for instance, by journalists) they are used with a fixed point of reference. In this context, the unit we're using is dBSPL (decibels relative to sound pressure level).
+-   dBSPL represent an absolute value of sound pressure. Just like 20 metres is the same length wherever you go, 20 dBSPL always represents the same level of sound pressure. To use a decibel this way, we need a fixed point of reference. The reference point for dBSPL is 20μPa (micropascals) - roughly the limit of sensitivity of the human ear.
+-   Levels of >120 dBSPL will damage our ears, but our pain threshold is somewhere around 150 dBSPL. So be careful, you could do lasting damage without realizing.
+-   If you want to reference "loudness" using decibels, then you need to apply a filter of some kind. This more accurately describes the idea of "volume" as humans understand it.
+-   The most common filter is the "A scale" (dBA). This is a "band-pass" filter, which is less sensitive to very high and very low frequencies. It's simplistic, but "close-enough" to have become a standard.
+-   A less-simplistic approximation of what our ears hear would be a "hearing response curve". These are much more complex than the "A" scale, with peaks and troughs at different frequencies.
+
+<figure className="post-content__image-wrapper">
+    <DecibelFrequencyCurveGraph />
+    <figcaption className="post-content__caption">
+        The graph on the left shows an "A" scale frequency response curve, while
+        the graph on the right shows one that more closely matches the response
+        of an average human ear.
+    </figcaption>
+</figure>
+
+Now that I've done my research, the dB markings on a mixing desk look far more logical. I can see now that using a simple low-to-high dB meter wouldn't make any sense. Any dB scale _requires_ a defined reference point, which doesn't exist in this context. A mixer-channel _cannot_ have a fixed frame of reference because it gets mixed. A mixer routes all channels to the "master bus" output channel, which has its own volume control. Knowing the value of a signal at the channel-level tells us nothing about the final output value.
+
+But if we flip things around, a channel strip _can_ have a fixed reference point. That fixed point is the maximum level that it can output. Because decibels are _relative_ units, we can use them to express how far below the max-level a signal is. By putting 0dB at the top of the meter (and negative values on the downward scale) we can gain useful information about the level of the signal.
+
+There is a technical term for this kind of decibel-usage - dBFS (decibel full scale). The highest possible level of sound produced by audio equipment is 0 dBFS. All other levels are then expressed in negative numbers. Absolute silence in dBFS is -∞ (minus infinity), but in practical terms -96 makes for a useable bottom point.
+
+## Putting dBFS to use on the web.
+
+Much like a mixing desk, the Web Audio API does not use dBSPL. The final volume depends on both the level set by your operating system and the level of your speakers. Your computer has no way of knowing what your audio-out connects to (in an analogue setting, at least). It could be going to a set of tiny tinny earbuds, or a 500w amplifier and massive speaker stack. Providing a dBSPL reading of the level would be both meaningless and impossible. For this reason the Web Audio API uses dBFS.
+
+In this scenario the dBFS value _is_ useful information. It lets us know if a channel is "clipping", and gives us the information we need to keep on top of our gain-staging. It also gives us a value to compare against other channels on the same system. We may not know the volume of the final destination, but we can compare the individual channels. If we look at a drum track and a guitar track, for instance, we can use the dBFS values to guide how we mix the levels of the two.
+
+<!-- I've built this keyboard using the Web Audio API. Now I know how the decibel actual works as a unit, I was able to incorporate it into my project. The volume meters now show their values in dBFS.
+
+[audio_module]
+
+The example keyboard above (go on, have a play with it!) shows us two VU meters ("VU" == volume units). The first shows us the inital volume of the sound *source*, and the second shows us the final level that is sent to our speakers. Both VU meters use a scale of 0 dBFS to -96 dBFS. -->
+
+## _Update, 29<sup>th</sup> March 2017:_
+
+After it was first published this post made it onto the homepage of Hacker News, where it generated an interesting comment thread. I'm grateful to the HN community for pointing out a couple of typos and omissions, as well as raising some interesting points of their own.
+
+-   By nature of my specialties and interests, this post is very web-centric, which means it deals almost exclusively with _digital_ audio. Once we make the transition into the analogue world, we start to see positive values for dBFS. This is known as "headroom", and accounts for the fact that analogue signals are commonly specified in dBV or dBu (0 references of 1 volt and ~0.775 volts, respectively). “So 0dBFS signal going into your USB audio interface might come out as a +16dBu analog signal, while the same digital signal going into a professional mixing console might come out as a +24dBu analog signal.” [korethr](https://news.ycombinator.com/user?id=korethr)
+-   The medium through which sound (pressure) travels has an effect on how we define decibels. “In air, dB SPL is referenced to 20 micropascals. In water, it's 1 micropascal, so the medium matters.” [hprotagonist](https://news.ycombinator.com/user?id=hprotagonist)
+-   Decibels are not just used in an audio context. I've now heard tales of them being used in spectrum analysis and anywhere that "pressure" needs to be measured. “Decibels are just a way to easily express ratios on a logarithmic scale. It's handy for all sorts of things.” [pitaj](https://news.ycombinator.com/user?id=pitaj)
+-   Bonus points go to [AndrewKemendo](https://news.ycombinator.com/user?id=AndrewKemendo) for opening my eyes to the bonkers world of "Car Audio SPL Drag Racing". Apparently some car owners compete to see which car-stereo can reach the highest dBSPL level when playing a single frequency. “It was instructive to compare frequency and spl because some cars resonant frequencies (fs) were better suited to different fs values of drivers (speakers) and then further down the line certain amplifiers optimized certain frequencies”. Just bananas!
+
+If you want to learn more about these interesting decibel side-stories, [the comment thread for this post on HN](https://news.ycombinator.com/item?id=13931512) makes a good jumping-off point.
+
+[^1]: For instance, this [from Wikipedia](https://en.wikipedia.org/wiki/Loudest_band_in_the_world): The heavy metal band Manowar is one claimant of the title of "loudest band in the world", citing a measurement of 129.5 dB in 1994 in Hanover.
+[^2]: For a deeper dive into the science, check out [this fantastically thorough explanation](http://www.animations.physics.unsw.edu.au/jw/dB.htm) from Australia's UNSW.
