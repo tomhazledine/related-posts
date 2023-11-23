@@ -4,7 +4,7 @@
     "description": "A node script that adds 'related posts' information to a set of markdown files.",
     "main": "src/index.js",
     "bin": {
-        "related-posts": "./src/index.js"
+        "related-posts": "./build/index.js"
     },
     "type": "module",
     "scripts": {

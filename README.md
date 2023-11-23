@@ -78,7 +78,7 @@ The script can be run directly in node with `node @tomhazledine/related-posts`, 
 ```json
 {
     "scripts": {
-        "related-posts": "@tomhazledine/related-posts"
+        "related-posts": "related-posts"
     }
 }
 ```
@@ -96,7 +96,7 @@ The script accepts a few arguments that change the behaviour of the script. Thes
 ```json
 {
     "scripts": {
-        "related-posts": "@tomhazledine/related-posts --verbose --auto"
+        "related-posts": "related-posts --verbose --auto"
     }
 }
 ```
