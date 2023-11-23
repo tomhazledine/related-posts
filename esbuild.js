@@ -1,0 +1,38 @@
+import * as esbuild from "esbuild";
+import readline from "readline";
+
+import { parseArgs } from "./src/utils/args.js";
+const args = parseArgs(process.argv);
+
+const config = {
+    entryPoints: ["src/index.js"],
+    bundle: true,
+    outdir: `build`,
+    external: ["fs", "path", "crypto", "readline"],
+    format: "esm",
+    minify: args.mode !== "development",
+    treeShaking: args.mode !== "development"
+};
+
+if (args.mode === "development") {
+    // Development mode
+    let ctx = await esbuild.context(config);
+
+    await ctx.watch();
+    console.log("watching...");
+
+    console.log(`Press "q" to exit`);
+    readline.emitKeypressEvents(process.stdin);
+    process.stdin.setRawMode(true);
+
+    process.stdin.on("keypress", async (str, key) => {
+        if (key.name === "q") {
+            await ctx.dispose();
+            console.log("stopped watching");
+            process.exit();
+        }
+    });
+} else {
+    // Production mode
+    await esbuild.build(config);
+}

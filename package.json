@@ -8,14 +8,15 @@
     },
     "type": "module",
     "scripts": {
-        "related": "node src/index"
+        "related": "node src/index.js",
+        "build": "node esbuild.js",
+        "dev": "node esbuild.js --mode=development"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^16.3.1",
         "esbuild": "^0.17.19",
-        "gpt-3-encoder": "^1.1.4",
+        "gpt-tokenizer": "^2.1.2",
         "openai": "^4.12.1",
         "yaml": "^2.3.4"
     }

@@ -4,4 +4,5 @@ export * from "./content.js";
 export * from "./getConfig.js";
 export * from "./helpers.js";
 export * from "./io.js";
+export * from "./loadEnvVars.js";
 export * from "./markdown.js";

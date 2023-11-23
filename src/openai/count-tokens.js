@@ -1,3 +1,3 @@
-import { encode } from "gpt-3-encoder";
+import { encode } from "gpt-tokenizer";
 
-export const countTokens = (string) => encode(string).length;
+export const countTokens = string => encode(string).length;

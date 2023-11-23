@@ -8,156 +8,165 @@ import { getEmbedding } from "./openai/embedding.js";
 import { compareEmbeddings, compareSummaries } from "./openai/similarity.js";
 import { summarize } from "./openai/summarize.js";
 
-log("Calculating related posts...");
-const args = parseArgs(process.argv);
-const config = getConfig(args.verbose);
+const realatedPosts = async () => {
+    log("Calculating related posts...");
+    console.log(process.env);
+    const args = parseArgs(process.argv);
+    const config = getConfig(args.verbose);
 
-// Load cached data
-const cachePath = path.resolve(process.cwd(), config.temp, "./cache.json");
-let cache = loadData(cachePath);
+    // Load cached data
+    const cachePath = path.resolve(process.cwd(), config.temp, "./cache.json");
+    let cache = loadData(cachePath);
 
-// Load cached embeddings
-const embeddingsPath = path.resolve(
-    process.cwd(),
-    config.temp,
-    "./embeddings.json"
-);
-let embeddings = loadData(embeddingsPath);
+    // Load cached embeddings
+    const embeddingsPath = path.resolve(
+        process.cwd(),
+        config.temp,
+        "./embeddings.json"
+    );
+    let embeddings = loadData(embeddingsPath);
 
-// Load articles
-const articlesFolder = path.resolve(process.cwd(), config.in);
-const articlePaths = readFolder(articlesFolder);
+    // Load articles
+    const articlesFolder = path.resolve(process.cwd(), config.in);
+    const articlePaths = readFolder(articlesFolder);
 
-if (articlePaths.length === 0) {
-    log(`No articles found in ${articlesFolder}`, "red");
-    process.exit(0);
-}
-
-const articles = {};
-
-for (const articlePath of articlePaths) {
-    const relativePath = path.basename(articlePath, path.extname(articlePath));
-
-    const contents = readFile(articlePath);
-    const structuredContent = parseFrontmatter(contents);
-    articles[relativePath] = { articlePath, ...structuredContent };
-    const contentString = `# ${structuredContent.frontmatter.title}\n\n## ${
-        structuredContent.frontmatter.excerpt || ""
-    }\n\n${structuredContent.markdown}`;
-
-    const hash = hashString(contentString);
-
-    if (
-        !cache[relativePath] ||
-        hash !== cache[relativePath].hash ||
-        args.forceSummaries
-    ) {
-        const generationLabel = !cache[relativePath]
-            ? "Generating"
-            : "Regenerating";
-        log(`${generationLabel} data for ${relativePath}.`, "yellow");
-        const embedding = await getEmbedding(contentString);
-        embeddings[relativePath] = embedding[0].embedding;
-        const summary = await summarize(contentString);
-        log(summary, "cyan");
-        cache[relativePath] = {
-            ...(cache[relativePath] || {}),
-            relativePath,
-            hash,
-            summary
-        };
-        await waitForUserInput(
-            `Pausing to allow for openai API rate limiting. Proceed? (y/n)`
-        );
-    } else {
-        log(`${relativePath} has not changed`);
+    if (articlePaths.length === 0) {
+        log(`No articles found in ${articlesFolder}`, "red");
+        process.exit(0);
     }
-}
 
-// Clean up cache data
-const deletedPostPaths = Object.keys(cache).filter(
-    path => !Object.keys(articles).includes(path)
-);
+    const articles = {};
 
-for (const articlePath of deletedPostPaths) {
-    log(`Deleting ${articlePath} from cache`, "red");
-    delete cache[articlePath];
-    delete embeddings[articlePath];
-}
+    for (const articlePath of articlePaths) {
+        const relativePath = path.basename(
+            articlePath,
+            path.extname(articlePath)
+        );
 
-log(`Calculating similarities`, "green");
-for (const articlePath of Object.keys(cache)) {
-    const noExistingSimilarities = !cache[articlePath].similarities;
-    const deletedSimilarPost = cache[articlePath].similarities
-        ? cache[articlePath].similarities.filter(
-              similarity =>
-                  !Object.keys(articles).includes(similarity.relativePath)
-          )
-        : [];
-    if (
-        noExistingSimilarities ||
-        deletedSimilarPost.length > 0 ||
-        args.forceSimilarities ||
-        !cache[articlePath].similarities[0].summary ||
-        !cache[articlePath].similarities[1].summary
-    ) {
-        const similarities = compareEmbeddings(articlePath, embeddings);
-        let similarPosts = [];
-        for (const similarPost of similarities) {
-            log(
-                `Generating comparison between ${articlePath} & ${similarPost.slug}`
-            );
-            const comparison = await compareSummaries(
-                cache[articlePath].summary,
-                cache[similarPost.slug].summary
-            );
-            log(comparison, "cyan");
-            log(`Score: ${similarPost.similarity}`, "white");
-            const similarPostObject = {
-                relativePath: similarPost.slug,
-                permalink: articles[similarPost.slug].frontmatter.permalink,
-                date: articles[similarPost.slug].frontmatter.date,
-                tags: articles[similarPost.slug].frontmatter.tags,
-                categories: articles[similarPost.slug].frontmatter.categories,
-                title: articles[similarPost.slug].frontmatter.title,
-                excerpt:
-                    articles[similarPost.slug].frontmatter.excerpt || false,
-                summary: comparison,
-                score: similarPost.similarity
+        const contents = readFile(articlePath);
+        const structuredContent = parseFrontmatter(contents);
+        articles[relativePath] = { articlePath, ...structuredContent };
+        const contentString = `# ${structuredContent.frontmatter.title}\n\n## ${
+            structuredContent.frontmatter.excerpt || ""
+        }\n\n${structuredContent.markdown}`;
+
+        const hash = hashString(contentString);
+
+        if (
+            !cache[relativePath] ||
+            hash !== cache[relativePath].hash ||
+            args.forceSummaries
+        ) {
+            const generationLabel = !cache[relativePath]
+                ? "Generating"
+                : "Regenerating";
+            log(`${generationLabel} data for ${relativePath}.`, "yellow");
+            const embedding = await getEmbedding(contentString);
+            embeddings[relativePath] = embedding[0].embedding;
+            const summary = await summarize(contentString);
+            log(summary, "cyan");
+            cache[relativePath] = {
+                ...(cache[relativePath] || {}),
+                relativePath,
+                hash,
+                summary
             };
-            similarPosts = [...similarPosts, similarPostObject];
-
-            if (args.auto) {
-                sleep(6000);
-            } else {
-                await waitForUserInput(
-                    `Pausing to allow for openai API rate limiting. Proceed? (y/n)`
-                );
-            }
+            await waitForUserInput(
+                `Pausing to allow for openai API rate limiting. Proceed? (y/n)`
+            );
+        } else {
+            log(`${relativePath} has not changed`);
         }
-        cache[articlePath].similarities = similarPosts;
     }
-}
 
-log(`Updating frontmatter`, "green");
-for (const articlePath of Object.keys(cache)) {
-    const updatedFrontmatter = {
-        ...articles[articlePath].frontmatter,
-        related: cache[articlePath].similarities
-    };
-    const frontmatterString = formatFrontmatter(updatedFrontmatter);
-    const fileString = `---\n${frontmatterString}\n---\n${articles[articlePath].markdown}`;
+    // Clean up cache data
+    const deletedPostPaths = Object.keys(cache).filter(
+        path => !Object.keys(articles).includes(path)
+    );
 
-    await saveFile(articles[articlePath].articlePath, fileString);
-
-    if (!args.auto) {
-        await waitForUserInput(
-            `Pausing to check file writing for ${articlePath}. Proceed? (y/n)`
-        );
+    for (const articlePath of deletedPostPaths) {
+        log(`Deleting ${articlePath} from cache`, "red");
+        delete cache[articlePath];
+        delete embeddings[articlePath];
     }
-}
 
-saveFile(cachePath, JSON.stringify(cache, null, 4));
-saveFile(embeddingsPath, JSON.stringify(embeddings, null, 4));
+    log(`Calculating similarities`, "green");
+    for (const articlePath of Object.keys(cache)) {
+        const noExistingSimilarities = !cache[articlePath].similarities;
+        const deletedSimilarPost = cache[articlePath].similarities
+            ? cache[articlePath].similarities.filter(
+                  similarity =>
+                      !Object.keys(articles).includes(similarity.relativePath)
+              )
+            : [];
+        if (
+            noExistingSimilarities ||
+            deletedSimilarPost.length > 0 ||
+            args.forceSimilarities ||
+            !cache[articlePath].similarities[0].summary ||
+            !cache[articlePath].similarities[1].summary
+        ) {
+            const similarities = compareEmbeddings(articlePath, embeddings);
+            let similarPosts = [];
+            for (const similarPost of similarities) {
+                log(
+                    `Generating comparison between ${articlePath} & ${similarPost.slug}`
+                );
+                const comparison = await compareSummaries(
+                    cache[articlePath].summary,
+                    cache[similarPost.slug].summary
+                );
+                log(comparison, "cyan");
+                log(`Score: ${similarPost.similarity}`, "white");
+                const similarPostObject = {
+                    relativePath: similarPost.slug,
+                    permalink: articles[similarPost.slug].frontmatter.permalink,
+                    date: articles[similarPost.slug].frontmatter.date,
+                    tags: articles[similarPost.slug].frontmatter.tags,
+                    categories:
+                        articles[similarPost.slug].frontmatter.categories,
+                    title: articles[similarPost.slug].frontmatter.title,
+                    excerpt:
+                        articles[similarPost.slug].frontmatter.excerpt || false,
+                    summary: comparison,
+                    score: similarPost.similarity
+                };
+                similarPosts = [...similarPosts, similarPostObject];
 
-log("Complete!", "green");
+                if (args.auto) {
+                    sleep(6000);
+                } else {
+                    await waitForUserInput(
+                        `Pausing to allow for openai API rate limiting. Proceed? (y/n)`
+                    );
+                }
+            }
+            cache[articlePath].similarities = similarPosts;
+        }
+    }
+
+    log(`Updating frontmatter`, "green");
+    for (const articlePath of Object.keys(cache)) {
+        const updatedFrontmatter = {
+            ...articles[articlePath].frontmatter,
+            related: cache[articlePath].similarities
+        };
+        const frontmatterString = formatFrontmatter(updatedFrontmatter);
+        const fileString = `---\n${frontmatterString}\n---\n${articles[articlePath].markdown}`;
+
+        await saveFile(articles[articlePath].articlePath, fileString);
+
+        if (!args.auto) {
+            await waitForUserInput(
+                `Pausing to check file writing for ${articlePath}. Proceed? (y/n)`
+            );
+        }
+    }
+
+    saveFile(cachePath, JSON.stringify(cache, null, 4));
+    saveFile(embeddingsPath, JSON.stringify(embeddings, null, 4));
+
+    log("Complete!", "green");
+};
+
+realatedPosts();
