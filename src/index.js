@@ -10,7 +10,6 @@ import { summarize } from "./openai/summarize.js";
 
 const realatedPosts = async () => {
     log("Calculating related posts...");
-    console.log(process.env);
     const args = parseArgs(process.argv);
     const config = getConfig(args.verbose);
 
