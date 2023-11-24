@@ -1,4 +1,4 @@
-import { openai } from "./openai.js";
+import { getCompletion } from "./getCompletion.js";
 import { log } from "../utils/console.js";
 import { countTokens } from "./count-tokens.js";
 import { TOTAL_TOKEN_LIMIT, chunkContent } from "../utils/content.js";
@@ -13,7 +13,7 @@ ${text}
 \`\`\`
 `;
 
-export const summarize = async text => {
+export const summarize = async (text, verbose = false) => {
     let prompt = buildSummaryPrompt(text);
 
     // const model = "gpt-3.5-turbo";
@@ -39,11 +39,7 @@ export const summarize = async text => {
     log(`Generating summary with ${tokenCount} tokens`, "green");
 
     try {
-        const completion = await openai.chat.completions.create({
-            messages: [{ role: "user", content: prompt }],
-            model
-            // temperature: 0
-        });
+        const completion = await getCompletion(prompt, model, verbose);
 
         if (completion.usage.total_tokens > TOTAL_TOKEN_LIMIT) {
             log(

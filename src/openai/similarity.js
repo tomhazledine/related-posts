@@ -1,4 +1,4 @@
-import { openai } from "./openai.js";
+import { getCompletion } from "./getCompletion.js";
 import { log } from "../utils/console.js";
 import { cosineSimilarity } from "../utils/helpers.js";
 
@@ -29,15 +29,11 @@ Here are some additional instructions to help you write the recommendation:
 * Avoid hyperbole (such as "It's an enlightening read" or similar). Just describe the similarities of the post and why it might be interesting to someone who has just read the first post.
 `;
 
-export const compareSummaries = async (post, match) => {
+export const compareSummaries = async (post, match, verbose = false) => {
     const prompt = buildSimilarityPrompt(post, match);
     const model = "gpt-4";
     try {
-        const completion = await openai.chat.completions.create({
-            messages: [{ role: "user", content: prompt }],
-            model
-            // temperature: 0
-        });
+        const completion = await getCompletion(prompt, model, verbose);
         const { choices } = completion;
         const result = choices.map(choice => choice.message.content).flat();
 

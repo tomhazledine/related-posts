@@ -60,9 +60,9 @@ const realatedPosts = async () => {
                 ? "Generating"
                 : "Regenerating";
             log(`${generationLabel} data for ${relativePath}.`, "yellow");
-            const embedding = await getEmbedding(contentString);
+            const embedding = await getEmbedding(contentString, args.verbose);
             embeddings[relativePath] = embedding[0].embedding;
-            const summary = await summarize(contentString);
+            const summary = await summarize(contentString, args.verbose);
             log(summary, "cyan");
             cache[relativePath] = {
                 ...(cache[relativePath] || {}),
@@ -113,7 +113,8 @@ const realatedPosts = async () => {
                 );
                 const comparison = await compareSummaries(
                     cache[articlePath].summary,
-                    cache[similarPost.slug].summary
+                    cache[similarPost.slug].summary,
+                    args.verbose
                 );
                 log(comparison, "cyan");
                 log(`Score: ${similarPost.similarity}`, "white");
