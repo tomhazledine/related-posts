@@ -8,8 +8,8 @@ const config = {
     entryPoints: ["src/index.js"],
     bundle: true,
     outdir: `build`,
-    external: ["fs", "path", "crypto", "readline"],
     format: "esm",
+    platform: "node",
     minify: args.mode !== "development",
     treeShaking: args.mode !== "development"
 };
