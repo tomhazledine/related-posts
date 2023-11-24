@@ -10,6 +10,9 @@ const config = {
     outdir: `build`,
     format: "esm",
     platform: "node",
+    banner: {
+        js: "#!/usr/bin/env node"
+    },
     minify: args.mode !== "development",
     treeShaking: args.mode !== "development"
 };
