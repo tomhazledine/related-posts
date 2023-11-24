@@ -28,7 +28,7 @@ export const getCompletion = async (prompt, model, verbose = false) => {
         if (verbose) log("Completion received.", "green");
         return completion;
     } catch (error) {
-        console.error(`Failed to get embedding: ${error}`);
+        log(`Failed to get completion: ${error}`, "red");
         throw error; // or handle error as per your application's error handling strategy
     }
 };

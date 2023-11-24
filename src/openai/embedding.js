@@ -22,10 +22,10 @@ export const getEmbedding = async (content, verbose = false) => {
         }
 
         const embedding = await result.json();
-        if (verbose) log(embedding);
+        if (verbose) log("Embedding received.", "green");
         return embedding.data;
     } catch (error) {
-        console.error(`Failed to get embedding: ${error}`);
+        log(`Failed to get embedding: ${error}`, "red");
         throw error; // or handle error as per your application's error handling strategy
     }
 };
