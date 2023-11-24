@@ -1,5 +1,5 @@
 {
-    "in": "./complex-data/content",
-    "temp": "./complex-data/temp",
+    "in": "./simple-data/content",
+    "temp": "./simple-data/temp",
     "openai_model": "gpt-4"
 }

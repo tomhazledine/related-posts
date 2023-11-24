@@ -1,7 +1,31 @@
 ---
 title: "The Evolution of Music: The Role of Synthesizers"
 date: 2022-01-01
-author: "Author Name"
+author: Author Name
+related:
+  - relativePath: 04-future-music
+    date: 2022-01-25
+    title: "The Future of Music: Predictions and Trends"
+    excerpt: false
+    summary:
+      - "\"This is similar to what you've just read because it continues the
+        discussion about the impact of technology on music, specifically the
+        role of synthesizers, and takes it a step further by exploring future
+        trends in the industry.\""
+    score: 0.8403481521303371
+  - relativePath: 02-synthesisers
+    permalink: synthesisers
+    date: 2023-02-01
+    title: Synthesisers
+    excerpt: A list of synthesisers.
+    summary:
+      - This is similar to what you've just read because it delves further into
+        specific types of synthesizers, including the Moog synthesizer mentioned
+        in the first post, and offers a deep dive into their features and
+        capabilities, which might interest someone learning about the history
+        and impact of these instruments.
+    score: 0.7868534081295753
+
 ---
 
 # The Evolution of Music: The Role of Synthesizers
