@@ -25,7 +25,7 @@ export const getCompletion = async (prompt, model, verbose = false) => {
         }
 
         const completion = await result.json();
-        if (verbose) log(completion);
+        if (verbose) log("Completion received.", "green");
         return completion;
     } catch (error) {
         console.error(`Failed to get embedding: ${error}`);

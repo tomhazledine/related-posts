@@ -70,9 +70,13 @@ const realatedPosts = async () => {
                 hash,
                 summary
             };
-            await waitForUserInput(
-                `Pausing to allow for openai API rate limiting. Proceed? (y/n)`
-            );
+            if (args.auto) {
+                sleep(6000);
+            } else {
+                await waitForUserInput(
+                    `Pausing to allow for openai API rate limiting. Proceed? (y/n)`
+                );
+            }
         } else {
             log(`${relativePath} has not changed`);
         }
