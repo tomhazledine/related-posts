@@ -29,9 +29,13 @@ Here are some additional instructions to help you write the recommendation:
 * Avoid hyperbole (such as "It's an enlightening read" or similar). Just describe the similarities of the post and why it might be interesting to someone who has just read the first post.
 `;
 
-export const compareSummaries = async (post, match, verbose = false) => {
+export const compareSummaries = async ({
+    post,
+    match,
+    model,
+    verbose = false
+}) => {
     const prompt = buildSimilarityPrompt(post, match);
-    const model = "gpt-4";
     try {
         const completion = await getCompletion(prompt, model, verbose);
         const { choices } = completion;

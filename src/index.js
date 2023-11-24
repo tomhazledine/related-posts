@@ -62,7 +62,11 @@ const realatedPosts = async () => {
             log(`${generationLabel} data for ${relativePath}.`, "yellow");
             const embedding = await getEmbedding(contentString, args.verbose);
             embeddings[relativePath] = embedding[0].embedding;
-            const summary = await summarize(contentString, args.verbose);
+            const summary = await summarize(
+                contentString,
+                config.openai_model,
+                args.verbose
+            );
             log(summary, "cyan");
             cache[relativePath] = {
                 ...(cache[relativePath] || {}),
@@ -115,11 +119,16 @@ const realatedPosts = async () => {
                 log(
                     `Generating comparison between ${articlePath} & ${similarPost.slug}`
                 );
-                const comparison = await compareSummaries(
-                    cache[articlePath].summary,
-                    cache[similarPost.slug].summary,
-                    args.verbose
-                );
+                const post = cache[articlePath].summary;
+                const match = cache[similarPost.slug].summary;
+                const model = config.openai_model;
+                const { verbose } = args;
+                const comparison = await compareSummaries({
+                    post,
+                    match,
+                    model,
+                    verbose
+                });
                 log(comparison, "cyan");
                 log(`Score: ${similarPost.similarity}`, "white");
                 const similarPostObject = {

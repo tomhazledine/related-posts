@@ -13,11 +13,9 @@ ${text}
 \`\`\`
 `;
 
-export const summarize = async (text, verbose = false) => {
+export const summarize = async (text, model, verbose = false) => {
     let prompt = buildSummaryPrompt(text);
 
-    // const model = "gpt-3.5-turbo";
-    const model = "gpt-4";
     let tokenCount = countTokens(prompt);
 
     if (tokenCount > TOTAL_TOKEN_LIMIT) {
