@@ -1,6 +1,6 @@
 import { log, loadEnvVars } from "../utils/index.js";
 
-loadEnvVars();
+loadEnvVars(["OPENAI_API_KEY"]);
 
 export const getEmbedding = async (content, verbose = false) => {
     try {

@@ -1,6 +1,6 @@
 import { log, loadEnvVars } from "../utils/index.js";
 
-loadEnvVars();
+loadEnvVars(["OPENAI_API_KEY"]);
 
 export const getCompletion = async (prompt, model, verbose = false) => {
     try {
