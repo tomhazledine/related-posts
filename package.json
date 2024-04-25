@@ -1,6 +1,6 @@
 {
     "name": "@tomhazledine/related-posts",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A node script that adds 'related posts' information to a set of markdown files.",
     "main": "src/index.js",
     "bin": {
