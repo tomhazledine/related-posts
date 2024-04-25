@@ -158,22 +158,27 @@ const realatedPosts = async () => {
         }
     }
 
-    log(`Updating frontmatter`, "green");
-    for (const articlePath of Object.keys(cache)) {
-        const updatedFrontmatter = {
-            ...articles[articlePath].frontmatter,
-            related: cache[articlePath].similarities
-        };
-        const frontmatterString = formatFrontmatter(updatedFrontmatter);
-        const fileString = `---\n${frontmatterString}\n---\n${articles[articlePath].markdown}`;
+    if (args.useFrontmatter) {
+        log(`Updating frontmatter`, "green");
+        for (const articlePath of Object.keys(cache)) {
+            const updatedFrontmatter = {
+                ...articles[articlePath].frontmatter,
+                related: cache[articlePath].similarities
+            };
+            const frontmatterString = formatFrontmatter(updatedFrontmatter);
+            const fileString = `---\n${frontmatterString}\n---\n${articles[articlePath].markdown}`;
 
-        await saveFile(articles[articlePath].articlePath, fileString);
+            await saveFile(articles[articlePath].articlePath, fileString);
 
-        if (!args.auto) {
-            await waitForUserInput(
-                `Pausing to check file writing for ${articlePath}. Proceed? (y/n)`
-            );
+            if (!args.auto) {
+                await waitForUserInput(
+                    `Pausing to check file writing for ${articlePath}. Proceed? (y/n)`
+                );
+            }
         }
+    } else {
+        log(`Writing data to ${config.out}`, "green");
+        saveFile(config.out, JSON.stringify(cache, null, 4));
     }
 
     saveFile(cachePath, JSON.stringify(cache, null, 4));

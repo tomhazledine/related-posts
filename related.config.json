@@ -1,5 +1,6 @@
 {
     "in": "./simple-data/content",
     "temp": "./simple-data/temp",
-    "openai_model": "gpt-4"
+    "openai_model": "gpt-4",
+    "out": "./simple-data/data.json"
 }

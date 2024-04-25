@@ -1,0 +1,220 @@
+{
+    "01-test": {
+        "relativePath": "01-test",
+        "hash": "270de012d744dda1329a2a325b139c1796a70d3478b2b97881ac1e5fc7b6d48e",
+        "summary": "In my recent blog post titled \"Test post,\" I delve into the process of testing a `related-posts` script. This script is an integral component of my blogging setup that enhances the connectivity between related content pieces and broadens readers' knowledge by directing them to similar posts.\n\nThe main purpose of the post was to carry out rigorous testing of the `related-posts` script to ensure its effectiveness. Remember, the end goal is always to enhance your reading experience and make it easier for you to navigate through related content. This test post, while not providing traditional content, is a crucial step in that journey. By ensuring various components of the blog work seamlessly, your browsing experience is guaranteed to be smooth!",
+        "similarities": [
+            {
+                "relativePath": "04-future-music",
+                "date": "2022-01-25",
+                "title": "The Future of Music: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because just as the first post elaborated on enhancing user experience through script testing, the second discusses enhancing listener experience through the influence of technology on music production."
+                ],
+                "score": 0.7242229010629897
+            },
+            {
+                "relativePath": "02-synthesisers",
+                "permalink": "synthesisers",
+                "date": "2023-02-01",
+                "title": "Synthesisers",
+                "excerpt": "A list of synthesisers.",
+                "summary": [
+                    "This is similar to what you've just read because, just as the first post delves into the intricacies of a 'related-posts' script to improve user experience, the second post dives deeper into the features and function of various synthesisers, enhancing the reader's understanding and interest in synthesisers."
+                ],
+                "score": 0.7123195222161548
+            }
+        ]
+    },
+    "02-synthesisers": {
+        "relativePath": "02-synthesisers",
+        "hash": "5c7be3d856050bf1a0ba831d7c261f4d4eb9e05bdce370f6c2908a2461017349",
+        "summary": "Dive into the world of synthesisers with this exciting list featuring some of the best in the business, according to VSCode Copilot. The Korg MS-20 is a monophonic analogue synthesiser that brings together a range of features including two oscillators, a filter, two envelopes, an LFO, a sequencer, as well as a delay effect. Likewise, the Moog Sub 37, along with its counterparts, the Sub Phatty and the Grandmother, also offer the same set of features all within the framework of a monophonic analogue synthesiser. \n\nVenturing further, the list also includes the Prophet 5 and the Fairlight CMI, both beholding to the monophonic analogue synthesiser category. These models too possess two oscillators, a filter, two envelopes, an LFO, a sequencer, and a layer of delay effect. As you can tell, each synthesiser brings together a cocktail of features and functions, promising a unique and immersive music creation experience.",
+        "similarities": [
+            {
+                "relativePath": "03-music",
+                "date": "2022-01-01",
+                "title": "The Evolution of Music: The Role of Synthesizers",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it continues the exploration of synthesizers, tracing their history and influence on music, which provides a broader context to the specific models discussed in the first post."
+                ],
+                "score": 0.7868534081295753
+            },
+            {
+                "relativePath": "04-future-music",
+                "date": "2022-01-25",
+                "title": "The Future of Music: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it continues the exploration of synthesizers, this time focusing on their influence on the future of music and the music industry."
+                ],
+                "score": 0.7422368406601739
+            }
+        ]
+    },
+    "03-music": {
+        "relativePath": "03-music",
+        "hash": "4a68fab08e3487b3a7407420bc0aa84c11b0491b01ea9c9b73d164c9025893d8",
+        "summary": "Delving into the evolution of music, the role of synthesizers is something that simply cannot be ignored. Having influenced the musical landscape from the swinging 60s to today's electronic beats, synthesizers have carved out a firm place at the forefront of musical innovation. The birth of the synthesizer came in the early 1960s with Robert Moog's development of the Moog synthesizer; an innovative delight that offered musicians a portal to a vast landscape of ethereal and planetary soundscapes. \n\nA glance at the rise of electronic music illuminates the influence of synthesizers, paving a futuristic yet nostalgic path to stardom with the likes of Kraftwerk and Depeche Mode. Modern synthesizers have seen a great democratization in recent times, with the advent of software synthesizers, or 'softsynths', making the creative sphere of electronic music more accessible to all. The importance of synthesizers extends far beyond just creating exciting new sounds; they have revolutionized music and shaped the soundtracks to our lives in a multitude of genres. As we cross the threshold into a future dense with possibility, the thought of the further role of synthesizers in shaping the musical landscape is indeed an exciting notion.",
+        "similarities": [
+            {
+                "relativePath": "04-future-music",
+                "date": "2022-01-25",
+                "title": "The Future of Music: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "\"This is similar to what you've just read because it continues the discussion about the impact of technology on music, specifically the role of synthesizers, and takes it a step further by exploring future trends in the industry.\""
+                ],
+                "score": 0.8403481521303371
+            },
+            {
+                "relativePath": "02-synthesisers",
+                "permalink": "synthesisers",
+                "date": "2023-02-01",
+                "title": "Synthesisers",
+                "excerpt": "A list of synthesisers.",
+                "summary": [
+                    "This is similar to what you've just read because it delves further into specific types of synthesizers, including the Moog synthesizer mentioned in the first post, and offers a deep dive into their features and capabilities, which might interest someone learning about the history and impact of these instruments."
+                ],
+                "score": 0.7868534081295753
+            }
+        ]
+    },
+    "04-future-music": {
+        "relativePath": "04-future-music",
+        "hash": "69930a3b72416d1c387b3f988da1f6cc7e7d4b2fc4e544c53073077c57e3d461",
+        "summary": "In this piece, we delve into the fascinating world of music and what the future might hold. We focus specifically on the impending trends and predictions that seem to be shaping the music industry. A major track we follow throughout the discussion is the unrelenting influence of technology on music, with a particular nod to the revolutionary role of synthesizers. Join us as we explore this sonic landscape of the future.",
+        "similarities": [
+            {
+                "relativePath": "08-future-of-rugby",
+                "date": "2022-01-25",
+                "title": "The Future of Rugby Union: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it also examines the influence of technological advancements on a specific field, this time the world of Rugby Union, and explores future trends and predictions in the context of this technology."
+                ],
+                "score": 0.869850964462071
+            },
+            {
+                "relativePath": "03-music",
+                "date": "2022-01-01",
+                "title": "The Evolution of Music: The Role of Synthesizers",
+                "excerpt": false,
+                "summary": [
+                    "\"This is similar to what you've just read because it provides a deeper history and evolution of synthesizers, a major trend predicted to shape the music industry, offering additional insights into its influence on electronic music and its democratization in recent years.\""
+                ],
+                "score": 0.8403481521303371
+            }
+        ]
+    },
+    "05-understanding-rugby": {
+        "relativePath": "05-understanding-rugby",
+        "hash": "30176b716b8be309119855030a292a5960b939d8713e3b710f91f6c5807fe34c",
+        "summary": "Diving into the world of Rugby Union can feel like an intimidating endeavour, but it can also be incredibly rewarding and exciting once you grasp the basics. In this engaging guide, we'll journey through interesting snippets of Rugby's history and explore how it has significantly influenced the realm of sports. If you're a novice striving to learn Rugby Union, hold on, as we'll also share some valuable tips to kick-start your adventure into this thrilling game. Familiarize yourself with rugby's fabric - a melding of camaraderie, strategy, physical prowess, and sheer dynamism; and uncover the game's unique charm that endears it to millions worldwide.\n",
+        "similarities": [
+            {
+                "relativePath": "06-history-of-rugby",
+                "date": "2022-01-15",
+                "title": "The History of Rugby Union: A Comprehensive Overview",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it offers a further exploration into the history of Rugby Union, delving deeper into its origins and the key figures that have shaped the sport, providing a more detailed understanding for newcomers to the game."
+                ],
+                "score": 0.9209118290866918
+            },
+            {
+                "relativePath": "08-future-of-rugby",
+                "date": "2022-01-25",
+                "title": "The Future of Rugby Union: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because both posts focus on Rugby Union, with the first introducing its history and basics, while the second discusses its future and the influence of technology on the game, which could be intriguing if you're interested in understanding the sport more comprehensively."
+                ],
+                "score": 0.8719423603060885
+            }
+        ]
+    },
+    "06-history-of-rugby": {
+        "relativePath": "06-history-of-rugby",
+        "hash": "6faf158073a7295ab82ed61c7699c407dc4a8418fb7ab4a31836c44ba34b36eb",
+        "summary": "Join me as we dive into the rich history of Rugby Union - a sport deeply rooted in tradition, tenacity, and passion. This journey will take us back to its humble origins, unraveling how it has dramatically transformed over the years. Along the way, we will spotlight the key figures whose impact and contributions have shaped Rugby Union into the globally embraced sport it is today. So, brace yourselves for an engaging trip through time as we discover the intriguing chronicles of Rugby Union's historical tapestry.",
+        "similarities": [
+            {
+                "relativePath": "05-understanding-rugby",
+                "date": "2022-01-10",
+                "title": "Understanding Rugby Union: A Beginner's Guide",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it continues the exploration of Rugby Union's historical influence and adds an introduction to the basic rules and strategies of the sport, which would augment your understanding of this game's cultural significance."
+                ],
+                "score": 0.9209118290866918
+            },
+            {
+                "relativePath": "08-future-of-rugby",
+                "date": "2022-01-25",
+                "title": "The Future of Rugby Union: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it continues the exploration of Rugby Union, shifting from the historical journey to futuristic trends and technological developments in the sport."
+                ],
+                "score": 0.8737768787796582
+            }
+        ]
+    },
+    "07-rugby-tech": {
+        "relativePath": "07-rugby-tech",
+        "hash": "62d82e75f2dba160ca4b54197e38c7aec837b1563a7b9f66c11acfe5361eb4df",
+        "summary": "In this blog piece, we delve into the fascinating evolution of technology in Rugby Union. Spanning from the time-honored traditional methods to the recent implementation of cutting-edge digital technology, this transformative journey is closely examined. Taking center stage are the innovative enhancements in training protocols and performance analysis that modern technology has empowered. Tune in as we explore how the world of Rugby Union has gone from analog to digital!",
+        "similarities": [
+            {
+                "relativePath": "08-future-of-rugby",
+                "date": "2022-01-25",
+                "title": "The Future of Rugby Union: Predictions and Trends",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it also discusses the influence of technology on Rugby Union, but focuses on the future implications and emerging trends versus the historical evolution detailed in the previous post."
+                ],
+                "score": 0.8827277951917917
+            },
+            {
+                "relativePath": "06-history-of-rugby",
+                "date": "2022-01-15",
+                "title": "The History of Rugby Union: A Comprehensive Overview",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it explores different aspects of Rugby Union, specifically its rich history and key figures, complementing the technological evolution discussed in the first post."
+                ],
+                "score": 0.8576045005251963
+            }
+        ]
+    },
+    "08-future-of-rugby": {
+        "relativePath": "08-future-of-rugby",
+        "hash": "8c11a05302bb0754fe635a73d9fdf0e7522d7a4a50db18e1b708e1cac9539960",
+        "summary": "In this blog, we're diving into the exciting future that lies ahead for Rugby Union. Expect to be enlightened on the emerging trends and predictions that are set to shape this fantastic sport. A special spotlight will be on how technology continues to heavily influence the game, from strategic planning to player performance. Stay tuned as we unpack the journey ahead for Rugby Union.",
+        "similarities": [
+            {
+                "relativePath": "07-rugby-tech",
+                "date": "2022-01-20",
+                "title": "Technology in Rugby Union: From Analog to Digital",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because both posts are centered around the influence and impact of technology on Rugby Union, specifically in terms of its effects on training and player performance."
+                ],
+                "score": 0.8827277951917917
+            },
+            {
+                "relativePath": "06-history-of-rugby",
+                "date": "2022-01-15",
+                "title": "The History of Rugby Union: A Comprehensive Overview",
+                "excerpt": false,
+                "summary": [
+                    "This is similar to what you've just read because it provides a comprehensive look at Rugby Union, offering historical context to supplement the future outlook and technological implications discussed in the first post."
+                ],
+                "score": 0.8737768787796582
+            }
+        ]
+    }
+}
