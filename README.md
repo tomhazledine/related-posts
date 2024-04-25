@@ -66,6 +66,7 @@ We've already covered adding your API key in the [Pre-requisites](#pre-requisite
     "in": "./path/to/your/content",
     "temp": "./somewhere/to/save/temp/files",
     "openai_model": "gpt-4",
+    "embeddings_model": "text-embedding-3-large",
     "out": "./path/to/save/data.json"
 }
 ```

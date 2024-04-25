@@ -2,5 +2,6 @@
     "in": "./simple-data/content",
     "temp": "./simple-data/temp",
     "openai_model": "gpt-4",
+    "embedding_model": "text-embedding-3-large",
     "out": "./simple-data/data.json"
 }

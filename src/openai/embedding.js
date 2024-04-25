@@ -2,7 +2,7 @@ import { log, loadEnvVars } from "../utils/index.js";
 
 loadEnvVars(["OPENAI_API_KEY"]);
 
-export const getEmbedding = async (content, verbose = false) => {
+export const getEmbedding = async (content, verbose = false, model) => {
     try {
         if (verbose) log("making embedding request...");
         const result = await fetch("https://api.openai.com/v1/embeddings", {
@@ -13,7 +13,7 @@ export const getEmbedding = async (content, verbose = false) => {
             },
             body: JSON.stringify({
                 input: content,
-                model: "text-embedding-ada-002"
+                model: model
             })
         });
 

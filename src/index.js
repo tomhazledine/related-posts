@@ -60,7 +60,11 @@ const realatedPosts = async () => {
                 ? "Generating"
                 : "Regenerating";
             log(`${generationLabel} data for ${relativePath}.`, "yellow");
-            const embedding = await getEmbedding(contentString, args.verbose);
+            const embedding = await getEmbedding(
+                contentString,
+                args.verbose,
+                config.embedding_model
+            );
             embeddings[relativePath] = embedding[0].embedding;
             const summary = await summarize(
                 contentString,

@@ -12,7 +12,9 @@
         "related": "node ./src/index.js",
         "build": "node esbuild.js",
         "dev": "node esbuild.js --mode=development",
-        "meta": "node esbuild.js --mode=meta"
+        "meta": "node esbuild.js --mode=meta",
+        "prepublish": "npm run build",
+        "prepublishOnly": "npm run build"
     },
     "repository": {
         "type": "git",
