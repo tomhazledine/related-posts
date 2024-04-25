@@ -65,9 +65,12 @@ We've already covered adding your API key in the [Pre-requisites](#pre-requisite
 {
     "in": "./path/to/your/content",
     "temp": "./somewhere/to/save/temp/files",
-    "openai_model": "gpt-4"
+    "openai_model": "gpt-4",
+    "out": "./path/to/save/data.json"
 }
 ```
+
+The `out` config value is not required if using the [`useFrontmatter` option](#useFrontmatter-boolean-default-false). `out` should be a path to a JSON file (including the `.json` extension) where the script will save the related posts data. This file can then be read by your SSG to add the related posts to your site.
 
 > **Note:** at time of publishing, the `gpt-4` model provides the best results for the "generative" portion of the relatedness calculation. However access to the `gpt-4` model is currently restricted to OpenAI accounts that have already paid an invoice, so the default is `gpt-3.5-turbo`.
 
@@ -106,6 +109,12 @@ The available options are:
 ### `verbose` (boolean) - default: `false`
 
 If `true`, the script will log more information to the console.
+
+### `useFrontmatter` (boolean) - default: `false`
+
+If `true`, the script will add the related posts data to the frontmatter of each markdown files.
+
+If `false`, the script will use the `out` config value to write the related posts data to a JSON file. This file can then be read by your SSG to add the related posts to your site.
 
 ### `auto` (boolean) - default: `false`
 

@@ -13,8 +13,13 @@
         "build": "node esbuild.js",
         "dev": "node esbuild.js --mode=development"
     },
-    "author": "",
-    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tomhazledine/related-posts.git"
+    },
+    "author": "Tom Hazledine <tom@tomhazledine.com> (https://tomhazledine.com)",
+    "license": "GPL-3.0",
+    "homepage": "https://github.com/tomhazledine/related-posts#readme",
     "devDependencies": {
         "esbuild": "^0.17.19"
     },
