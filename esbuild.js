@@ -1,4 +1,5 @@
 import * as esbuild from "esbuild";
+import fs from "fs";
 import readline from "readline";
 
 import { parseArgs } from "./src/utils/args.js";
@@ -16,6 +17,12 @@ const config = {
     minify: args.mode !== "development",
     treeShaking: args.mode !== "development"
 };
+
+if (args.mode === "meta") {
+    // Meta mode
+    const result = await esbuild.build({ ...config, metafile: true });
+    fs.writeFileSync("build/meta.json", JSON.stringify(result.metafile));
+}
 
 if (args.mode === "development") {
     // Development mode

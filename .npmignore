@@ -2,3 +2,5 @@ simple-data/*
 complex-data/*
 node_modules/*
 .DS_Store
+.vscode
+.env

@@ -11,7 +11,8 @@
         "related:prod": "node ./build/index.js",
         "related": "node ./src/index.js",
         "build": "node esbuild.js",
-        "dev": "node esbuild.js --mode=development"
+        "dev": "node esbuild.js --mode=development",
+        "meta": "node esbuild.js --mode=meta"
     },
     "repository": {
         "type": "git",
