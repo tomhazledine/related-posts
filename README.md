@@ -136,3 +136,7 @@ By default, the script will only calculate the similarity between two posts if t
 ### `forceSummaries` (boolean) - default: `false`
 
 By default, the script will only generate a summary for a post if it hasn't already been generated. This is an important performance optimisation, as generating a summary is an expensive part of the script (both in runtime, and in OpenAPI usage fees). However, if you want to re-generate the summaries for all posts, you can use the `forceSummaries` flag.
+
+### `forceEmbeddings` (boolean) - default: `false`
+
+By default, the script will only calculate the embeddings for a post if they haven't already been calculated. However, if you want to re-calculate the embeddings for all posts, you can use the `forceEmbeddings` flag.
