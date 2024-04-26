@@ -88,6 +88,7 @@ const realatedPosts = async () => {
             cache[relativePath] = {
                 ...(cache[relativePath] || {}),
                 relativePath,
+                permalink: structuredContent.frontmatter.permalink,
                 hash,
                 summary
             };
