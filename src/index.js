@@ -54,18 +54,31 @@ const realatedPosts = async () => {
         if (
             !cache[relativePath] ||
             hash !== cache[relativePath].hash ||
-            args.forceSummaries
+            args.forceEmbeddings
         ) {
             const generationLabel = !cache[relativePath]
                 ? "Generating"
                 : "Regenerating";
-            log(`${generationLabel} data for ${relativePath}.`, "yellow");
+            log(`${generationLabel} embedding for ${relativePath}.`, "yellow");
             const embedding = await getEmbedding(
                 contentString,
                 args.verbose,
                 config.embedding_model
             );
             embeddings[relativePath] = embedding[0].embedding;
+        } else {
+            log(`${relativePath} embedding has not changed`);
+        }
+
+        if (
+            !cache[relativePath] ||
+            hash !== cache[relativePath].hash ||
+            args.forceSummaries
+        ) {
+            const generationLabel = !cache[relativePath]
+                ? "Generating"
+                : "Regenerating";
+            log(`${generationLabel} data for ${relativePath}.`, "yellow");
             const summary = await summarize(
                 contentString,
                 config.openai_model,
